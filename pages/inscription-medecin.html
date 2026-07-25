@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inscription médecin sur CareSync EHR, dossier médical électronique du Burkina Faso.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Inscription Médecin — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body class="bg-neutral-50">
+  <a href="#main" class="cs-skip-link">Aller au contenu</a>
+  <div id="cs-header"></div>
+
+  <main id="main" class="max-w-3xl mx-auto px-4 py-8 sm:py-12">
+    <!-- Titre -->
+    <div class="text-center mb-8 cs-anim-slide-up">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-info-50 text-info-700 mb-3">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2v2"/><path d="M5 2v2"/><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/></svg>
+      </div>
+      <h1 class="text-3xl font-bold text-neutral-800">Inscription Médecin</h1>
+      <p class="text-neutral-500 mt-2 text-sm">Rejoignez le réseau des professionnels de santé du Burkina Faso en 5 étapes.</p>
+    </div>
+
+    <!-- Barre de progression -->
+    <div class="flex items-center justify-center gap-0 mb-10 max-w-2xl mx-auto" id="cs-stepper">
+      <div class="flex flex-col items-center">
+        <div class="cs-step-dot w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-info-700 text-white" data-dot="1">1</div>
+        <span class="text-xs mt-2 text-info-700 font-medium text-center" data-label="1">Identité pro</span>
+      </div>
+      <div class="flex-1 h-0.5 bg-neutral-200 mx-1.5 -mt-6 cs-step-line" data-line="1"></div>
+      <div class="flex flex-col items-center">
+        <div class="cs-step-dot w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-neutral-200 text-neutral-400" data-dot="2">2</div>
+        <span class="text-xs mt-2 text-neutral-400 text-center" data-label="2">Vérification</span>
+      </div>
+      <div class="flex-1 h-0.5 bg-neutral-200 mx-1.5 -mt-6 cs-step-line" data-line="2"></div>
+      <div class="flex flex-col items-center">
+        <div class="cs-step-dot w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-neutral-200 text-neutral-400" data-dot="3">3</div>
+        <span class="text-xs mt-2 text-neutral-400 text-center" data-label="3">Coordonnées</span>
+      </div>
+      <div class="flex-1 h-0.5 bg-neutral-200 mx-1.5 -mt-6 cs-step-line" data-line="3"></div>
+      <div class="flex flex-col items-center">
+        <div class="cs-step-dot w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-neutral-200 text-neutral-400" data-dot="4">4</div>
+        <span class="text-xs mt-2 text-neutral-400 text-center" data-label="4">Compléments</span>
+      </div>
+      <div class="flex-1 h-0.5 bg-neutral-200 mx-1.5 -mt-6 cs-step-line" data-line="4"></div>
+      <div class="flex flex-col items-center">
+        <div class="cs-step-dot w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-neutral-200 text-neutral-400" data-dot="5">5</div>
+        <span class="text-xs mt-2 text-neutral-400 text-center" data-label="5">Confirmation</span>
+      </div>
+    </div>
+
+    <!-- Formulaire -->
+    <form id="cs-form-medecin" class="cs-card cs-card-elevated cs-card-accent-info p-6 sm:p-8" novalidate>
+      <!-- ÉTAPE 1 : Identité professionnelle -->
+      <section class="cs-step-panel" data-panel="1">
+        <h2 class="text-xl font-semibold text-neutral-800 mb-1">Identité professionnelle</h2>
+        <p class="text-sm text-neutral-500 mb-6">Vos informations professionnelles de base.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="nom" class="cs-label cs-label-required">Nom</label>
+            <input type="text" id="nom" name="nom" class="cs-input" required aria-required="true" autocomplete="family-name" placeholder="SAWADOGO">
+            <div class="cs-field-error hidden" data-error="nom"></div>
+          </div>
+          <div>
+            <label for="prenom" class="cs-label cs-label-required">Prénom</label>
+            <input type="text" id="prenom" name="prenom" class="cs-input" required aria-required="true" autocomplete="given-name" placeholder="Issa">
+            <div class="cs-field-error hidden" data-error="prenom"></div>
+          </div>
+          <div>
+            <label for="dateNaissance" class="cs-label">Date de naissance</label>
+            <input type="date" id="dateNaissance" name="dateNaissance" class="cs-input" max="2026-12-31">
+          </div>
+          <div>
+            <fieldset>
+              <legend class="cs-label">Sexe</legend>
+              <div class="flex gap-3">
+                <label class="flex items-center gap-2 cs-input cursor-pointer px-3 py-2 has-[:checked]:border-info-700 has-[:checked]:bg-info-50">
+                  <input type="radio" name="sexe" value="M" class="w-4 h-4 accent-info-700">
+                  <span class="text-sm">Masculin</span>
+                </label>
+                <label class="flex items-center gap-2 cs-input cursor-pointer px-3 py-2 has-[:checked]:border-info-700 has-[:checked]:bg-info-50">
+                  <input type="radio" name="sexe" value="F" class="w-4 h-4 accent-info-700">
+                  <span class="text-sm">Féminin</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+          <div>
+            <label for="specialite" class="cs-label cs-label-required">Spécialité</label>
+            <select id="specialite" name="specialite" class="cs-select" required aria-required="true">
+              <option value="">— Sélectionnez —</option>
+              <option value="Médecine interne">Médecine interne</option>
+              <option value="Chirurgie">Chirurgie</option>
+              <option value="Pédiatrie">Pédiatrie</option>
+              <option value="Gynécologie-Obstétrique">Gynécologie-Obstétrique</option>
+              <option value="Cardiologie">Cardiologie</option>
+              <option value="Dermatologie">Dermatologie</option>
+              <option value="Ophtalmologie">Ophtalmologie</option>
+              <option value="ORL">ORL</option>
+              <option value="Urologie">Urologie</option>
+              <option value="Neurologie">Neurologie</option>
+              <option value="Psychiatrie">Psychiatrie</option>
+              <option value="Radiologie">Radiologie</option>
+              <option value="Anesthésie-Réanimation">Anesthésie-Réanimation</option>
+            </select>
+            <div class="cs-field-error hidden" data-error="specialite"></div>
+          </div>
+          <div>
+            <label for="grade" class="cs-label cs-label-required">Grade</label>
+            <select id="grade" name="grade" class="cs-select" required aria-required="true">
+              <option value="">— Sélectionnez —</option>
+              <option value="Interne">Interne</option>
+              <option value="Assistant">Assistant</option>
+              <option value="Spécialiste">Spécialiste</option>
+              <option value="Maître de conférences">Maître de conférences</option>
+              <option value="Professeur titulaire">Professeur titulaire</option>
+              <option value="Médecin généraliste">Médecin généraliste</option>
+            </select>
+            <div class="cs-field-error hidden" data-error="grade"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ÉTAPE 2 : Vérification ministérielle -->
+      <section class="cs-step-panel hidden" data-panel="2">
+        <h2 class="text-xl font-semibold text-neutral-800 mb-1">Vérification ministérielle</h2>
+        <p class="text-sm text-neutral-500 mb-6">Votre agrément professionnel et rattachement institutionnel.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="numeroAgrement" class="cs-label">Numéro d'agrément</label>
+            <input type="text" id="numeroAgrement" name="numeroAgrement" class="cs-input font-mono uppercase" placeholder="AGRE-2025-1234">
+            <p class="text-xs text-neutral-400 mt-1">Format : AGRE-2025-XXXX. Si vide, un numéro sera généré automatiquement.</p>
+            <div class="cs-field-error hidden" data-error="numeroAgrement"></div>
+          </div>
+          <div>
+            <label for="etablissementId" class="cs-label cs-label-required">Structure de rattachement</label>
+            <select id="etablissementId" name="etablissementId" class="cs-select" required aria-required="true">
+              <option value="">— Sélectionnez —</option>
+            </select>
+            <div class="cs-field-error hidden" data-error="etablissementId"></div>
+          </div>
+          <div>
+            <label for="fonction" class="cs-label cs-label-required">Fonction</label>
+            <select id="fonction" name="fonction" class="cs-select" required aria-required="true">
+              <option value="">— Sélectionnez —</option>
+              <option value="Médecin chef de service">Médecin chef de service</option>
+              <option value="Praticien hospitalier">Praticien hospitalier</option>
+              <option value="Consultant">Consultant</option>
+              <option value="Médecin résident">Médecin résident</option>
+              <option value="Médecin libéral">Médecin libéral</option>
+              <option value="Enseignant hospitalo-universitaire">Enseignant hospitalo-universitaire</option>
+            </select>
+            <div class="cs-field-error hidden" data-error="fonction"></div>
+          </div>
+          <div>
+            <label for="dateDebutExercice" class="cs-label cs-label-required">Date de début d'exercice</label>
+            <input type="date" id="dateDebutExercice" name="dateDebutExercice" class="cs-input" required aria-required="true" max="2026-12-31">
+            <div class="cs-field-error hidden" data-error="dateDebutExercice"></div>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="cs-label">Document justificatif (diplôme, agrément)</label>
+            <div class="border-2 border-dashed border-neutral-300 rounded-cs-md p-6 text-center hover:border-info-400 transition cursor-pointer" id="cs-upload-zone">
+              <svg class="mx-auto text-neutral-400 mb-2" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <p class="text-sm text-neutral-600 font-medium">Glissez votre fichier ici ou cliquez pour parcourir</p>
+              <p class="text-xs text-neutral-400 mt-1">PDF, JPG ou PNG (max 5 Mo) — zone fictive pour ce prototype</p>
+              <input type="file" id="documentJustificatif" class="hidden" accept=".pdf,.jpg,.jpeg,.png">
+            </div>
+            <p id="cs-upload-info" class="text-xs text-info-700 mt-2 hidden"></p>
+          </div>
+          <div class="sm:col-span-2 p-4 border border-gold-200 bg-gold-50 rounded-cs-md">
+            <label for="codeMinistere" class="cs-label flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gold-700"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+              Code ministère (optionnel)
+            </label>
+            <input type="text" id="codeMinistere" name="codeMinistere" class="cs-input font-mono uppercase" placeholder="MIN-MED-2026-AB12" maxlength="20">
+            <div class="cs-field-error hidden" data-error="codeMinistere"></div>
+            <p class="text-xs text-gold-800 mt-2">Si vous disposez d'un code officiel, saisissez-le pour activer la certification <strong>OR</strong> et exercer immédiatement.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ÉTAPE 3 : Coordonnées -->
+      <section class="cs-step-panel hidden" data-panel="3">
+        <h2 class="text-xl font-semibold text-neutral-800 mb-1">Coordonnées</h2>
+        <p class="text-sm text-neutral-500 mb-6">Vos moyens de contact professionnels.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="telephone" class="cs-label cs-label-required">Téléphone professionnel</label>
+            <input type="tel" id="telephone" name="telephone" class="cs-input" required aria-required="true" placeholder="+226 50 00 00 00" inputmode="tel">
+            <div class="cs-field-error hidden" data-error="telephone"></div>
+          </div>
+          <div>
+            <label for="email" class="cs-label cs-label-required">Email professionnel</label>
+            <input type="email" id="email" name="email" class="cs-input" required aria-required="true" autocomplete="email" placeholder="i.sawadogo@chu-yalgado.bf">
+            <div class="cs-field-error hidden" data-error="email"></div>
+          </div>
+          <div>
+            <label for="telephonePerso" class="cs-label">Téléphone personnel (optionnel)</label>
+            <input type="tel" id="telephonePerso" name="telephonePerso" class="cs-input" placeholder="+226 70 00 00 00" inputmode="tel">
+            <div class="cs-field-error hidden" data-error="telephonePerso"></div>
+          </div>
+          <div>
+            <label for="province" class="cs-label cs-label-required">Province d'exercice</label>
+            <select id="province" name="province" class="cs-select" required aria-required="true">
+              <option value="">— Sélectionnez —</option>
+            </select>
+            <div class="cs-field-error hidden" data-error="province"></div>
+          </div>
+          <div>
+            <label for="ville" class="cs-label cs-label-required">Ville</label>
+            <input type="text" id="ville" name="ville" class="cs-input" required aria-required="true" placeholder="Ouagadougou">
+            <div class="cs-field-error hidden" data-error="ville"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ÉTAPE 4 : Compléments -->
+      <section class="cs-step-panel hidden" data-panel="4">
+        <h2 class="text-xl font-semibold text-neutral-800 mb-1">Compléments</h2>
+        <p class="text-sm text-neutral-500 mb-6">Langues parlées et disponibilité pour les patients.</p>
+
+        <div class="space-y-5">
+          <div>
+            <span class="cs-label">Langues de consultation</span>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+              <label class="flex items-center gap-2 cs-input cursor-pointer px-3 py-2 has-[:checked]:border-info-700 has-[:checked]:bg-info-50">
+                <input type="checkbox" name="langues" value="Français" class="w-4 h-4 accent-info-700" checked>
+                <span class="text-sm">Français</span>
+              </label>
+              <label class="flex items-center gap-2 cs-input cursor-pointer px-3 py-2 has-[:checked]:border-info-700 has-[:checked]:bg-info-50">
+                <input type="checkbox" name="langues" value="Mooré" class="w-4 h-4 accent-info-700">
+                <span class="text-sm">Mooré</span>
+              </label>
+              <label class="flex items-center gap-2 cs-input cursor-pointer px-3 py-2 has-[:checked]:border-info-700 has-[:checked]:bg-info-50">
+                <input type="checkbox" name="langues" value="Dioula" class="w-4 h-4 accent-info-700">
+                <span class="text-sm">Dioula</span>
+              </label>
+              <label class="flex items-center gap-2 cs-input cursor-pointer px-3 py-2 has-[:checked]:border-info-700 has-[:checked]:bg-info-50">
+                <input type="checkbox" name="langues" value="Foulfouldé" class="w-4 h-4 accent-info-700">
+                <span class="text-sm">Foulfouldé</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <span class="cs-label">Jours de disponibilité</span>
+            <div class="grid grid-cols-4 sm:grid-cols-7 gap-2 mt-2">
+              <label class="flex items-center justify-center cs-input cursor-pointer px-2 py-2 has-[:checked]:border-info-700 has-[:checked]:bg-info-50 text-xs">
+                <input type="checkbox" name="joursDispo" value="Lundi" class="w-3.5 h-3.5 accent-info-700 mr-1">
+                <span>Lun</span>
+              </label>
+              <label class="flex items-center justify-center cs-input cursor-pointer px-2 py-2 has-[:checked]:border-info-700 has-[:checked]:bg-info-50 text-xs">
+                <input type="checkbox" name="joursDispo" value="Mardi" class="w-3.5 h-3.5 accent-info-700 mr-1">
+                <span>Mar</span>
+              </label>
+              <label class="flex items-center justify-center cs-input cursor-pointer px-2 py-2 has-[:checked]:border-info-700 has-[:checked]:bg-info-50 text-xs">
+                <input type="checkbox" name="joursDispo" value="Mercredi" class="w-3.5 h-3.5 accent-info-700 mr-1">
+                <span>Mer</span>
+              </label>
+              <label class="flex items-center justify-center cs-input cursor-pointer px-2 py-2 has-[:checked]:border-info-700 has-[:checked]:bg-info-50 text-xs">
+                <input type="checkbox" name="joursDispo" value="Jeudi" class="w-3.5 h-3.5 accent-info-700 mr-1">
+                <span>Jeu</span>
+              </label>
+              <label class="flex items-center justify-center cs-input cursor-pointer px-2 py-2 has-[:checked]:border-info-700 has-[:checked]:bg-info-50 text-xs">
+                <input type="checkbox" name="joursDispo" value="Vendredi" class="w-3.5 h-3.5 accent-info-700 mr-1">
+                <span>Ven</span>
+              </label>
+              <label class="flex items-center justify-center cs-input cursor-pointer px-2 py-2 has-[:checked]:border-info-700 has-[:checked]:bg-info-50 text-xs">
+                <input type="checkbox" name="joursDispo" value="Samedi" class="w-3.5 h-3.5 accent-info-700 mr-1">
+                <span>Sam</span>
+              </label>
+              <label class="flex items-center justify-center cs-input cursor-pointer px-2 py-2 has-[:checked]:border-info-700 has-[:checked]:bg-info-50 text-xs">
+                <input type="checkbox" name="joursDispo" value="Dimanche" class="w-3.5 h-3.5 accent-info-700 mr-1">
+                <span>Dim</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="heureDebut" class="cs-label">Heure de début</label>
+              <input type="time" id="heureDebut" name="heureDebut" class="cs-input" value="08:00">
+            </div>
+            <div>
+              <label for="heureFin" class="cs-label">Heure de fin</label>
+              <input type="time" id="heureFin" name="heureFin" class="cs-input" value="17:00">
+            </div>
+          </div>
+
+          <div>
+            <label for="biographie" class="cs-label">Biographie / Parcours professionnel</label>
+            <textarea id="biographie" name="biographie" class="cs-textarea" rows="4" maxlength="300" placeholder="Présentez votre parcours, vos expertises, vos recherches..."></textarea>
+            <div class="flex justify-between mt-1">
+              <p class="text-xs text-neutral-400">Maximum 300 caractères.</p>
+              <p class="text-xs text-neutral-400"><span id="bio-count">0</span> / 300</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ÉTAPE 5 : Confirmation -->
+      <section class="cs-step-panel hidden" data-panel="5">
+        <h2 class="text-xl font-semibold text-neutral-800 mb-1">Confirmation et engagements</h2>
+        <p class="text-sm text-neutral-500 mb-6">Vérifiez vos informations et acceptez les engagements.</p>
+
+        <div id="cs-recap" class="bg-neutral-50 border border-neutral-200 rounded-cs-md p-4 space-y-3 text-sm"></div>
+
+        <div class="mt-6 space-y-3">
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="attestation" id="attestation" class="w-5 h-5 mt-0.5 accent-info-700" required aria-required="true">
+            <span class="text-sm text-neutral-700">J'atteste sur l'honneur l'exactitude des informations fournies dans ce formulaire.</span>
+          </label>
+          <div class="cs-field-error hidden" data-error="attestation"></div>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="charte" id="charte" class="w-5 h-5 mt-0.5 accent-info-700" required aria-required="true">
+            <span class="text-sm text-neutral-700">Je m'engage à respecter la <a href="#" class="text-info-700 underline">charte déontologique</a> médicale du Burkina Faso et le secret médical.</span>
+          </label>
+          <div class="cs-field-error hidden" data-error="charte"></div>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="conditions" id="conditions" class="w-5 h-5 mt-0.5 accent-info-700" required aria-required="true">
+            <span class="text-sm text-neutral-700">J'accepte les <a href="#" class="text-info-700 underline">conditions d'utilisation</a> de la plateforme CareSync EHR.</span>
+          </label>
+          <div class="cs-field-error hidden" data-error="conditions"></div>
+        </div>
+      </section>
+
+      <!-- Boutons navigation -->
+      <div class="flex items-center justify-between gap-3 mt-8 pt-6 border-t border-neutral-100">
+        <button type="button" id="cs-btn-prev" class="cs-btn cs-btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          <span>Précédent</span>
+        </button>
+        <button type="button" id="cs-btn-next" class="cs-btn cs-btn-primary">
+          <span>Suivant</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button type="submit" id="cs-btn-submit" class="cs-btn cs-btn-warning hidden">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4Z"/></svg>
+          <span>Soumettre pour vérification</span>
+        </button>
+      </div>
+    </form>
+
+    <p class="text-center text-sm text-neutral-500 mt-6">
+      Vous avez déjà un compte ?
+      <a href="auth.html" class="text-info-700 font-medium hover:underline">Connectez-vous</a>
+    </p>
+  </main>
+
+  <footer class="bg-neutral-900 text-neutral-400 mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-center text-xs">
+      CareSync EHR · Prototype pédagogique · Ministère de la Santé du Burkina Faso
+    </div>
+  </footer>
+
+  <script>
+    // ===== Header =====
+    document.getElementById('cs-header').innerHTML = renderPublicHeader('auth');
+
+    var etapeActuelle = 1;
+    var etapeMax = 5;
+    var regionsData = [];
+    var structuresData = [];
+
+    // ===== Chargement des données JSON =====
+    loadJSON('../assets/data/regions.json').then(function (data) {
+      if (!data) return;
+      regionsData = data;
+      var provSel = document.getElementById('province');
+      data.forEach(function (r) {
+        r.provinces.forEach(function (p) {
+          var opt = document.createElement('option');
+          opt.value = p.province;
+          opt.textContent = p.province + ' (' + r.region + ')';
+          provSel.appendChild(opt);
+        });
+      });
+    });
+
+    loadJSON('../assets/data/structures.json').then(function (data) {
+      if (!data) return;
+      structuresData = data;
+      var sel = document.getElementById('etablissementId');
+      data.forEach(function (s) {
+        var opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = s.nom + ' (' + s.type + ', ' + (s.commune || s.region || '') + ')';
+        sel.appendChild(opt);
+      });
+    });
+
+    // ===== Upload zone fictive =====
+    var uploadZone = document.getElementById('cs-upload-zone');
+    var uploadInput = document.getElementById('documentJustificatif');
+    var uploadInfo = document.getElementById('cs-upload-info');
+    if (uploadZone && uploadInput) {
+      uploadZone.addEventListener('click', function () { uploadInput.click(); });
+      uploadInput.addEventListener('change', function () {
+        var f = uploadInput.files && uploadInput.files[0];
+        if (f) {
+          uploadInfo.textContent = 'Fichier sélectionné : ' + f.name + ' (' + formatFileSize(f.size) + ')';
+          uploadInfo.classList.remove('hidden');
+        }
+      });
+    }
+
+    // ===== Compteur bio =====
+    var bio = document.getElementById('biographie');
+    var bioCount = document.getElementById('bio-count');
+    if (bio && bioCount) {
+      bio.addEventListener('input', function () { bioCount.textContent = bio.value.length; });
+    }
+
+    // ===== Validation =====
+    function effacerErreurs() {
+      document.querySelectorAll('.cs-field-error').forEach(function (el) { el.classList.add('hidden'); el.textContent = ''; });
+      document.querySelectorAll('.cs-input-error').forEach(function (el) { el.classList.remove('cs-input-error'); });
+    }
+    function afficherErreur(champ, message) {
+      var errEl = document.querySelector('[data-error="' + champ + '"]');
+      if (errEl) { errEl.textContent = message; errEl.classList.remove('hidden'); }
+      var input = document.getElementById(champ) || document.querySelector('[name="' + champ + '"]');
+      if (input && input.classList) input.classList.add('cs-input-error');
+    }
+    function validerEtape(n) {
+      effacerErreurs();
+      var ok = true;
+      if (n === 1) {
+        var nom = document.getElementById('nom').value.trim();
+        var prenom = document.getElementById('prenom').value.trim();
+        if (nom.length < 2) { afficherErreur('nom', 'Le nom doit comporter au moins 2 caractères.'); ok = false; }
+        if (prenom.length < 2) { afficherErreur('prenom', 'Le prénom doit comporter au moins 2 caractères.'); ok = false; }
+        if (!document.getElementById('specialite').value) { afficherErreur('specialite', 'La spécialité est requise.'); ok = false; }
+        if (!document.getElementById('grade').value) { afficherErreur('grade', 'Le grade est requis.'); ok = false; }
+      } else if (n === 2) {
+        var numAgrement = document.getElementById('numeroAgrement').value.trim();
+        if (numAgrement && numAgrement.length < 5) { afficherErreur('numeroAgrement', 'Numéro d\'agrément invalide.'); ok = false; }
+        if (!document.getElementById('etablissementId').value) { afficherErreur('etablissementId', 'La structure de rattachement est requise.'); ok = false; }
+        if (!document.getElementById('fonction').value) { afficherErreur('fonction', 'La fonction est requise.'); ok = false; }
+        if (!document.getElementById('dateDebutExercice').value) { afficherErreur('dateDebutExercice', 'La date de début d\'exercice est requise.'); ok = false; }
+        var code = document.getElementById('codeMinistere').value.trim().toUpperCase();
+        if (code && !Auth.REGEX_CODE_MINISTERE.test(code)) { afficherErreur('codeMinistere', 'Format attendu : MIN-MED-2026-XXXX'); ok = false; }
+      } else if (n === 3) {
+        var tel = document.getElementById('telephone').value.trim();
+        var email = document.getElementById('email').value.trim();
+        var telPerso = document.getElementById('telephonePerso').value.trim();
+        if (!Auth.REGEX_PHONE.test(tel)) { afficherErreur('telephone', 'Format requis : +226 XX XX XX XX'); ok = false; }
+        if (!email || !Auth.REGEX_EMAIL.test(email)) { afficherErreur('email', 'Email professionnel invalide.'); ok = false; }
+        if (telPerso && !Auth.REGEX_PHONE.test(telPerso)) { afficherErreur('telephonePerso', 'Format requis : +226 XX XX XX XX'); ok = false; }
+        if (!document.getElementById('province').value) { afficherErreur('province', 'Province requise.'); ok = false; }
+        if (!document.getElementById('ville').value) { afficherErreur('ville', 'Ville requise.'); ok = false; }
+      } else if (n === 5) {
+        if (!document.getElementById('attestation').checked) { afficherErreur('attestation', 'Vous devez attester de l\'exactitude des informations.'); ok = false; }
+        if (!document.getElementById('charte').checked) { afficherErreur('charte', 'Vous devez accepter la charte déontologique.'); ok = false; }
+        if (!document.getElementById('conditions').checked) { afficherErreur('conditions', 'Vous devez accepter les conditions d\'utilisation.'); ok = false; }
+      }
+      return ok;
+    }
+
+    function goToStep(n) {
+      if (n < 1 || n > etapeMax) return;
+      if (n > etapeActuelle && !validerEtape(etapeActuelle)) return;
+      document.querySelectorAll('.cs-step-panel').forEach(function (p) { p.classList.add('hidden'); });
+      var panel = document.querySelector('[data-panel="' + n + '"]');
+      if (panel) { panel.classList.remove('hidden'); panel.classList.add('cs-anim-fade-in'); }
+      etapeActuelle = n;
+      updateStepper();
+      updateButtons();
+      if (n === etapeMax) {
+        genererRecap();
+        updateSubmitButton();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateStepper() {
+      for (var i = 1; i <= etapeMax; i++) {
+        var dot = document.querySelector('[data-dot="' + i + '"]');
+        var label = document.querySelector('[data-label="' + i + '"]');
+        var line = document.querySelector('[data-line="' + i + '"]');
+        if (!dot) continue;
+        if (i <= etapeActuelle) {
+          dot.classList.remove('bg-neutral-200', 'text-neutral-400');
+          dot.classList.add('bg-info-700', 'text-white');
+          if (label) { label.classList.remove('text-neutral-400'); label.classList.add('text-info-700', 'font-medium'); }
+          if (line && i < etapeActuelle) { line.classList.remove('bg-neutral-200'); line.classList.add('bg-info-700'); }
+        } else {
+          dot.classList.add('bg-neutral-200', 'text-neutral-400');
+          dot.classList.remove('bg-info-700', 'text-white');
+          if (label) { label.classList.add('text-neutral-400'); label.classList.remove('text-info-700', 'font-medium'); }
+          if (line) { line.classList.add('bg-neutral-200'); line.classList.remove('bg-info-700'); }
+        }
+      }
+    }
+
+    function updateButtons() {
+      var btnPrev = document.getElementById('cs-btn-prev');
+      var btnNext = document.getElementById('cs-btn-next');
+      var btnSubmit = document.getElementById('cs-btn-submit');
+      btnPrev.classList.toggle('hidden', etapeActuelle === 1);
+      if (etapeActuelle === etapeMax) {
+        btnNext.classList.add('hidden');
+        btnSubmit.classList.remove('hidden');
+      } else {
+        btnNext.classList.remove('hidden');
+        btnSubmit.classList.add('hidden');
+      }
+    }
+
+    function updateSubmitButton() {
+      var code = (document.getElementById('codeMinistere').value || '').trim().toUpperCase();
+      var btn = document.getElementById('cs-btn-submit');
+      if (code && Auth.REGEX_CODE_MINISTERE.test(code)) {
+        btn.classList.remove('cs-btn-warning');
+        btn.classList.add('cs-btn-primary');
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Créer mon compte certifié</span>';
+      } else {
+        btn.classList.add('cs-btn-warning');
+        btn.classList.remove('cs-btn-primary');
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4Z"/></svg><span>Soumettre pour vérification</span>';
+      }
+    }
+
+    document.getElementById('cs-btn-next').addEventListener('click', function () { goToStep(etapeActuelle + 1); });
+    document.getElementById('cs-btn-prev').addEventListener('click', function () { goToStep(etapeActuelle - 1); });
+    document.getElementById('codeMinistere').addEventListener('input', function () {
+      if (etapeActuelle === etapeMax) updateSubmitButton();
+    });
+
+    // ===== Récapitulatif =====
+    function genererRecap() {
+      var sexe = document.querySelector('input[name="sexe"]:checked');
+      var etab = structuresData.find(function (s) { return s.id === document.getElementById('etablissementId').value; });
+      var langues = Array.prototype.slice.call(document.querySelectorAll('input[name="langues"]:checked')).map(function (c) { return c.value; });
+      var jours = Array.prototype.slice.call(document.querySelectorAll('input[name="joursDispo"]:checked')).map(function (c) { return c.value; });
+      var recap = document.getElementById('cs-recap');
+      var lignes = [
+        ['Nom complet', ('Dr. ' + document.getElementById('prenom').value + ' ' + document.getElementById('nom').value).trim()],
+        ['Sexe', sexe ? (sexe.value === 'M' ? 'Masculin' : 'Féminin') : '—'],
+        ['Spécialité', document.getElementById('specialite').value || '—'],
+        ['Grade', document.getElementById('grade').value || '—'],
+        ['Numéro d\'agrément', document.getElementById('numeroAgrement').value || 'Généré automatiquement'],
+        ['Structure', etab ? etab.nom : '—'],
+        ['Fonction', document.getElementById('fonction').value || '—'],
+        ['Date début exercice', formatDate(document.getElementById('dateDebutExercice').value) || '—'],
+        ['Téléphone pro', document.getElementById('telephone').value || '—'],
+        ['Email pro', document.getElementById('email').value || '—'],
+        ['Province', document.getElementById('province').value || '—'],
+        ['Ville', document.getElementById('ville').value || '—'],
+        ['Langues', langues.length ? langues.join(', ') : 'Français'],
+        ['Disponibilité', (jours.length ? jours.join(', ') : 'Non précisé') + (document.getElementById('heureDebut').value && document.getElementById('heureFin').value ? ' (' + document.getElementById('heureDebut').value + '-' + document.getElementById('heureFin').value + ')' : '')],
+        ['Biographie', document.getElementById('biographie').value || '—']
+      ];
+      recap.innerHTML = lignes.map(function (l) {
+        return '<div class="flex justify-between gap-4"><span class="text-neutral-500">' + l[0] + '</span><span class="text-neutral-800 font-medium text-right">' + echapperHTML(l[1]) + '</span></div>';
+      }).join('');
+    }
+
+    // ===== Soumission =====
+    document.getElementById('cs-form-medecin').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!validerEtape(etapeMax)) return;
+
+      var langues = Array.prototype.slice.call(document.querySelectorAll('input[name="langues"]:checked')).map(function (c) { return c.value; });
+      var jours = Array.prototype.slice.call(document.querySelectorAll('input[name="joursDispo"]:checked')).map(function (c) { return c.value; });
+      var code = document.getElementById('codeMinistere').value.trim().toUpperCase();
+      var etab = structuresData.find(function (s) { return s.id === document.getElementById('etablissementId').value; });
+      var sexe = document.querySelector('input[name="sexe"]:checked');
+
+      var data = {
+        nom: document.getElementById('nom').value,
+        prenom: document.getElementById('prenom').value,
+        dateNaissance: document.getElementById('dateNaissance').value || '',
+        sexe: sexe ? sexe.value : 'M',
+        specialite: document.getElementById('specialite').value,
+        grade: document.getElementById('grade').value,
+        numeroAgrement: document.getElementById('numeroAgrement').value.trim() || null,
+        etablissementId: document.getElementById('etablissementId').value,
+        etablissement: etab ? etab.nom : '',
+        fonction: document.getElementById('fonction').value,
+        dateDebutExercice: document.getElementById('dateDebutExercice').value,
+        telephone: document.getElementById('telephone').value,
+        email: document.getElementById('email').value,
+        telephonePerso: document.getElementById('telephonePerso').value || null,
+        province: document.getElementById('province').value,
+        ville: document.getElementById('ville').value,
+        langues: langues,
+        disponibilite: { jours: jours, heureDebut: document.getElementById('heureDebut').value, heureFin: document.getElementById('heureFin').value },
+        biographie: document.getElementById('biographie').value || '',
+        consentement: true,
+        codeMinistere: code || null
+      };
+
+      var result = Auth.inscriptionMedecin(data);
+      if (result.success) {
+        if (result.certifie) {
+          showToast('Inscription réussie', 'Votre identifiant BFA : ' + result.id, 'success', 8000);
+          showToast('Certification OR', 'Compte certifié par le Ministère de la Santé.', 'success', 6000);
+        } else {
+          showToast('Dossier soumis', 'Votre identifiant BFA : ' + result.id + '. En attente de validation ministérielle.', 'success', 9000);
+        }
+        var btn = document.getElementById('cs-btn-submit');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="cs-spinner cs-spinner-dark"></span><span>Redirection...</span>';
+        setTimeout(function () {
+          window.location.href = 'auth.html';
+        }, 3000);
+      } else {
+        showToast('Erreur d\'inscription', result.errors.join(' · '), 'error', 6000);
+      }
+    });
+
+    // ===== Code ministère depuis l'URL =====
+    window.addEventListener('DOMContentLoaded', function () {
+      var code = getURLParam('code');
+      if (code) {
+        var codeField = document.getElementById('codeMinistere');
+        if (codeField) {
+          codeField.value = code.toUpperCase();
+          var info = document.createElement('p');
+          info.className = 'mt-2 text-xs text-info-700 font-medium';
+          info.textContent = 'Code ministère détecté depuis l\'URL — vous bénéficierez d\'une certification OR.';
+          codeField.parentNode.appendChild(info);
+        }
+      }
+      updateButtons();
+    });
+  </script>
+</body>
+</html>
