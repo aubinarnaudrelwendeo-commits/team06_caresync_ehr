@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dossier familial — CareSync EHR Burkina Faso">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Famille — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body>
+  <a href="#cs-content" class="cs-sr-only">Aller au contenu</a>
+  <div id="cs-sim-elements"></div>
+  <div id="cs-sidebar-wrapper"></div>
+  <main class="cs-main-content">
+    <div id="cs-topbar-wrapper"></div>
+    <div class="cs-content-area" id="cs-content">
+      <div class="cs-card p-10 text-center">
+        <div class="inline-block cs-spinner cs-spinner-dark" style="width: 28px; height: 28px;"></div>
+        <p class="mt-3 text-sm text-neutral-500">Chargement de la famille...</p>
+      </div>
+    </div>
+  </main>
+  <div id="cs-modal-root"></div>
+  <script>
+    var user = requireAuth();
+    var famille = null;
+    var membres = [];
+
+    if (user) {
+      try { initPage(); } catch (err) {
+        document.getElementById('cs-content').innerHTML =
+          '<div class="cs-card p-8 text-center text-danger-700">Erreur: ' + echapperHTML(err.message) + '</div>';
+      }
+    }
+
+    function initPage() {
+      document.getElementById('cs-sidebar-wrapper').innerHTML = renderSidebar(user.role, 'familles');
+      document.getElementById('cs-topbar-wrapper').innerHTML = renderTopbar('Famille', 'Membres, vaccins et historique familial');
+      document.getElementById('cs-sim-elements').innerHTML = renderSimElements();
+      initApp();
+
+      if (user.role === 'patient') {
+        famille = Storage.getFamilleByPatient(user.id);
+      } else if (user.role === 'medecin') {
+        var allF = Storage.getAll('familles');
+        if (allF.length) famille = allF[0];
+      } else {
+        famille = Storage.getAll('familles')[0] || null;
+      }
+
+      if (!famille) {
+        document.getElementById('cs-content').innerHTML =
+          '<div class="cs-card p-10 text-center">' +
+            icon('users', 36) +
+            '<h2 class="text-lg font-semibold text-neutral-800 mt-3">Aucune famille enregistrée</h2>' +
+            '<p class="text-sm text-neutral-500 mt-1">Vous pouvez créer un dossier familial pour centraliser les données.</p>' +
+            '<button onclick="openAddMembre()" class="cs-btn cs-btn-primary cs-btn-sm mt-4">' + icon('plus', 16) + ' Créer la famille</button>' +
+          '</div>';
+        return;
+      }
+      membres = Storage.getMembresFamille(famille.id);
+      renderPage();
+    }
+
+    function renderPage() {
+      var html = renderFamilleHeader() +
+        '<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">' +
+          renderMembres() +
+          renderVaccinsTable() +
+          renderTimeline() +
+        '</div>';
+      document.getElementById('cs-content').innerHTML = html;
+    }
+
+    function renderFamilleHeader() {
+      var nbVaccinsAJour = membres.filter(function (m) { return m.statutMedical && /à jour|actif/i.test(m.statutMedical); }).length;
+      var nbRdv = membres.length;
+      var nbDocs = membres.length * 3;
+      var html = '<div class="cs-card p-6 bg-gradient-to-br from-primary-700 to-primary-900 text-white relative overflow-hidden">' +
+        '<div class="absolute inset-0 opacity-10" aria-hidden="true">' + icon('users', 200) + '</div>' +
+        '<div class="relative">' +
+          '<div class="flex items-center gap-3 mb-4">' + icon('users', 24) + '<h2 class="text-xl font-bold">Famille ' + echapperHTML(famille.nomFamille || '—') + '</h2>' +
+            '<span class="cs-badge bg-white/20 text-white">' + echapperHTML(famille.id) + '</span></div>' +
+          '<div class="grid grid-cols-2 md:grid-cols-4 gap-4">' +
+            statCard(membres.length, 'Membres', 'users') +
+            statCard(nbVaccinsAJour, 'Vaccins à jour', 'syringe') +
+            statCard(nbRdv, 'RDV à venir', 'calendar-days') +
+            statCard(nbDocs, 'Documents partagés', 'folder-open') +
+          '</div>' +
+          '<div class="mt-4 text-sm flex flex-wrap gap-4 text-white/80">' +
+            '<span>' + icon('map-pin', 14) + ' ' + echapperHTML(famille.adresse || '—') + '</span>' +
+            '<span>' + icon('building', 14) + ' ' + echapperHTML(famille.region || '—') + ' / ' + echapperHTML(famille.province || '') + '</span>' +
+            '<span>' + icon('calendar', 14) + ' Créée le ' + formatDate(famille.dateCreation) + '</span>' +
+          '</div>' +
+          '<div class="mt-4 flex justify-end"><button onclick="openAddMembre()" class="cs-btn bg-white text-primary-700 hover:bg-primary-50">' + icon('plus', 16) + ' Ajouter un membre</button></div>' +
+        '</div>' +
+      '</div>';
+      return html;
+    }
+
+    function statCard(val, label, icone) {
+      return '<div class="bg-white/10 backdrop-blur-sm rounded-cs-md p-3">' +
+        '<div class="flex items-center gap-2 text-white/80 text-xs">' + icon(icone, 14) + ' ' + label + '</div>' +
+        '<div class="text-2xl font-bold mt-1">' + val + '</div></div>';
+    }
+
+    function lienColor(lien) {
+      var l = (lien || '').toLowerCase();
+      if (/père|conjoint|époux|mari/.test(l)) return 'bg-info-100 text-info-700';
+      if (/enfant|fils|fille/.test(l)) return 'bg-primary-100 text-primary-700';
+      if (/mère|parent/.test(l)) return 'bg-gold-100 text-gold-700';
+      return 'bg-neutral-100 text-neutral-700';
+    }
+
+    function renderMembres() {
+      var html = '<div class="lg:col-span-2 space-y-3">';
+      membres.forEach(function (m) {
+        var dernCons = Storage.getConsultationsByPatient(m.id)[0];
+        var ordActives = Storage.getOrdonnancesByPatient(m.id).filter(function (o) { return o.statut === 'certifiée'; }).length;
+        var vaccinsAJour = m.statutMedical && /à jour|actif/i.test(m.statutMedical);
+        var lien = m.roleFamille || 'Membre';
+        html += '<div class="cs-card p-4 flex flex-col sm:flex-row gap-3 items-start">' +
+          '<div class="cs-avatar cs-avatar-lg ' + lienColor(lien) + '">' + echapperHTML(initiales(m.prenom, m.nom)) + '</div>' +
+          '<div class="flex-1 min-w-0">' +
+            '<div class="flex flex-wrap items-center gap-2">' +
+              '<h3 class="font-semibold text-neutral-800">' + echapperHTML(m.prenom + ' ' + m.nom) + '</h3>' +
+              '<span class="cs-badge ' + lienColor(lien) + '">' + echapperHTML(lien) + '</span>' +
+              (vaccinsAJour ? '<span class="cs-badge cs-badge-success">Vaccins à jour</span>' : '<span class="cs-badge cs-badge-warning">Vaccins à revoir</span>') +
+            '</div>' +
+            '<div class="text-xs text-neutral-500 font-mono mt-0.5">' + echapperHTML(m.id) + '</div>' +
+            '<div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-3 text-xs">' +
+              '<div><span class="text-neutral-500 block">Âge</span><span class="font-medium text-neutral-800">' + formatAge(m.dateNaissance) + '</span></div>' +
+              '<div><span class="text-neutral-500 block">Dernière consultation</span><span class="font-medium text-neutral-800">' + (dernCons ? formatDate(dernCons.date) : '—') + '</span></div>' +
+              '<div><span class="text-neutral-500 block">Ordonnances actives</span><span class="font-medium text-neutral-800">' + ordActives + '</span></div>' +
+            '</div>' +
+          '</div>' +
+          '<a href="dossier-patient.html?id=' + encodeURIComponent(m.id) + '" class="cs-btn cs-btn-ghost cs-btn-sm" aria-label="Voir le dossier de ' + echapperHTML(m.prenom) + '">' + icon('eye', 14) + ' Dossier</a>' +
+        '</div>';
+      });
+      html += '</div>';
+      return html;
+    }
+
+    function renderVaccinsTable() {
+      var vaccins = [
+        { v: 'BCG', date: '2026-01-15', membre: membres[0] ? (membres[0].prenom + ' ' + membres[0].nom) : '—', statut: 'à jour' },
+        { v: 'DTC 1', date: '2026-01-22', membre: membres[1] ? (membres[1].prenom + ' ' + membres[1].nom) : '—', statut: 'à jour' },
+        { v: 'Rougeole', date: '2026-02-10', membre: membres[1] ? (membres[1].prenom + ' ' + membres[1].nom) : '—', statut: 'à jour' },
+        { v: 'Fièvre jaune', date: '2026-03-15', membre: membres[0] ? (membres[0].prenom + ' ' + membres[0].nom) : '—', statut: 'à venir' },
+        { v: 'ROR', date: '2026-04-01', membre: membres[2] ? (membres[2].prenom + ' ' + membres[2].nom) : '—', statut: 'en retard' }
+      ];
+      var html = '<div class="cs-card p-4"><h3 class="font-semibold text-neutral-800 mb-3 flex items-center gap-2">' + icon('syringe', 18) + ' Vaccins familiaux</h3>' +
+        '<table class="cs-table"><thead><tr><th>Vaccin</th><th>Membre</th><th>Date</th><th>Statut</th></tr></thead><tbody>';
+      vaccins.forEach(function (v) {
+        html += '<tr><td class="font-medium">' + echapperHTML(v.v) + '</td><td>' + echapperHTML(v.membre) + '</td><td>' + formatDate(v.date) + '</td>' +
+          '<td><span class="cs-badge ' + badgeForStatut(v.statut) + '">' + echapperHTML(v.statut) + '</span></td></tr>';
+      });
+      html += '</tbody></table></div>';
+      return html;
+    }
+
+    function renderTimeline() {
+      var events = [];
+      membres.forEach(function (m) {
+        var cons = Storage.getConsultationsByPatient(m.id).slice(0, 2);
+        cons.forEach(function (c) {
+          events.push({ date: c.date, titre: c.motif, membre: m.prenom + ' ' + m.nom, type: 'consultation' });
+        });
+        var ords = Storage.getOrdonnancesByPatient(m.id).slice(0, 1);
+        ords.forEach(function (o) {
+          events.push({ date: o.date, titre: 'Ordonnance ' + o.id, membre: m.prenom + ' ' + m.nom, type: 'ordonnance' });
+        });
+      });
+      events.sort(function (a, b) { return (b.date || '').localeCompare(a.date || ''); });
+      events = events.slice(0, 8);
+      var html = '<div class="cs-card p-4"><h3 class="font-semibold text-neutral-800 mb-3 flex items-center gap-2">' + icon('history', 18) + ' Historique familial</h3>' +
+        '<div class="relative pl-6 space-y-3">';
+      events.forEach(function (e) {
+        html += '<div class="relative">' +
+          '<span class="cs-dot ' + dotClassForType(e.type) + ' absolute -left-6 top-1"></span>' +
+          '<div class="text-sm font-medium text-neutral-800">' + echapperHTML(e.titre) + '</div>' +
+          '<div class="text-xs text-neutral-500">' + echapperHTML(e.membre) + ' • ' + formatDate(e.date) + '</div>' +
+        '</div>';
+      });
+      if (!events.length) html += '<p class="text-sm text-neutral-400">Aucun événement.</p>';
+      html += '</div></div>';
+      return html;
+    }
+
+    function openAddMembre() {
+      var liens = ['Père', 'Mère', 'Enfant', 'Conjoint', 'Frère', 'Sœur', 'Parent'];
+      var lOpts = liens.map(function (l) { return '<option value="' + l + '">' + l + '</option>'; }).join('');
+      var html = '<div class="cs-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="cs-add-title">' +
+        '<div class="cs-modal" onclick="event.stopPropagation()">' +
+          '<div class="cs-modal-header"><h3 class="cs-modal-title" id="cs-add-title">Ajouter un membre</h3>' +
+            '<button onclick="closeModal()" class="cs-btn cs-btn-icon" aria-label="Fermer">' + icon('x', 18) + '</button></div>' +
+          '<div class="cs-modal-body"><form id="cs-add-form" onsubmit="event.preventDefault(); submitMembre();"><div class="space-y-3">' +
+            '<div class="grid grid-cols-2 gap-3">' +
+              '<div><label class="cs-label">Prénom</label><input name="prenom" required class="cs-input w-full"></div>' +
+              '<div><label class="cs-label">Nom</label><input name="nom" required class="cs-input w-full" value="' + echapperHTML(famille ? famille.nomFamille : '') + '"></div>' +
+            '</div>' +
+            '<div class="grid grid-cols-2 gap-3">' +
+              '<div><label class="cs-label">Téléphone</label><input name="telephone" class="cs-input w-full" placeholder="+226 ..."></div>' +
+              '<div><label class="cs-label">Lien familial</label><select name="roleFamille" class="cs-select w-full">' + lOpts + '</select></div>' +
+            '</div>' +
+            '<div><label class="cs-label">Date de naissance</label><input type="date" name="dateNaissance" class="cs-input w-full"></div>' +
+            '<div><label class="cs-label">Sexe</label><select name="sexe" class="cs-select w-full"><option value="M">Masculin</option><option value="F">Féminin</option></select></div>' +
+          '</div></form></div>' +
+          '<div class="cs-modal-footer"><button onclick="closeModal()" class="cs-btn cs-btn-secondary">Annuler</button>' +
+            '<button onclick="submitMembre()" class="cs-btn cs-btn-primary">' + icon('check', 16) + ' Ajouter</button></div>' +
+        '</div>' +
+      '</div>';
+      document.getElementById('cs-modal-root').innerHTML = html;
+    }
+
+    function submitMembre() {
+      var form = document.getElementById('cs-add-form');
+      if (!form) return;
+      var fd = new FormData(form);
+      var item = {
+        prenom: fd.get('prenom'),
+        nom: fd.get('nom'),
+        telephone: fd.get('telephone'),
+        roleFamille: fd.get('roleFamille'),
+        dateNaissance: fd.get('dateNaissance'),
+        sexe: fd.get('sexe'),
+        region: famille ? famille.region : '',
+        province: famille ? famille.province : '',
+        adresse: famille ? famille.adresse : '',
+        familleId: famille ? famille.id : null,
+        consentement: true
+      };
+      var created = Storage.create('patients', item);
+      if (famille) {
+        var membresIds = famille.membres || [];
+        membresIds.push(created.id);
+        Storage.update('familles', famille.id, { membres: membresIds, nbMembres: membresIds.length });
+      }
+      Storage.logAction('ajout_membre_famille', user.id, user.role, 'Membre ' + created.id + ' ajouté à la famille', { familleId: famille ? famille.id : null });
+      closeModal();
+      showToast('Membre ajouté', created.id + ' ajouté à la famille.', 'success');
+      initPage();
+    }
+
+    function closeModal() { document.getElementById('cs-modal-root').innerHTML = ''; }
+  </script>
+</body>
+</html>

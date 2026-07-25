@@ -1,0 +1,384 @@
+[
+  {
+    "id": "BFA-FAM-2026-0001",
+    "nomFamille": "Ouédraogo",
+    "tuteurPrincipal": "BFA-PAT-2026-0001",
+    "membres": [
+      "BFA-PAT-2026-0001",
+      "BFA-PAT-2026-0002",
+      "BFA-PAT-2026-0003",
+      "BFA-PAT-2026-0004"
+    ],
+    "adresse": "Secteur 15, Ouagadougou",
+    "region": "Centre",
+    "province": "Kadiogo",
+    "nbMembres": 4,
+    "dateCreation": "2026-01-20",
+    "historiqueMedical": "Hypertension maternelle, drépanocytose AS chez la mère"
+  },
+  {
+    "id": "BFA-FAM-2026-0002",
+    "nomFamille": "BONKOUNGOU",
+    "tuteurPrincipal": "BFA-PAT-2026-0086",
+    "membres": [
+      "BFA-PAT-2026-0086",
+      "BFA-PAT-2026-0112",
+      "BFA-PAT-2026-0081",
+      "BFA-PAT-2026-0034",
+      "BFA-PAT-2026-0027"
+    ],
+    "adresse": "Secteur 12, Fada N'Gourma",
+    "region": "Est",
+    "province": "Gourma",
+    "nbMembres": 5,
+    "dateCreation": "2026-04-24",
+    "historiqueMedical": "Césarienne, Asthme, Malaria chronique, Tuberculose (guérie), Otite chronique"
+  },
+  {
+    "id": "BFA-FAM-2026-0003",
+    "nomFamille": "LANKOANDE",
+    "tuteurPrincipal": "BFA-PAT-2026-0058",
+    "membres": [
+      "BFA-PAT-2026-0058",
+      "BFA-PAT-2026-0101",
+      "BFA-PAT-2026-0033"
+    ],
+    "adresse": "Secteur 7, Banfora",
+    "region": "Cascades",
+    "province": "Comoé",
+    "nbMembres": 3,
+    "dateCreation": "2026-03-09",
+    "historiqueMedical": "Fracture du fémur, Paludisme sévère (2023), Otite chronique, VIH (sous ARV)"
+  },
+  {
+    "id": "BFA-FAM-2026-0004",
+    "nomFamille": "ROAMBA",
+    "tuteurPrincipal": "BFA-PAT-2026-0057",
+    "membres": [
+      "BFA-PAT-2026-0057"
+    ],
+    "adresse": "Secteur 12, Tenkodogo",
+    "region": "Centre-Est",
+    "province": "Boulgou",
+    "nbMembres": 1,
+    "dateCreation": "2026-01-31",
+    "historiqueMedical": "Aucun antécédent notable"
+  },
+  {
+    "id": "BFA-FAM-2026-0005",
+    "nomFamille": "GNOUMOU",
+    "tuteurPrincipal": "BFA-PAT-2026-0029",
+    "membres": [
+      "BFA-PAT-2026-0029"
+    ],
+    "adresse": "Secteur 20, Banfora",
+    "region": "Cascades",
+    "province": "Comoé",
+    "nbMembres": 1,
+    "dateCreation": "2026-05-16",
+    "historiqueMedical": "Avortement thérapeutique, Tuberculose (guérie), Malaria chronique, Paludisme sévère (2023)"
+  },
+  {
+    "id": "BFA-FAM-2026-0006",
+    "nomFamille": "ILBOUDO",
+    "tuteurPrincipal": "BFA-PAT-2026-0066",
+    "membres": [
+      "BFA-PAT-2026-0066",
+      "BFA-PAT-2026-0109",
+      "BFA-PAT-2026-0079"
+    ],
+    "adresse": "Secteur 24, Dédougou",
+    "region": "Boucle du Mouhoun",
+    "province": "Mouhoun",
+    "nbMembres": 3,
+    "dateCreation": "2026-06-04",
+    "historiqueMedical": "Asthme, Appendicectomie, Ulcère gastrique, Brûlure au 2e degré, Paludisme sévère (2023)"
+  },
+  {
+    "id": "BFA-FAM-2026-0007",
+    "nomFamille": "NIGNAN",
+    "tuteurPrincipal": "BFA-PAT-2026-0111",
+    "membres": [
+      "BFA-PAT-2026-0111",
+      "BFA-PAT-2026-0051",
+      "BFA-PAT-2026-0023"
+    ],
+    "adresse": "Secteur 9, Bobo-Dioulasso",
+    "region": "Hauts-Bassins",
+    "province": "Houet",
+    "nbMembres": 3,
+    "dateCreation": "2026-05-01",
+    "historiqueMedical": "Anémie ferriprive"
+  },
+  {
+    "id": "BFA-FAM-2026-0008",
+    "nomFamille": "ZOUNGRANA",
+    "tuteurPrincipal": "BFA-PAT-2026-0084",
+    "membres": [
+      "BFA-PAT-2026-0084"
+    ],
+    "adresse": "Secteur 4, Bobo-Dioulasso",
+    "region": "Hauts-Bassins",
+    "province": "Houet",
+    "nbMembres": 1,
+    "dateCreation": "2026-03-23",
+    "historiqueMedical": "Aucun antécédent notable"
+  },
+  {
+    "id": "BFA-FAM-2026-0009",
+    "nomFamille": "GUISSOU",
+    "tuteurPrincipal": "BFA-PAT-2026-0043",
+    "membres": [
+      "BFA-PAT-2026-0043",
+      "BFA-PAT-2026-0018"
+    ],
+    "adresse": "Secteur 12, Ouahigouya",
+    "region": "Nord",
+    "province": "Yatenga",
+    "nbMembres": 2,
+    "dateCreation": "2026-02-03",
+    "historiqueMedical": "Anémie ferriprive, Cataracte, Otite chronique, Fracture du fémur"
+  },
+  {
+    "id": "BFA-FAM-2026-0010",
+    "nomFamille": "BOUDOUMA",
+    "tuteurPrincipal": "BFA-PAT-2026-0091",
+    "membres": [
+      "BFA-PAT-2026-0091",
+      "BFA-PAT-2026-0104",
+      "BFA-PAT-2026-0040"
+    ],
+    "adresse": "Secteur 21, Ouagadougou",
+    "region": "Centre",
+    "province": "Kadiogo",
+    "nbMembres": 3,
+    "dateCreation": "2026-04-16",
+    "historiqueMedical": "Aucun antécédent notable"
+  },
+  {
+    "id": "BFA-FAM-2026-0011",
+    "nomFamille": "KOMPAORE",
+    "tuteurPrincipal": "BFA-PAT-2026-0105",
+    "membres": [
+      "BFA-PAT-2026-0105",
+      "BFA-PAT-2026-0115",
+      "BFA-PAT-2026-0097",
+      "BFA-PAT-2026-0067"
+    ],
+    "adresse": "Secteur 18, Kaya",
+    "region": "Centre-Nord",
+    "province": "Sanmatenga",
+    "nbMembres": 4,
+    "dateCreation": "2026-06-01",
+    "historiqueMedical": "Avortement thérapeutique, Hypertension artérielle, Tuberculose (guérie), Épilepsie, Anémie ferriprive"
+  },
+  {
+    "id": "BFA-FAM-2026-0012",
+    "nomFamille": "MEIDA",
+    "tuteurPrincipal": "BFA-PAT-2026-0099",
+    "membres": [
+      "BFA-PAT-2026-0099"
+    ],
+    "adresse": "Secteur 12, Dédougou",
+    "region": "Boucle du Mouhoun",
+    "province": "Mouhoun",
+    "nbMembres": 1,
+    "dateCreation": "2026-05-31",
+    "historiqueMedical": "Aucun antécédent notable"
+  },
+  {
+    "id": "BFA-FAM-2026-0013",
+    "nomFamille": "ZONGO",
+    "tuteurPrincipal": "BFA-PAT-2026-0063",
+    "membres": [
+      "BFA-PAT-2026-0063",
+      "BFA-PAT-2026-0117",
+      "BFA-PAT-2026-0107"
+    ],
+    "adresse": "Secteur 30, Manga",
+    "region": "Centre-Sud",
+    "province": "Zoundwéogo",
+    "nbMembres": 3,
+    "dateCreation": "2026-02-16",
+    "historiqueMedical": "Tuberculose (guérie), Anémie ferriprive, Drépanocytose, Fracture du fémur"
+  },
+  {
+    "id": "BFA-FAM-2026-0014",
+    "nomFamille": "ZOUNGRANA",
+    "tuteurPrincipal": "BFA-PAT-2026-0050",
+    "membres": [
+      "BFA-PAT-2026-0050",
+      "BFA-PAT-2026-0077",
+      "BFA-PAT-2026-0072"
+    ],
+    "adresse": "Secteur 17, Koudougou",
+    "region": "Centre-Ouest",
+    "province": "Boulkiemdé",
+    "nbMembres": 3,
+    "dateCreation": "2026-03-26",
+    "historiqueMedical": "Asthme, Malaria chronique, Tuberculose (guérie), Épilepsie, Brûlure au 2e degré"
+  },
+  {
+    "id": "BFA-FAM-2026-0015",
+    "nomFamille": "BATIONO",
+    "tuteurPrincipal": "BFA-PAT-2026-0100",
+    "membres": [
+      "BFA-PAT-2026-0100",
+      "BFA-PAT-2026-0012",
+      "BFA-PAT-2026-0007"
+    ],
+    "adresse": "Secteur 3, Ziniaré",
+    "region": "Plateau-Central",
+    "province": "Oubritenga",
+    "nbMembres": 3,
+    "dateCreation": "2026-05-15",
+    "historiqueMedical": "Anémie ferriprive, Cardiopathie, Brûlure au 2e degré"
+  },
+  {
+    "id": "BFA-FAM-2026-0016",
+    "nomFamille": "SANOU",
+    "tuteurPrincipal": "BFA-PAT-2026-0102",
+    "membres": [
+      "BFA-PAT-2026-0102"
+    ],
+    "adresse": "Secteur 26, Ouahigouya",
+    "region": "Nord",
+    "province": "Yatenga",
+    "nbMembres": 1,
+    "dateCreation": "2026-07-01",
+    "historiqueMedical": "Aucun antécédent notable"
+  },
+  {
+    "id": "BFA-FAM-2026-0017",
+    "nomFamille": "NIGNAN",
+    "tuteurPrincipal": "BFA-PAT-2026-0116",
+    "membres": [
+      "BFA-PAT-2026-0116",
+      "BFA-PAT-2026-0083"
+    ],
+    "adresse": "Secteur 4, Gaoua",
+    "region": "Sud-Ouest",
+    "province": "Poni",
+    "nbMembres": 2,
+    "dateCreation": "2026-02-25",
+    "historiqueMedical": "Aucun antécédent notable"
+  },
+  {
+    "id": "BFA-FAM-2026-0018",
+    "nomFamille": "KAFANDO",
+    "tuteurPrincipal": "BFA-PAT-2026-0022",
+    "membres": [
+      "BFA-PAT-2026-0022"
+    ],
+    "adresse": "Secteur 11, Manga",
+    "region": "Centre-Sud",
+    "province": "Zoundwéogo",
+    "nbMembres": 1,
+    "dateCreation": "2026-06-03",
+    "historiqueMedical": "Hypertension artérielle, Paludisme sévère (2023), Vasectomie, Hépatite B"
+  },
+  {
+    "id": "BFA-FAM-2026-0019",
+    "nomFamille": "HIEN",
+    "tuteurPrincipal": "BFA-PAT-2026-0082",
+    "membres": [
+      "BFA-PAT-2026-0082",
+      "BFA-PAT-2026-0061"
+    ],
+    "adresse": "Secteur 23, Bobo-Dioulasso",
+    "region": "Hauts-Bassins",
+    "province": "Houet",
+    "nbMembres": 2,
+    "dateCreation": "2026-07-10",
+    "historiqueMedical": "Aucun antécédent notable"
+  },
+  {
+    "id": "BFA-FAM-2026-0020",
+    "nomFamille": "KABORE",
+    "tuteurPrincipal": "BFA-PAT-2026-0039",
+    "membres": [
+      "BFA-PAT-2026-0039",
+      "BFA-PAT-2026-0108",
+      "BFA-PAT-2026-0073",
+      "BFA-PAT-2026-0056"
+    ],
+    "adresse": "Secteur 28, Dori",
+    "region": "Sahel",
+    "province": "Séno",
+    "nbMembres": 4,
+    "dateCreation": "2026-05-02",
+    "historiqueMedical": "Fracture du fémur, Asthme, Épilepsie, Ulcère gastrique, Cardiopathie"
+  },
+  {
+    "id": "BFA-FAM-2026-0021",
+    "nomFamille": "DABIRE",
+    "tuteurPrincipal": "BFA-PAT-2026-0011",
+    "membres": [
+      "BFA-PAT-2026-0011",
+      "BFA-PAT-2026-0014"
+    ],
+    "adresse": "Secteur 28, Ouagadougou",
+    "region": "Centre",
+    "province": "Kadiogo",
+    "nbMembres": 2,
+    "dateCreation": "2026-04-25",
+    "historiqueMedical": "Appendicectomie"
+  },
+  {
+    "id": "BFA-FAM-2026-0022",
+    "nomFamille": "GUISSOU",
+    "tuteurPrincipal": "BFA-PAT-2026-0070",
+    "membres": [
+      "BFA-PAT-2026-0070",
+      "BFA-PAT-2026-0037"
+    ],
+    "adresse": "Secteur 2, Dori",
+    "region": "Sahel",
+    "province": "Séno",
+    "nbMembres": 2,
+    "dateCreation": "2026-04-14",
+    "historiqueMedical": "Otite chronique"
+  },
+  {
+    "id": "BFA-FAM-2026-0023",
+    "nomFamille": "DABIRE",
+    "tuteurPrincipal": "BFA-PAT-2026-0005",
+    "membres": [
+      "BFA-PAT-2026-0005"
+    ],
+    "adresse": "Secteur 30, Kaya",
+    "region": "Centre-Nord",
+    "province": "Sanmatenga",
+    "nbMembres": 1,
+    "dateCreation": "2026-02-11",
+    "historiqueMedical": "Asthme"
+  },
+  {
+    "id": "BFA-FAM-2026-0024",
+    "nomFamille": "DABIRE",
+    "tuteurPrincipal": "BFA-PAT-2026-0060",
+    "membres": [
+      "BFA-PAT-2026-0060"
+    ],
+    "adresse": "Secteur 28, Dédougou",
+    "region": "Boucle du Mouhoun",
+    "province": "Mouhoun",
+    "nbMembres": 1,
+    "dateCreation": "2026-05-02",
+    "historiqueMedical": "Asthme, Vasectomie, Drépanocytose, Fracture du fémur"
+  },
+  {
+    "id": "BFA-FAM-2026-0025",
+    "nomFamille": "ROAMBA",
+    "tuteurPrincipal": "BFA-PAT-2026-0069",
+    "membres": [
+      "BFA-PAT-2026-0069"
+    ],
+    "adresse": "Secteur 12, Ouahigouya",
+    "region": "Nord",
+    "province": "Yatenga",
+    "nbMembres": 1,
+    "dateCreation": "2026-07-17",
+    "historiqueMedical": "Aucun antécédent notable"
+  }
+]
