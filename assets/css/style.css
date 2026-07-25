@@ -1,0 +1,1643 @@
+/* Feuille de style principale */
+
+/* ===== Variables CSS ===== */
+:root {
+  /* Palette primaire */
+  --cs-primary: #0F5132;
+  --cs-primary-hover: #146C43;
+  --cs-primary-active: #0B3D2E;
+  --cs-primary-light: #EBFBEE;
+  --cs-primary-border: #96F2D7;
+
+  /* Danger */
+  --cs-danger: #9B2C38;
+  --cs-danger-hover: #7A1E28;
+  --cs-danger-light: #FDEDEC;
+  --cs-danger-border: #F5B7B1;
+
+  /* Warning / Gold */
+  --cs-warning: #B8860B;
+  --cs-warning-text: #5C3D0E;
+  --cs-warning-light: #FEF7E0;
+  --cs-accent: #D4A017;
+
+  /* Info (médecin) */
+  --cs-info: #2C3E6B;
+  --cs-info-hover: #3D5289;
+  --cs-info-light: #F2F5FA;
+
+  /* Admin (violet) */
+  --cs-admin: #4A3B6B;
+  --cs-admin-hover: #5C4D8A;
+  --cs-admin-light: #F3F1FA;
+
+  /* Backgrounds */
+  --cs-bg-page: #F8F9FA;
+  --cs-bg-card: #FFFFFF;
+  --cs-bg-hover: #E8EDF7;
+  --cs-bg-alt: #F2F5FA;
+
+  /* Textes */
+  --cs-text-primary: #1A1A2E;
+  --cs-text-body: #2D2D44;
+  --cs-text-secondary: #6C757D;
+  --cs-text-muted: #ADB5BD;
+  --cs-text-inverse: #FFFFFF;
+
+  /* Bordures */
+  --cs-border: #E9ECEF;
+  --cs-border-strong: #DEE2E6;
+  --cs-border-focus: #0F5132;
+  --cs-border-error: #9B2C38;
+
+  /* Ombres */
+  --cs-shadow-soft: 0 1px 3px 0 rgba(26,26,46,0.06), 0 1px 2px -1px rgba(26,26,46,0.06);
+  --cs-shadow-medium: 0 4px 6px -1px rgba(26,26,46,0.08), 0 2px 4px -2px rgba(26,26,46,0.06);
+  --cs-shadow-strong: 0 10px 15px -3px rgba(26,26,46,0.10), 0 4px 6px -4px rgba(26,26,46,0.06);
+  --cs-shadow-focus: 0 0 0 3px rgba(15,81,50,0.30);
+
+  /* Rayons */
+  --cs-radius-xs: 4px;
+  --cs-radius-sm: 6px;
+  --cs-radius-md: 10px;
+  --cs-radius-lg: 16px;
+  --cs-radius-xl: 24px;
+  --cs-radius-full: 9999px;
+
+  /* Transitions */
+  --cs-transition-fast: 150ms;
+  --cs-transition-normal: 200ms;
+  --cs-transition-slow: 300ms;
+
+  /* Fonts */
+  --cs-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --cs-font-serif: 'Playfair Display', Georgia, serif;
+  --cs-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
+
+/* ===== Reset & base ===== */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--cs-font-body);
+  color: var(--cs-text-primary);
+  background: var(--cs-bg-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--cs-font-serif);
+  color: var(--cs-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.font-serif { font-family: var(--cs-font-serif) !important; }
+.font-sans { font-family: var(--cs-font-body) !important; }
+.font-mono, .cs-text-mono { font-family: var(--cs-font-mono) !important; }
+
+/* ===== Skip link (accessibilité) ===== */
+.cs-skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 9999;
+  background: var(--cs-primary);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 0 0 var(--cs-radius-sm) 0;
+}
+.cs-skip-link:focus {
+  left: 0;
+}
+
+/* ===== Animations ===== */
+@keyframes cs-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes cs-slide-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes cs-slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes cs-scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes cs-toast-in {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes cs-toast-out {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(100%); }
+}
+@keyframes cs-pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+@keyframes cs-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes cs-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes cs-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes cs-fab-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 160, 23, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(212, 160, 23, 0); }
+}
+
+.cs-anim-fade-in { animation: cs-fade-in var(--cs-transition-normal) ease-out; }
+.cs-anim-slide-up { animation: cs-slide-up var(--cs-transition-slow) cubic-bezier(0, 0, 0.2, 1); }
+.cs-anim-slide-down { animation: cs-slide-down var(--cs-transition-slow) cubic-bezier(0, 0, 0.2, 1); }
+.cs-anim-scale-in { animation: cs-scale-in var(--cs-transition-normal) cubic-bezier(0.34, 1.56, 0.64, 1); }
+.cs-anim-float { animation: cs-float 3s ease-in-out infinite; }
+.cs-anim-pulse { animation: cs-pulse-soft 2s ease-in-out infinite; }
+
+/* Stagger animation */
+.cs-stagger > * { animation: cs-slide-up var(--cs-transition-slow) cubic-bezier(0, 0, 0.2, 1) both; }
+.cs-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.cs-stagger > *:nth-child(2) { animation-delay: 60ms; }
+.cs-stagger > *:nth-child(3) { animation-delay: 120ms; }
+.cs-stagger > *:nth-child(4) { animation-delay: 180ms; }
+.cs-stagger > *:nth-child(5) { animation-delay: 240ms; }
+.cs-stagger > *:nth-child(6) { animation-delay: 300ms; }
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== Cards ===== */
+.cs-card {
+  background: var(--cs-bg-card);
+  border-radius: var(--cs-radius-md);
+  box-shadow: var(--cs-shadow-soft);
+  border: 1px solid var(--cs-border);
+  transition: box-shadow var(--cs-transition-slow), transform var(--cs-transition-slow);
+}
+.cs-card-elevated {
+  box-shadow: var(--cs-shadow-medium);
+}
+.cs-card-accent {
+  border-top: 4px solid var(--cs-primary);
+}
+.cs-card-accent-warning {
+  border-top: 4px solid var(--cs-accent);
+}
+.cs-card-accent-info {
+  border-top: 4px solid var(--cs-info);
+}
+.cs-card-accent-admin {
+  border-top: 4px solid var(--cs-admin);
+}
+.cs-card-clickable {
+  cursor: pointer;
+}
+.cs-card-clickable:hover {
+  box-shadow: var(--cs-shadow-medium);
+  transform: translateY(-2px);
+}
+
+/* ===== Buttons ===== */
+.cs-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--cs-radius-sm);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.25;
+  cursor: pointer;
+  transition: all var(--cs-transition-normal);
+  border: none;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+}
+.cs-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--cs-shadow-focus);
+}
+.cs-btn:active {
+  transform: scale(0.98);
+}
+.cs-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.cs-btn-primary {
+  background: var(--cs-primary);
+  color: white;
+  box-shadow: var(--cs-shadow-soft);
+}
+.cs-btn-primary:hover {
+  background: var(--cs-primary-hover);
+  box-shadow: var(--cs-shadow-medium);
+}
+
+.cs-btn-secondary {
+  background: transparent;
+  color: var(--cs-primary);
+  border: 1px solid rgba(15, 81, 50, 0.3);
+}
+.cs-btn-secondary:hover {
+  background: var(--cs-primary-light);
+}
+
+.cs-btn-danger {
+  background: var(--cs-danger);
+  color: white;
+}
+.cs-btn-danger:hover {
+  background: var(--cs-danger-hover);
+}
+
+.cs-btn-warning {
+  background: var(--cs-accent);
+  color: var(--cs-warning-text);
+}
+.cs-btn-warning:hover {
+  background: var(--cs-warning);
+  color: white;
+}
+
+.cs-btn-ghost {
+  background: transparent;
+  color: var(--cs-text-secondary);
+}
+.cs-btn-ghost:hover {
+  background: var(--cs-bg-hover);
+}
+
+.cs-btn-sm {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+.cs-btn-lg {
+  padding: 14px 24px;
+  font-size: 16px;
+}
+.cs-btn-icon {
+  padding: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--cs-radius-sm);
+  background: transparent;
+}
+.cs-btn-icon:hover {
+  background: var(--cs-bg-hover);
+}
+
+/* ===== Forms ===== */
+.cs-input, .cs-select, .cs-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--cs-radius-sm);
+  border: 1px solid var(--cs-border-strong);
+  background: white;
+  font-size: 15px;
+  color: var(--cs-text-primary);
+  transition: all var(--cs-transition-normal);
+  font-family: inherit;
+}
+.cs-input::placeholder, .cs-textarea::placeholder {
+  color: var(--cs-text-muted);
+}
+.cs-input:hover, .cs-select:hover, .cs-textarea:hover {
+  border-color: var(--cs-text-muted);
+}
+.cs-input:focus, .cs-select:focus, .cs-textarea:focus {
+  outline: none;
+  border-color: var(--cs-primary);
+  box-shadow: 0 0 0 3px rgba(15, 81, 50, 0.2);
+}
+.cs-input-error, .cs-input-error:focus {
+  border-color: var(--cs-danger);
+  box-shadow: 0 0 0 3px rgba(155, 44, 56, 0.2);
+}
+.cs-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.cs-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cs-text-body);
+  margin-bottom: 6px;
+}
+.cs-label-required::after {
+  content: ' *';
+  color: var(--cs-danger);
+}
+.cs-field-error {
+  font-size: 12px;
+  color: var(--cs-danger);
+  margin-top: 4px;
+}
+
+.cs-input-group {
+  position: relative;
+}
+.cs-input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--cs-text-muted);
+  pointer-events: none;
+}
+.cs-input-group .cs-input {
+  padding-left: 38px;
+}
+
+/* Toggle switch */
+.cs-toggle {
+  position: relative;
+  display: inline-flex;
+  height: 24px;
+  width: 44px;
+  align-items: center;
+  border-radius: 9999px;
+  background: var(--cs-border-strong);
+  cursor: pointer;
+  transition: background-color var(--cs-transition-normal);
+  border: none;
+}
+.cs-toggle[data-checked="true"] {
+  background: var(--cs-primary);
+}
+.cs-toggle-dot {
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  border-radius: 9999px;
+  background: white;
+  transform: translateX(3px);
+  transition: transform var(--cs-transition-normal);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.cs-toggle[data-checked="true"] .cs-toggle-dot {
+  transform: translateX(23px);
+}
+
+/* ===== Badges ===== */
+.cs-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--cs-radius-full);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.cs-badge-success { background: #D3F9D8; color: #0F5132; }
+.cs-badge-warning { background: #FAEAB8; color: #7A5310; }
+.cs-badge-danger { background: #FADBD8; color: #7A1E28; }
+.cs-badge-info { background: #E8EDF7; color: #2C3E6B; }
+.cs-badge-admin { background: #E2DFF0; color: #4A3B6B; }
+.cs-badge-neutral { background: #E9ECEF; color: #495057; }
+
+/* Status dots */
+.cs-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.cs-dot-success { background: #198754; }
+.cs-dot-warning { background: #D4A017; }
+.cs-dot-danger { background: #9B2C38; animation: cs-pulse-soft 2s ease-in-out infinite; }
+.cs-dot-info { background: #4A6FA5; }
+
+/* ===== Avatars ===== */
+.cs-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 600;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.cs-avatar-sm { width: 32px; height: 32px; font-size: 12px; }
+.cs-avatar-md { width: 40px; height: 40px; font-size: 14px; }
+.cs-avatar-lg { width: 56px; height: 56px; font-size: 18px; }
+.cs-avatar-xl { width: 80px; height: 80px; font-size: 24px; }
+
+/* ===== Layout: Sidebar + Topbar ===== */
+.cs-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 256px;
+  background: white;
+  border-right: 1px solid var(--cs-border);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--cs-transition-normal);
+}
+.cs-sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--cs-border);
+}
+.cs-sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 12px;
+}
+.cs-sidebar-divider {
+  height: 1px;
+  background: var(--cs-border);
+  margin: 12px 8px;
+}
+.cs-sidebar-footer {
+  padding: 16px 12px;
+  border-top: 1px solid var(--cs-border);
+}
+
+.cs-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--cs-radius-sm);
+  color: var(--cs-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all var(--cs-transition-fast);
+  text-decoration: none;
+  margin-bottom: 2px;
+}
+.cs-nav-link:hover {
+  background: var(--cs-bg-hover);
+  color: var(--cs-text-primary);
+}
+.cs-nav-link.active {
+  background: var(--cs-primary-light);
+  color: var(--cs-primary);
+  font-weight: 600;
+}
+.cs-nav-link.active svg {
+  color: var(--cs-primary);
+}
+
+.cs-main-content {
+  margin-left: 256px;
+  min-height: 100vh;
+  background: var(--cs-bg-page);
+}
+
+.cs-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--cs-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  transition: box-shadow var(--cs-transition-normal);
+}
+.cs-topbar.scrolled {
+  box-shadow: var(--cs-shadow-soft);
+}
+.cs-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cs-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cs-content-area {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.cs-notif-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--cs-danger);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* ===== Modal ===== */
+.cs-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: cs-fade-in var(--cs-transition-fast) ease-out;
+}
+.cs-modal {
+  background: white;
+  border-radius: var(--cs-radius-lg);
+  box-shadow: var(--cs-shadow-strong);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.cs-modal-lg { max-width: 640px; }
+.cs-modal-xl { max-width: 900px; }
+.cs-modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--cs-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cs-modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cs-text-primary);
+}
+.cs-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+.cs-modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--cs-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  background: var(--cs-bg-page);
+}
+
+/* ===== Toasts ===== */
+.cs-toast-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+.cs-toast {
+  background: white;
+  border-radius: var(--cs-radius-md);
+  box-shadow: var(--cs-shadow-strong);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  max-width: 400px;
+  min-width: 280px;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all var(--cs-transition-slow);
+  pointer-events: auto;
+  border-left: 4px solid var(--cs-info);
+}
+.cs-toast.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.cs-toast-out {
+  animation: cs-toast-out 250ms ease-in forwards;
+}
+.cs-toast-success { border-left-color: #198754; }
+.cs-toast-success .cs-toast-icon { color: #198754; background: #D3F9D8; }
+.cs-toast-error { border-left-color: #9B2C38; }
+.cs-toast-error .cs-toast-icon { color: #9B2C38; background: #FADBD8; }
+.cs-toast-warning { border-left-color: #B8860B; }
+.cs-toast-warning .cs-toast-icon { color: #B8860B; background: #FAEAB8; }
+.cs-toast-info { border-left-color: #4A6FA5; }
+.cs-toast-info .cs-toast-icon { color: #4A6FA5; background: #E8EDF7; }
+
+.cs-toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cs-toast-content {
+  flex: 1;
+  min-width: 0;
+}
+.cs-toast-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--cs-text-primary);
+  margin-bottom: 2px;
+}
+.cs-toast-message {
+  font-size: 13px;
+  color: var(--cs-text-secondary);
+}
+.cs-toast-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--cs-text-muted);
+  padding: 4px;
+  border-radius: var(--cs-radius-sm);
+  transition: all var(--cs-transition-fast);
+}
+.cs-toast-close:hover {
+  background: var(--cs-bg-hover);
+  color: var(--cs-text-primary);
+}
+
+/* ===== Tables ===== */
+.cs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.cs-table thead {
+  background: var(--cs-bg-page);
+  border-bottom: 1px solid var(--cs-border);
+}
+.cs-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  color: var(--cs-text-secondary);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.cs-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--cs-border);
+  color: var(--cs-text-body);
+}
+.cs-table tbody tr {
+  transition: background-color var(--cs-transition-fast);
+}
+.cs-table tbody tr:hover {
+  background: var(--cs-bg-alt);
+}
+
+/* ===== Timeline ===== */
+.cs-timeline {
+  position: relative;
+  padding-left: 32px;
+}
+.cs-timeline::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--cs-border-strong);
+}
+.cs-timeline-item {
+  position: relative;
+  padding-bottom: 24px;
+}
+.cs-timeline-item:last-child {
+  padding-bottom: 0;
+}
+.cs-timeline-dot {
+  position: absolute;
+  left: -28px;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--cs-primary);
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px var(--cs-border);
+}
+.cs-timeline-dot.warning { background: var(--cs-accent); }
+.cs-timeline-dot.info { background: var(--cs-info); }
+.cs-timeline-dot.danger { background: var(--cs-danger); }
+
+/* ===== Tampon virtuel (ordonnance) ===== */
+.cs-stamp {
+  display: inline-block;
+  border: 3px double var(--cs-primary);
+  border-radius: var(--cs-radius-md);
+  padding: 12px 20px;
+  text-align: center;
+  background: rgba(15, 81, 50, 0.03);
+  font-family: var(--cs-font-serif);
+  color: var(--cs-primary);
+  transform: rotate(-2deg);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.cs-stamp-title {
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.cs-stamp-line {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* ===== Simulation FAB ===== */
+.cs-sim-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 40;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #D4A017, #B8860B);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(184, 134, 11, 0.4);
+  transition: all var(--cs-transition-normal);
+  position: fixed;
+}
+.cs-sim-fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 32px rgba(184, 134, 11, 0.5);
+}
+.cs-sim-fab-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: cs-fab-pulse 2s ease-in-out infinite;
+}
+
+.cs-sim-banner {
+  position: sticky;
+  top: 0;
+  z-index: 35;
+  background: linear-gradient(90deg, var(--cs-accent), var(--cs-warning));
+  color: white;
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 13px;
+  box-shadow: var(--cs-shadow-soft);
+}
+
+/* ===== Spinner ===== */
+.cs-spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--cs-border);
+  border-top-color: var(--cs-primary);
+  border-radius: 50%;
+  animation: cs-spin 0.8s linear infinite;
+}
+.cs-spinner-dark {
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+}
+
+/* ===== Skeleton ===== */
+.cs-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: cs-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--cs-radius-sm);
+}
+
+/* ===== Divider ===== */
+.cs-divider {
+  height: 1px;
+  background: var(--cs-border);
+  margin: 16px 0;
+}
+
+/* ===== SR-only (visually hidden but accessible) ===== */
+.cs-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===== Print ===== */
+@media print {
+  body * { visibility: hidden; }
+  .cs-printable, .cs-printable * { visibility: visible; }
+  .cs-printable { position: absolute; left: 0; top: 0; width: 100%; }
+  .cs-no-print { display: none !important; }
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--cs-border-strong);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--cs-text-muted); }
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .cs-sidebar {
+    transform: translateX(-100%);
+    box-shadow: var(--cs-shadow-strong);
+  }
+  .cs-sidebar.open {
+    transform: translateX(0);
+  }
+  .cs-main-content {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .cs-modal {
+    max-width: 100%;
+    max-height: 95vh;
+  }
+  .cs-toast-container {
+    top: 12px;
+    right: 12px;
+    left: 12px;
+  }
+  .cs-toast {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .cs-content-area {
+    padding: 16px;
+  }
+}
+
+/* ===== Notifications dropdown ===== */
+.cs-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  background: white;
+  border-radius: var(--cs-radius-md);
+  box-shadow: var(--cs-shadow-strong);
+  border: 1px solid var(--cs-border);
+  z-index: 50;
+  overflow: hidden;
+  animation: cs-slide-down var(--cs-transition-fast) ease-out;
+}
+.cs-dropdown-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--cs-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--cs-bg-page);
+}
+.cs-dropdown-list {
+  max-height: 360px;
+  overflow-y: auto;
+}
+.cs-notif-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--cs-border);
+  cursor: pointer;
+  transition: background var(--cs-transition-fast);
+}
+.cs-notif-item:hover {
+  background: var(--cs-bg-alt);
+}
+.cs-notif-item.unread {
+  background: rgba(15, 81, 50, 0.03);
+}
+.cs-notif-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.cs-notif-dot.cs-dot-success { background: #198754; }
+.cs-notif-dot.cs-dot-warning { background: #D4A017; }
+.cs-notif-dot.cs-dot-danger { background: #9B2C38; }
+.cs-notif-dot.cs-dot-info { background: #4A6FA5; }
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+/* ==========================================================================
+   CareSync EHR - Styles additionnels v2.1
+   Composants : recherche intelligente, notation coeurs, menus repliables,
+   fiche médicament, carte patient d'urgence, badges BETA.
+   ========================================================================== */
+
+/* ---------- Banner simulation : évite la troncature du texte ---------- */
+.cs-sim-banner {
+  min-height: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.cs-sim-banner > div:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 768px) {
+  .cs-sim-banner {
+    white-space: normal;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
+
+/* ---------- Badges BETA ---------- */
+.cs-badge-xs {
+  font-size: 9px;
+  padding: 1px 5px;
+  line-height: 1.2;
+}
+
+/* ---------- Recherche intelligente (autocomplete) ---------- */
+.cs-search-results {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-md);
+  box-shadow: var(--cs-shadow-strong);
+  max-height: 360px;
+  overflow-y: auto;
+  z-index: 40;
+  display: none;
+}
+.cs-search-results.cs-search-active {
+  display: block;
+}
+.cs-search-result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background 120ms ease;
+  border-bottom: 1px solid var(--cs-border);
+}
+.cs-search-result:last-child {
+  border-bottom: none;
+}
+.cs-search-result:hover,
+.cs-search-result:focus {
+  background: var(--cs-bg-alt);
+  outline: none;
+}
+.cs-search-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.cs-search-result-content {
+  flex: 1;
+  min-width: 0;
+}
+.cs-search-result-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cs-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cs-search-result-meta {
+  font-size: 11px;
+  color: var(--cs-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cs-search-result-id {
+  font-size: 10px;
+  color: var(--cs-text-light);
+  margin-top: 2px;
+}
+.cs-search-empty {
+  padding: 16px;
+  text-align: center;
+  color: var(--cs-text-muted);
+  font-size: 13px;
+}
+
+/* ---------- Notation médecins (coeurs SVG) ---------- */
+.cs-hearts {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.cs-heart {
+  transition: transform 150ms ease, filter 150ms ease;
+}
+.cs-heart-clickable {
+  cursor: pointer;
+}
+.cs-heart-clickable:hover {
+  transform: scale(1.18);
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.18));
+}
+.cs-heart-clickable:focus {
+  outline: 2px solid var(--cs-primary);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+.cs-hearts-widget {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 12px;
+  background: var(--cs-bg-alt);
+  border-radius: var(--cs-radius-sm);
+  border: 1px solid var(--cs-border);
+}
+.cs-hearts-interactive {
+  padding: 6px 0;
+}
+
+/* ---------- Menus repliables (sections dashboard) ---------- */
+.cs-collapsible {
+  margin-bottom: 16px;
+}
+.cs-collapse-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 18px;
+  background: white;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-md);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cs-text);
+  transition: background 120ms ease, border-color 120ms ease;
+}
+.cs-collapse-header:hover {
+  background: var(--cs-bg-alt);
+  border-color: var(--cs-primary-light);
+}
+.cs-collapse-header.cs-collapsed {
+  border-bottom-left-radius: var(--cs-radius-md);
+  border-bottom-right-radius: var(--cs-radius-md);
+}
+.cs-collapse-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cs-collapse-icon {
+  display: inline-flex;
+  color: var(--cs-primary);
+}
+.cs-collapse-chevron {
+  display: inline-flex;
+  transition: transform 200ms ease;
+  color: var(--cs-text-muted);
+}
+.cs-collapse-header:not(.cs-collapsed) .cs-collapse-chevron {
+  transform: rotate(180deg);
+}
+.cs-collapse-body {
+  padding: 16px 0 0 0;
+  animation: cs-slide-down var(--cs-transition-fast) ease-out;
+}
+.cs-collapse-body.cs-hidden {
+  display: none;
+}
+@keyframes cs-slide-down {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Fiche médicament ---------- */
+.cs-med-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.cs-med-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--cs-text);
+  border-bottom: 1px dashed var(--cs-border);
+}
+.cs-med-list li:last-child {
+  border-bottom: none;
+}
+.cs-med-list li svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ---------- Carte patient d'urgence ---------- */
+.cs-urgence-card {
+  background: linear-gradient(135deg, #FEF3F2 0%, #FEE4E2 100%);
+  border: 2px solid #FCA5A5;
+  border-radius: var(--cs-radius-lg);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.cs-urgence-card::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 80px;
+  height: 80px;
+  background: rgba(220, 38, 38, 0.06);
+  border-radius: 50%;
+}
+.cs-urgence-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  position: relative;
+}
+.cs-urgence-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #B91C1C;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.cs-urgence-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(185, 28, 28, 0.1);
+  position: relative;
+}
+.cs-urgence-row:last-child {
+  border-bottom: none;
+}
+.cs-urgence-label {
+  font-size: 12px;
+  color: #7F1D1D;
+  font-weight: 500;
+}
+.cs-urgence-value {
+  font-size: 13px;
+  color: #1F2937;
+  font-weight: 600;
+  text-align: right;
+}
+.cs-urgence-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  margin-top: 12px;
+  background: #DC2626;
+  color: white;
+  border: none;
+  border-radius: var(--cs-radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.cs-urgence-btn:hover {
+  background: #B91C1C;
+}
+
+/* ---------- Personne de confiance ---------- */
+.cs-trusted-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: linear-gradient(90deg, var(--cs-primary-light) 0%, transparent 100%);
+  border-left: 4px solid var(--cs-primary);
+  border-radius: var(--cs-radius-sm);
+  margin-top: 8px;
+}
+.cs-trusted-person-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--cs-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cs-trusted-person-info {
+  flex: 1;
+  min-width: 0;
+}
+.cs-trusted-person-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cs-text);
+}
+.cs-trusted-person-relation {
+  font-size: 11px;
+  color: var(--cs-text-muted);
+}
+.cs-trusted-person-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* ---------- Améliorations topbar search ---------- */
+.cs-topbar .cs-search-wrapper {
+  position: relative;
+}
+.cs-topbar .cs-search-results {
+  width: 380px;
+  max-width: calc(100vw - 32px);
+}
+
+/* ---------- Carte tableau de bord KPI (correction icône jaune) ---------- */
+.cs-kpi-card {
+  background: white;
+  border-radius: var(--cs-radius-md);
+  padding: 18px;
+  border: 1px solid var(--cs-border);
+  box-shadow: var(--cs-shadow-soft);
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+.cs-kpi-card:hover {
+  box-shadow: var(--cs-shadow-medium);
+  transform: translateY(-1px);
+}
+.cs-kpi-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--cs-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cs-kpi-icon.bg-gold-100 {
+  background: #FEF7E0;
+  color: #996B13;
+}
+
+/* ---------- Graphique barres (correction affichage) ---------- */
+.cs-chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 200px;
+  padding: 0 8px;
+  position: relative;
+}
+.cs-chart-bar-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  position: relative;
+}
+.cs-chart-bar-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cs-text);
+  margin-bottom: 4px;
+}
+.cs-chart-bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--cs-admin-500) 0%, var(--cs-admin-700) 100%);
+  border-radius: 4px 4px 0 0;
+  min-height: 4px;
+  transition: filter 150ms ease;
+}
+.cs-chart-bar:hover {
+  filter: brightness(1.1);
+}
+.cs-chart-bar-label {
+  font-size: 11px;
+  color: var(--cs-text-muted);
+  margin-top: 8px;
+  text-transform: capitalize;
+}
+
+/* ---------- Carte patient résumé ---------- */
+.cs-patient-summary-card {
+  background: white;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--cs-shadow-soft);
+}
+.cs-patient-summary-header {
+  background: linear-gradient(135deg, var(--cs-primary-800) 0%, var(--cs-primary-700) 100%);
+  color: white;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cs-patient-summary-body {
+  padding: 16px 20px;
+}
+.cs-patient-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.cs-patient-summary-cell {
+  padding: 10px;
+  background: var(--cs-bg-alt);
+  border-radius: var(--cs-radius-sm);
+}
+.cs-patient-summary-cell-label {
+  font-size: 10px;
+  color: var(--cs-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+.cs-patient-summary-cell-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cs-text);
+}
+
+/* ---------- Section structure santé (cartes) ---------- */
+.cs-structure-card {
+  background: white;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-md);
+  padding: 16px;
+  transition: box-shadow 200ms ease, border-color 200ms ease;
+  cursor: pointer;
+}
+.cs-structure-card:hover {
+  box-shadow: var(--cs-shadow-medium);
+  border-color: var(--cs-primary);
+}
+.cs-structure-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.cs-structure-badge-CHU { background: #FEE2E2; color: #991B1B; }
+.cs-structure-badge-CHR { background: #FED7AA; color: #9A3412; }
+.cs-structure-badge-CMA { background: #FEF3C7; color: #92400E; }
+.cs-structure-badge-CSPS { background: #DBEAFE; color: #1E40AF; }
+.cs-structure-badge-Clinique { background: #E9D5FF; color: #6B21A8; }
+
+/* ---------- Rôles médecins par structure ---------- */
+.cs-role-medecin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--cs-bg-alt);
+  border: 1px solid var(--cs-border);
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--cs-text);
+}
+.cs-role-medecin-Médecin {
+  background: #DBEAFE;
+  color: #1E40AF;
+}
+.cs-role-medecin-Sage {
+  background: #FCE7F3;
+  color: #9D174D;
+}
+.cs-role-medecin-Chef {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+/* ---------- Carte avis médecin (admin) ---------- */
+.cs-avis-card {
+  background: white;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-sm);
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.cs-avis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+.cs-avis-meta {
+  font-size: 11px;
+  color: var(--cs-text-muted);
+}
+.cs-avis-comment {
+  font-size: 13px;
+  color: var(--cs-text);
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+/* ---------- Étiquette confidentialité ---------- */
+.cs-confidential-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: #1F2937;
+  color: #F9FAFB;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* ---------- Indicateur de chargement intelligent ---------- */
+.cs-loading-pulse {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cs-primary);
+  animation: cs-pulse 1.5s ease-in-out infinite;
+}
+@keyframes cs-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ---------- Tables améliorées ---------- */
+.cs-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+}
+.cs-table thead th {
+  background: var(--cs-bg-alt);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--cs-text-muted);
+  border-bottom: 1px solid var(--cs-border);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.cs-table tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--cs-border);
+  color: var(--cs-text);
+  vertical-align: middle;
+}
+.cs-table tbody tr:hover {
+  background: var(--cs-bg-alt);
+}
+.cs-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---------- Sélecteur de structure (dropdown) ---------- */
+.cs-structure-select {
+  position: relative;
+  display: inline-block;
+}
+.cs-structure-select-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-md);
+  box-shadow: var(--cs-shadow-strong);
+  z-index: 30;
+  display: none;
+}
+.cs-structure-select-dropdown.open {
+  display: block;
+}
+.cs-structure-select-option {
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--cs-border);
+  font-size: 13px;
+}
+.cs-structure-select-option:hover {
+  background: var(--cs-bg-alt);
+}
+.cs-structure-select-option:last-child {
+  border-bottom: none;
+}
+
+/* ---------- Footer version discret ---------- */
+.cs-sidebar-footer .cs-version {
+  font-size: 10px;
+  color: var(--cs-text-light);
+  font-family: ui-monospace, monospace;
+  text-align: center;
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
+/* ---------- responsive utilitaires ---------- */
+@media (max-width: 640px) {
+  .cs-kpi-card { padding: 14px; }
+  .cs-collapse-header { padding: 12px 14px; font-size: 13px; }
+  .cs-search-results { width: 100%; }
+  .cs-patient-summary-grid { grid-template-columns: repeat(2, 1fr); }
+}
