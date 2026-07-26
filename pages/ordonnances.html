@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ordonnances certifiées — CareSync EHR Burkina Faso">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Ordonnances — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body>
+  <a href="#cs-content" class="cs-sr-only">Aller au contenu</a>
+  <div id="cs-sim-elements"></div>
+  <div id="cs-sidebar-wrapper"></div>
+  <main class="cs-main-content">
+    <div id="cs-topbar-wrapper"></div>
+    <div class="cs-content-area" id="cs-content">
+      <div class="cs-card p-10 text-center">
+        <div class="inline-block cs-spinner cs-spinner-dark" style="width: 28px; height: 28px;"></div>
+        <p class="mt-3 text-sm text-neutral-500">Chargement des ordonnances...</p>
+      </div>
+    </div>
+  </main>
+  <div id="cs-modal-root"></div>
+  <script>
+    var user = requireAuth();
+    var filtStatut = 'all';
+    var filtPeriode = 'all';
+    var searchQuery = '';
+
+    if (user) {
+      try { initPage(); } catch (err) {
+        document.getElementById('cs-content').innerHTML =
+          '<div class="cs-card p-8 text-center text-danger-700">Erreur: ' + echapperHTML(err.message) + '</div>';
+      }
+    }
+
+    function initPage() {
+      document.getElementById('cs-sidebar-wrapper').innerHTML = renderSidebar(user.role, 'ordonnances');
+      document.getElementById('cs-topbar-wrapper').innerHTML = renderTopbar('Ordonnances', 'Prescriptions médicales certifiées');
+      document.getElementById('cs-sim-elements').innerHTML = renderSimElements();
+      initApp();
+      renderList();
+    }
+
+    function getOrdonnances() {
+      var all = Storage.getAll('ordonnances');
+      if (user.role === 'patient') return all.filter(function (o) { return o.patientId === user.id; });
+      if (user.role === 'medecin') return all.filter(function (o) { return o.medecinId === user.id; });
+      return all;
+    }
+
+    function renderList() {
+      var ord = getOrdonnances();
+      var now = new Date();
+      var filtered = ord.filter(function (o) {
+        if (filtStatut !== 'all' && o.statut !== filtStatut) return false;
+        if (filtPeriode !== 'all') {
+          var d = new Date(o.date);
+          var diff = (now - d) / 86400000;
+          if (filtPeriode === '7' && diff > 7) return false;
+          if (filtPeriode === '30' && diff > 30) return false;
+          if (filtPeriode === '90' && diff > 90) return false;
+        }
+        if (searchQuery) {
+          var q = searchQuery.toLowerCase();
+          var haystack = (o.id + ' ' + (o.diagnostic || '') + ' ' + (o.patientId || '')).toLowerCase();
+          if (haystack.indexOf(q) === -1) return false;
+        }
+        return true;
+      });
+
+      var isMedecin = user.role === 'medecin';
+      var html = '<div class="cs-card p-4 mb-4 flex flex-wrap gap-3 items-center">' +
+        '<div class="relative flex-1 min-w-[200px]">' +
+          '<input type="search" placeholder="Rechercher..." value="' + echapperHTML(searchQuery) + '" oninput="searchQuery=this.value; debounceFilter()" class="cs-input pl-9 w-full" aria-label="Rechercher une ordonnance">' +
+          '<span class="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">' + icon('search', 16) + '</span>' +
+        '</div>' +
+        '<select onchange="filtStatut=this.value; renderList();" class="cs-select" aria-label="Filtrer par statut">' +
+          '<option value="all"' + (filtStatut === 'all' ? ' selected' : '') + '>Tous statuts</option>' +
+          '<option value="certifiée"' + (filtStatut === 'certifiée' ? ' selected' : '') + '>Certifiée</option>' +
+          '<option value="brouillon"' + (filtStatut === 'brouillon' ? ' selected' : '') + '>Brouillon</option>' +
+          '<option value="expirée"' + (filtStatut === 'expirée' ? ' selected' : '') + '>Expirée</option>' +
+        '</select>' +
+        '<select onchange="filtPeriode=this.value; renderList();" class="cs-select" aria-label="Filtrer par période">' +
+          '<option value="all"' + (filtPeriode === 'all' ? ' selected' : '') + '>Toute période</option>' +
+          '<option value="7"' + (filtPeriode === '7' ? ' selected' : '') + '>7 derniers jours</option>' +
+          '<option value="30"' + (filtPeriode === '30' ? ' selected' : '') + '>30 derniers jours</option>' +
+          '<option value="90"' + (filtPeriode === '90' ? ' selected' : '') + '>90 derniers jours</option>' +
+        '</select>' +
+        (isMedecin ? '<button onclick="openNewOrdonnance()" class="cs-btn cs-btn-primary">' + icon('plus', 16) + ' Nouvelle ordonnance</button>' : '') +
+      '</div>';
+
+      html += '<div class="text-xs text-neutral-500 mb-3">' + filtered.length + ' ordonnance(s)</div>';
+
+      if (!filtered.length) {
+        html += '<div class="cs-card p-10 text-center text-neutral-400">' + icon('inbox', 36) + '<p class="mt-2 text-sm">Aucune ordonnance trouvée.</p></div>';
+      } else {
+        html += '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">';
+        filtered.forEach(function (o) {
+          var p = Storage.getById('patients', o.patientId);
+          var m = Storage.getById('medecins', o.medecinId);
+          var meds = o.traitements || [];
+          var medPreview = meds.slice(0, 3).map(function (t) { return echapperHTML(t.medicament); }).join(', ');
+          if (meds.length > 3) medPreview += ' <span class="text-neutral-500">et ' + (meds.length - 3) + ' autres</span>';
+          html += '<div class="cs-card cs-card-clickable p-4" onclick="openDetail(\'' + o.id + '\')">' +
+            '<div class="flex justify-between items-start gap-2">' +
+              '<div><div class="text-xs font-mono text-neutral-500">' + echapperHTML(o.id) + '</div>' +
+                '<div class="text-xs text-neutral-400">' + formatDate(o.date) + '</div></div>' +
+              '<span class="cs-badge ' + badgeForStatut(o.statut) + '">' + echapperHTML(o.statut || '—') + '</span>' +
+            '</div>' +
+            '<div class="mt-3 text-sm font-medium text-neutral-800">' + (p ? echapperHTML(p.prenom + ' ' + p.nom) : echapperHTML(o.patientId || '—')) + '</div>' +
+            '<div class="text-xs text-neutral-500">' + (m ? echapperHTML('Dr. ' + m.prenom + ' ' + m.nom) : '—') + '</div>' +
+            '<div class="mt-2 text-xs text-neutral-600">' + medPreview + '</div>' +
+            '<div class="mt-3 flex justify-end"><button class="cs-btn cs-btn-ghost cs-btn-sm" aria-label="Voir ordonnance ' + o.id + '">' + icon('eye', 14) + ' Voir</button></div>' +
+          '</div>';
+        });
+        html += '</div>';
+      }
+
+      document.getElementById('cs-content').innerHTML = html;
+    }
+
+    var debounceTimer = null;
+    function debounceFilter() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(renderList, 200);
+    }
+
+    function openDetail(ordId) {
+      var o = Storage.getById('ordonnances', ordId);
+      if (!o) return;
+      var p = Storage.getById('patients', o.patientId);
+      var m = Storage.getById('medecins', o.medecinId);
+      var s = o.consultationId ? Storage.getById('consultations', o.consultationId) : null;
+      var stru = s && s.etablissement ? Storage.getById('structures', s.etablissement) : null;
+
+      var medsHtml = '';
+      (o.traitements || []).forEach(function (t) {
+        medsHtml += '<tr><td class="font-medium text-neutral-800">' + echapperHTML(t.medicament) + '</td>' +
+          '<td>' + echapperHTML(t.posologie || '—') + '</td>' +
+          '<td>' + echapperHTML(t.duree || '—') + '</td>' +
+          '<td class="text-xs text-neutral-600">' + echapperHTML(t.instructions || '') + '</td></tr>';
+      });
+
+      var html = '<div class="cs-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="cs-ord-title">' +
+        '<div class="cs-modal cs-modal-lg" onclick="event.stopPropagation()">' +
+          '<div class="cs-modal-header"><h3 class="cs-modal-title" id="cs-ord-title">Ordonnance ' + echapperHTML(o.id) + '</h3>' +
+            '<button onclick="closeModal()" class="cs-btn cs-btn-icon" aria-label="Fermer">' + icon('x', 18) + '</button></div>' +
+          '<div class="cs-modal-body">' +
+            '<div class="flex justify-between items-start mb-4">' +
+              '<div><div class="text-xs text-neutral-500">Patient</div><div class="font-semibold text-neutral-800">' + (p ? echapperHTML(p.prenom + ' ' + p.nom) : echapperHTML(o.patientId)) + '</div>' +
+                '<div class="text-xs text-neutral-400 font-mono">' + echapperHTML(o.patientId || '') + '</div></div>' +
+              '<div class="text-right"><div class="text-xs text-neutral-500">Date d\'émission</div><div class="font-semibold text-neutral-800">' + formatDate(o.date) + '</div>' +
+                '<span class="cs-badge ' + badgeForStatut(o.statut) + ' mt-1">' + echapperHTML(o.statut || '—') + '</span></div>' +
+            '</div>' +
+            '<div class="bg-neutral-50 rounded-cs-md p-3 mb-4 text-sm"><div class="text-xs text-neutral-500">Diagnostic</div><div class="text-neutral-800">' + echapperHTML(o.diagnostic || '—') + '</div></div>' +
+            '<table class="cs-table mb-4"><thead><tr><th>Médicament</th><th>Posologie</th><th>Durée</th><th>Instructions</th></tr></thead><tbody>' + medsHtml + '</tbody></table>' +
+            (o.observations ? '<div class="bg-info-50 rounded-cs-md p-3 mb-4 text-sm text-info-800"><strong>Observations :</strong> ' + echapperHTML(o.observations) + '</div>' : '') +
+            '<div class="flex justify-between items-end gap-3 border-t border-neutral-100 pt-4">' +
+              '<div class="text-sm"><div class="text-xs text-neutral-500">Médecin prescripteur</div><div class="font-medium">' + (m ? echapperHTML('Dr. ' + m.prenom + ' ' + m.nom) : '—') + '</div>' +
+                (m && m.specialite ? '<div class="text-xs text-neutral-400">' + echapperHTML(m.specialite) + '</div>' : '') +
+                (stru ? '<div class="text-xs text-neutral-400">' + icon('building', 12) + ' ' + echapperHTML(stru.nom) + '</div>' : '') +
+              '</div>' +
+              (o.tamponMinistere ? '<div class="cs-stamp"><div class="cs-stamp-title">Certifiée MINISTÈRE</div><div class="cs-stamp-line">CareSync EHR · BF</div><div class="cs-stamp-line">' + formatDate(o.date) + '</div></div>' : '') +
+            '</div>' +
+          '</div>' +
+          '<div class="cs-modal-footer">' +
+            '<button onclick="closeModal()" class="cs-btn cs-btn-secondary">Fermer</button>' +
+            '<button onclick="window.print()" class="cs-btn cs-btn-ghost">' + icon('printer', 16) + ' Imprimer</button>' +
+            '<button onclick="showToast(\'PDF\', \'Téléchargement PDF simulé\', \'info\')" class="cs-btn cs-btn-primary">' + icon('download', 16) + ' Télécharger PDF</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+      document.getElementById('cs-modal-root').innerHTML = html;
+    }
+
+    function openNewOrdonnance() {
+      var patients = Storage.getAll('patients');
+      var pOpts = patients.map(function (p) { return '<option value="' + p.id + '">' + echapperHTML(p.prenom + ' ' + p.nom + ' (' + p.id + ')') + '</option>'; }).join('');
+      var html = '<div class="cs-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="cs-ord-new-title">' +
+        '<div class="cs-modal" onclick="event.stopPropagation()">' +
+          '<div class="cs-modal-header"><h3 class="cs-modal-title" id="cs-ord-new-title">Nouvelle ordonnance</h3>' +
+            '<button onclick="closeModal()" class="cs-btn cs-btn-icon" aria-label="Fermer">' + icon('x', 18) + '</button></div>' +
+          '<div class="cs-modal-body"><form id="cs-ord-form" onsubmit="event.preventDefault(); submitOrdonnance();">' +
+            '<div class="space-y-3">' +
+              '<div><label class="cs-label">Patient</label><select name="patientId" required class="cs-select w-full">' + pOpts + '</select></div>' +
+              '<div><label class="cs-label">Diagnostic</label><input name="diagnostic" required class="cs-input w-full" placeholder="Ex : Hypertension artérielle"></div>' +
+              '<div><label class="cs-label">Médicament principal</label><input name="medicament" required class="cs-input w-full" placeholder="Ex : Amlodipine 5mg"></div>' +
+              '<div class="grid grid-cols-2 gap-3"><div><label class="cs-label">Posologie</label><input name="posologie" class="cs-input w-full" placeholder="1 cp/jour"></div>' +
+                '<div><label class="cs-label">Durée</label><input name="duree" class="cs-input w-full" placeholder="30 jours"></div></div>' +
+              '<div><label class="cs-label">Observations</label><textarea name="observations" rows="3" class="cs-textarea w-full"></textarea></div>' +
+            '</div></form>' +
+          '</div>' +
+          '<div class="cs-modal-footer"><button onclick="closeModal()" class="cs-btn cs-btn-secondary">Annuler</button>' +
+            '<button onclick="submitOrdonnance()" class="cs-btn cs-btn-primary">' + icon('check', 16) + ' Certifier</button></div>' +
+        '</div>' +
+      '</div>';
+      document.getElementById('cs-modal-root').innerHTML = html;
+    }
+
+    function submitOrdonnance() {
+      var form = document.getElementById('cs-ord-form');
+      if (!form) return;
+      var fd = new FormData(form);
+      var item = {
+        patientId: fd.get('patientId'),
+        medecinId: user.id,
+        date: new Date().toISOString().substring(0, 10),
+        diagnostic: fd.get('diagnostic'),
+        traitements: [{ medicament: fd.get('medicament'), posologie: fd.get('posologie'), duree: fd.get('duree'), instructions: '' }],
+        observations: fd.get('observations'),
+        statut: 'certifiée',
+        tamponMinistere: true,
+        signatureMedecin: 'Dr. ' + user.prenom + ' ' + user.nom
+      };
+      var created = Storage.create('ordonnances', item);
+      Storage.logAction('creation_ordonnance', user.id, user.role, 'Ordonnance ' + created.id + ' créée', { patientId: item.patientId });
+      closeModal();
+      showToast('Ordonnance créée', created.id + ' certifiée par le ministère.', 'success');
+      renderList();
+    }
+
+    function closeModal() {
+      document.getElementById('cs-modal-root').innerHTML = '';
+    }
+  </script>
+</body>
+</html>
