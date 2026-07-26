@@ -1,0 +1,2096 @@
+[
+  {
+    "id": "ORD-2026-0001",
+    "patientId": "BFA-PAT-2026-0023",
+    "medecinId": "BFA-MED-2026-0006",
+    "consultationId": "CONS-2026-0010",
+    "structureId": "STR-2026-0001",
+    "date": "2026-07-19",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0017",
+        "medicamentNom": "Prednisolone MS",
+        "dci": "Prednisolone",
+        "dosage": "20 mg",
+        "posologie": "1 à 2 mg/kg/jour (maladie inflammatoire)",
+        "duree": "14 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Asthme - crise modérée",
+    "statut": "certifiée",
+    "dateCertification": "2026-07-19",
+    "certifiePar": "BFA-MED-2026-0006",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:BA8632BB84B8B3439555D04EB8AB4EFB90F7DE75",
+    "observations": "À prendre avec repas",
+    "renouvellement": true,
+    "dateExpiration": "2027-02-03",
+    "createdAt": "2026-07-19T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0002",
+    "patientId": "BFA-PAT-2026-0006",
+    "medecinId": "BFA-MED-2026-0023",
+    "consultationId": "CONS-2026-0012",
+    "structureId": "STR-2026-0014",
+    "date": "2026-07-19",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0021",
+        "medicamentNom": "Acide Folique MS",
+        "dci": "Acide folique",
+        "dosage": "5 mg",
+        "posologie": "0,1 à 0,4 mg/kg/jour",
+        "duree": "3 mois",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0026",
+        "medicamentNom": "Quinine IV MS",
+        "dci": "Quinine",
+        "dosage": "500 mg",
+        "posologie": "Idem adulte (calculé au poids)",
+        "duree": "10 jours",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Rhinite virale",
+    "statut": "certifiée",
+    "dateCertification": "2026-07-19",
+    "certifiePar": "BFA-MED-2026-0023",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:106DF285D84A9FE6DDF17EC3FCB4EDE154F1083D",
+    "observations": "Adapter la dose selon la fonction rénale",
+    "renouvellement": true,
+    "dateExpiration": "2026-10-25",
+    "createdAt": "2026-07-19T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0003",
+    "patientId": "BFA-PAT-2026-0115",
+    "medecinId": "BFA-MED-2026-0003",
+    "consultationId": "CONS-2026-0009",
+    "structureId": "STR-2026-0002",
+    "date": "2026-07-13",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0028",
+        "medicamentNom": "Céfixime MS",
+        "dci": "Céfixime",
+        "dosage": "200 mg",
+        "posologie": "8 mg/kg/jour en 2 prises",
+        "duree": "10 jours",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Consultation préventive",
+    "statut": "certifiée",
+    "dateCertification": "2026-07-13",
+    "certifiePar": "BFA-MED-2026-0003",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:F2AEDBE4BD5E16DC38249C93F7CC4A644355932F",
+    "observations": "Bien respecter les horaires",
+    "renouvellement": false,
+    "dateExpiration": "2027-02-21",
+    "createdAt": "2026-07-13T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0004",
+    "patientId": "BFA-PAT-2026-0063",
+    "medecinId": "BFA-MED-2026-0008",
+    "consultationId": "CONS-2026-0034",
+    "structureId": "STR-2026-0001",
+    "date": "2026-07-10",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0002",
+        "medicamentNom": "Amoxicilline BF",
+        "dci": "Amoxicilline",
+        "dosage": "500 mg",
+        "posologie": "1 gélule 3 fois par jour pendant 7 jours",
+        "duree": "3 mois",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0001",
+        "medicamentNom": "Paracétamol CareSync",
+        "dci": "Paracétamol",
+        "dosage": "500 mg",
+        "posologie": "1 à 2 comprimés, 3 fois par jour (max 4 g/j)",
+        "duree": "14 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0014",
+        "medicamentNom": "Insuline NPH",
+        "dci": "Insuline isophane",
+        "dosage": "100 UI/mL",
+        "posologie": "Adapté à la glycémie (0,5 à 1 UI/kg/jour)",
+        "duree": "5 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0018",
+        "medicamentNom": "Furosémide BF",
+        "dci": "Furosémide",
+        "dosage": "40 mg",
+        "posologie": "1 comprimé 1 à 2 fois par jour",
+        "duree": "5 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Anémie ferriprive",
+    "statut": "certifiée",
+    "dateCertification": "2026-07-10",
+    "certifiePar": "BFA-MED-2026-0008",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:B66745D3DB6E8CD9EA7124B716A361937A8AB682",
+    "observations": "Revenir consulter si pas d'amélioration après 3 jours",
+    "renouvellement": true,
+    "dateExpiration": "2026-11-02",
+    "createdAt": "2026-07-10T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0005",
+    "patientId": "BFA-PAT-2026-0077",
+    "medecinId": "BFA-MED-2026-0022",
+    "consultationId": "CONS-2026-0020",
+    "structureId": "STR-2026-0028",
+    "date": "2026-07-05",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0026",
+        "medicamentNom": "Quinine IV MS",
+        "dci": "Quinine",
+        "dosage": "500 mg",
+        "posologie": "Idem adulte (calculé au poids)",
+        "duree": "10 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0023",
+        "medicamentNom": "Zinc Sulfate BF",
+        "dci": "Zinc sulfate",
+        "dosage": "20 mg",
+        "posologie": "10 mg/jour (< 6 mois), 20 mg/jour (> 6 mois)",
+        "duree": "3 mois",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Paludisme simple",
+    "statut": "certifiée",
+    "dateCertification": "2026-07-05",
+    "certifiePar": "BFA-MED-2026-0022",
+    "valideParMinistere": true,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:D848F068023BD0BDA90DC51A313B92185F59A1E2",
+    "observations": "",
+    "renouvellement": false,
+    "dateExpiration": "2027-01-26",
+    "createdAt": "2026-07-05T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0006",
+    "patientId": "BFA-PAT-2026-0112",
+    "medecinId": "BFA-MED-2026-0003",
+    "consultationId": "CONS-2026-0021",
+    "structureId": "STR-2026-0002",
+    "date": "2026-06-29",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0036",
+        "medicamentNom": "Oméprazole MS",
+        "dci": "Oméprazole",
+        "dosage": "20 mg",
+        "posologie": "0,5 à 1 mg/kg/jour",
+        "duree": "7 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Angine streptococcique",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-29",
+    "certifiePar": "BFA-MED-2026-0003",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:F590F0FEB6B3FCF7954667A9933967ED1ED382E6",
+    "observations": "",
+    "renouvellement": true,
+    "dateExpiration": "2026-08-24",
+    "createdAt": "2026-06-29T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0007",
+    "patientId": "BFA-PAT-2026-0052",
+    "medecinId": "BFA-MED-2026-0019",
+    "consultationId": "CONS-2026-0033",
+    "structureId": "STR-2026-0012",
+    "date": "2026-06-28",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0026",
+        "medicamentNom": "Quinine IV MS",
+        "dci": "Quinine",
+        "dosage": "500 mg",
+        "posologie": "8 mg/kg/8h IV lente (paludisme sévère)",
+        "duree": "14 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0010",
+        "medicamentNom": "Amlodipine BF",
+        "dci": "Amlodipine",
+        "dosage": "5 mg",
+        "posologie": "1 comprimé par jour (max 10 mg)",
+        "duree": "3 mois",
+        "quantite": 30
+      }
+    ],
+    "diagnosticAssocie": "Gastroentérite aiguë",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-28",
+    "certifiePar": "BFA-MED-2026-0019",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:67585875CA281BA60655C2F6CB050B29A627EA29",
+    "observations": "À prendre avec repas",
+    "renouvellement": false,
+    "dateExpiration": "2026-09-24",
+    "createdAt": "2026-06-28T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0008",
+    "patientId": "BFA-PAT-2026-0073",
+    "medecinId": "BFA-MED-2026-0008",
+    "consultationId": "CONS-2026-0069",
+    "structureId": "STR-2026-0001",
+    "date": "2026-06-23",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0018",
+        "medicamentNom": "Furosémide BF",
+        "dci": "Furosémide",
+        "dosage": "40 mg",
+        "posologie": "1 à 2 mg/kg/jour",
+        "duree": "3 mois",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0019",
+        "medicamentNom": "Spironolactone MS",
+        "dci": "Spironolactone",
+        "dosage": "75 mg",
+        "posologie": "1 à 3 mg/kg/jour",
+        "duree": "10 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0042",
+        "medicamentNom": "Acide Valproique MS",
+        "dci": "Valproate de sodium",
+        "dosage": "500 mg",
+        "posologie": "15 à 30 mg/kg/jour",
+        "duree": "5 jours",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Gastroentérite aiguë",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-23",
+    "certifiePar": "BFA-MED-2026-0008",
+    "valideParMinistere": true,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:2C6C9ECE93D8BCFF24525C98111CBAF7A9DA386A",
+    "observations": "À prendre avec repas",
+    "renouvellement": false,
+    "dateExpiration": "2027-07-11",
+    "createdAt": "2026-06-23T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0009",
+    "patientId": "BFA-PAT-2026-0089",
+    "medecinId": "BFA-MED-2026-0019",
+    "consultationId": "CONS-2026-0072",
+    "structureId": "STR-2026-0012",
+    "date": "2026-06-21",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0014",
+        "medicamentNom": "Insuline NPH",
+        "dci": "Insuline isophane",
+        "dosage": "100 UI/mL",
+        "posologie": "Adapté à la glycémie (0,5 à 1 UI/kg/jour)",
+        "duree": "5 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0028",
+        "medicamentNom": "Céfixime MS",
+        "dci": "Céfixime",
+        "dosage": "200 mg",
+        "posologie": "200 mg 2 fois par jour pendant 5 à 7 jours",
+        "duree": "3 mois",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Otite moyenne aiguë",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-21",
+    "certifiePar": "BFA-MED-2026-0019",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:88D43831D420170584E0CC0A7AC28EDFB7E7F2B6",
+    "observations": "Revenir consulter si pas d'amélioration après 3 jours",
+    "renouvellement": false,
+    "dateExpiration": "2026-10-29",
+    "createdAt": "2026-06-21T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0010",
+    "patientId": "BFA-PAT-2026-0053",
+    "medecinId": "BFA-MED-2026-0009",
+    "consultationId": "CONS-2026-0052",
+    "structureId": "STR-2026-0002",
+    "date": "2026-06-20",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0049",
+        "medicamentNom": "Aciclovir MS",
+        "dci": "Aciclovir",
+        "dosage": "200 mg",
+        "posologie": "200 mg 5 fois par jour pendant 5 jours",
+        "duree": "5 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0043",
+        "medicamentNom": "Lévétiracétam BF",
+        "dci": "Lévétiracétam",
+        "dosage": "500 mg",
+        "posologie": "500 mg 2 fois par jour (max 1500 mg 2x/jour)",
+        "duree": "1 mois",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0013",
+        "medicamentNom": "Glibenclamide MS",
+        "dci": "Glibenclamide",
+        "dosage": "5 mg",
+        "posologie": "1 à 2 comprimés par jour (matin)",
+        "duree": "14 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0024",
+        "medicamentNom": "Sérum Physiologique",
+        "dci": "NaCl 0,9%",
+        "dosage": "500 mL",
+        "posologie": "Adapté à l'état clinique",
+        "duree": "7 jours",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Conjonctivite allergique",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-20",
+    "certifiePar": "BFA-MED-2026-0009",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:8DC7A7128D0973C5461E0FA4A4DAE39582C31F03",
+    "observations": "Surveillance rénale demandée",
+    "renouvellement": false,
+    "dateExpiration": "2027-01-11",
+    "createdAt": "2026-06-20T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0011",
+    "patientId": "BFA-PAT-2026-0021",
+    "medecinId": "BFA-MED-2026-0027",
+    "consultationId": "CONS-2026-0066",
+    "structureId": "STR-2026-0013",
+    "date": "2026-06-18",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0032",
+        "medicamentNom": "Erythromycine BF",
+        "dci": "Erythromycine",
+        "dosage": "500 mg",
+        "posologie": "500 mg 4 fois par jour pendant 7 jours",
+        "duree": "14 jours",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Bilan de santé favorable",
+    "statut": "en_attente",
+    "dateCertification": null,
+    "certifiePar": null,
+    "valideParMinistere": false,
+    "tamponVirtuel": false,
+    "hashCertification": null,
+    "observations": "À prendre avec repas",
+    "renouvellement": false,
+    "dateExpiration": null,
+    "createdAt": "2026-06-18T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0012",
+    "patientId": "BFA-PAT-2026-0003",
+    "medecinId": "BFA-MED-2026-0001",
+    "consultationId": "CONS-2026-0019",
+    "structureId": "STR-2026-0003",
+    "date": "2026-06-17",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0034",
+        "medicamentNom": "Vancomycine MS",
+        "dci": "Vancomycine",
+        "dosage": "500 mg",
+        "posologie": "40 mg/kg/jour en 4 prises",
+        "duree": "14 jours",
+        "quantite": 30
+      }
+    ],
+    "diagnosticAssocie": "Paludisme sévère",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-17",
+    "certifiePar": "BFA-MED-2026-0001",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:1B56E2E95CA882C797385C7AEBC81AE5C37D287E",
+    "observations": "Bien respecter les horaires",
+    "renouvellement": false,
+    "dateExpiration": "2027-02-05",
+    "createdAt": "2026-06-17T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0013",
+    "patientId": "BFA-PAT-2026-0053",
+    "medecinId": "BFA-MED-2026-0015",
+    "consultationId": "CONS-2026-0026",
+    "structureId": "STR-2026-0001",
+    "date": "2026-06-15",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0027",
+        "medicamentNom": "Chloroquine BF",
+        "dci": "Chloroquine",
+        "dosage": "100 mg",
+        "posologie": "Résistance fréquente - usage limité",
+        "duree": "3 mois",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0044",
+        "medicamentNom": "L-Thyroxine MS",
+        "dci": "Lévothyroxine",
+        "dosage": "100 µg",
+        "posologie": "1,6 µg/kg/jour (adapté à la TSH)",
+        "duree": "7 jours",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Colique néphrétique",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-15",
+    "certifiePar": "BFA-MED-2026-0015",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:A3E2113A02B198FCFDBBE1FA3FBC9C9D769E0D2A",
+    "observations": "Adapter la dose selon la fonction rénale",
+    "renouvellement": false,
+    "dateExpiration": "2027-07-04",
+    "createdAt": "2026-06-15T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0014",
+    "patientId": "BFA-PAT-2026-0054",
+    "medecinId": "BFA-MED-2026-0007",
+    "consultationId": "CONS-2026-0051",
+    "structureId": "STR-2026-0002",
+    "date": "2026-06-15",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0012",
+        "medicamentNom": "Metformine CareSync",
+        "dci": "Metformine",
+        "dosage": "500 mg",
+        "posologie": "500 à 1000 mg 2 fois par jour (max 3 g/j)",
+        "duree": "10 jours",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Diabète type 2 déséquilibré",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-15",
+    "certifiePar": "BFA-MED-2026-0007",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:C7F097303DFA7098C1E1D26BE0CDE009B3C6187A",
+    "observations": "Surveillance rénale demandée",
+    "renouvellement": false,
+    "dateExpiration": "2026-11-22",
+    "createdAt": "2026-06-15T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0015",
+    "patientId": "BFA-PAT-2026-0031",
+    "medecinId": "BFA-MED-2026-0037",
+    "consultationId": "CONS-2026-0043",
+    "structureId": "STR-2026-0063",
+    "date": "2026-06-14",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0037",
+        "medicamentNom": "Loperamide BF",
+        "dci": "Loperamide",
+        "dosage": "2 mg",
+        "posologie": "2 gélules initiales puis 1 après chaque selle molle (max 8/jour)",
+        "duree": "7 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0025",
+        "medicamentNom": "SRO OMS",
+        "dci": "Sels de réhydratation orale",
+        "dosage": "1 L",
+        "posologie": "1 sachet dilué dans 1 L d'eau potable",
+        "duree": "3 mois",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0027",
+        "medicamentNom": "Chloroquine BF",
+        "dci": "Chloroquine",
+        "dosage": "100 mg",
+        "posologie": "Résistance fréquente - usage limité",
+        "duree": "14 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0026",
+        "medicamentNom": "Quinine IV MS",
+        "dci": "Quinine",
+        "dosage": "500 mg",
+        "posologie": "8 mg/kg/8h IV lente (paludisme sévère)",
+        "duree": "3 mois",
+        "quantite": 30
+      }
+    ],
+    "diagnosticAssocie": "Bilan de santé favorable",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-14",
+    "certifiePar": "BFA-MED-2026-0037",
+    "valideParMinistere": true,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:2E6B2F24694470415C8757AE974F7A99F3A69CFE",
+    "observations": "Surveillance rénale demandée",
+    "renouvellement": false,
+    "dateExpiration": "2027-01-24",
+    "createdAt": "2026-06-14T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0016",
+    "patientId": "BFA-PAT-2026-0034",
+    "medecinId": "BFA-MED-2026-0024",
+    "consultationId": "CONS-2026-0048",
+    "structureId": "STR-2026-0051",
+    "date": "2026-06-09",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0014",
+        "medicamentNom": "Insuline NPH",
+        "dci": "Insuline isophane",
+        "dosage": "100 UI/mL",
+        "posologie": "Adapté au poids et glycémie",
+        "duree": "10 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0008",
+        "medicamentNom": "Ibuprofène MS",
+        "dci": "Ibuprofène",
+        "dosage": "400 mg",
+        "posologie": "20 à 30 mg/kg/jour en 3 prises",
+        "duree": "7 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Hypertension non contrôlée",
+    "statut": "en_attente",
+    "dateCertification": null,
+    "certifiePar": null,
+    "valideParMinistere": false,
+    "tamponVirtuel": false,
+    "hashCertification": null,
+    "observations": "Bien respecter les horaires",
+    "renouvellement": false,
+    "dateExpiration": null,
+    "createdAt": "2026-06-09T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0017",
+    "patientId": "BFA-PAT-2026-0049",
+    "medecinId": "BFA-MED-2026-0033",
+    "consultationId": "CONS-2026-0041",
+    "structureId": "STR-2026-0047",
+    "date": "2026-06-08",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0002",
+        "medicamentNom": "Amoxicilline BF",
+        "dci": "Amoxicilline",
+        "dosage": "500 mg",
+        "posologie": "1 gélule 3 fois par jour pendant 7 jours",
+        "duree": "3 mois",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0022",
+        "medicamentNom": "Vitamine A Enfant",
+        "dci": "Rétinol",
+        "dosage": "100 000 UI",
+        "posologie": "Uniquement pour supplémentation programmée",
+        "duree": "1 mois",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Anémie ferriprive",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-08",
+    "certifiePar": "BFA-MED-2026-0033",
+    "valideParMinistere": true,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:C7C86F50AD87C1A16178606C4877649CA1E1A386",
+    "observations": "Surveillance rénale demandée",
+    "renouvellement": true,
+    "dateExpiration": "2026-10-11",
+    "createdAt": "2026-06-08T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0018",
+    "patientId": "BFA-PAT-2026-0050",
+    "medecinId": "BFA-MED-2026-0003",
+    "consultationId": "CONS-2026-0028",
+    "structureId": "STR-2026-0002",
+    "date": "2026-06-07",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0002",
+        "medicamentNom": "Amoxicilline BF",
+        "dci": "Amoxicilline",
+        "dosage": "500 mg",
+        "posologie": "1 gélule 3 fois par jour pendant 7 jours",
+        "duree": "5 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0032",
+        "medicamentNom": "Erythromycine BF",
+        "dci": "Erythromycine",
+        "dosage": "500 mg",
+        "posologie": "500 mg 4 fois par jour pendant 7 jours",
+        "duree": "10 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0040",
+        "medicamentNom": "Phénytoine BF",
+        "dci": "Phénytoine",
+        "dosage": "100 mg",
+        "posologie": "200 à 500 mg/jour en 2 prises",
+        "duree": "7 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0017",
+        "medicamentNom": "Prednisolone MS",
+        "dci": "Prednisolone",
+        "dosage": "20 mg",
+        "posologie": "0,5 à 1 mg/kg/jour (adapté à l'indication)",
+        "duree": "10 jours",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Diabète type 2 déséquilibré",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-07",
+    "certifiePar": "BFA-MED-2026-0003",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:5F47D6620B62A0D1F0942D6D8FB15178DFCFE423",
+    "observations": "Surveillance rénale demandée",
+    "renouvellement": false,
+    "dateExpiration": "2027-02-13",
+    "createdAt": "2026-06-07T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0019",
+    "patientId": "BFA-PAT-2026-0102",
+    "medecinId": "BFA-MED-2026-0033",
+    "consultationId": "CONS-2026-0023",
+    "structureId": "STR-2026-0047",
+    "date": "2026-06-06",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0035",
+        "medicamentNom": "Ranitidine BF (remplacé)",
+        "dci": "Ranitidine",
+        "dosage": "150 mg",
+        "posologie": "150 mg 2 fois par jour",
+        "duree": "1 mois",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0030",
+        "medicamentNom": "Ciprofloxacine BF",
+        "dci": "Ciprofloxacine",
+        "dosage": "500 mg",
+        "posologie": "500 mg 2 fois par jour pendant 7 jours",
+        "duree": "7 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0019",
+        "medicamentNom": "Spironolactone MS",
+        "dci": "Spironolactone",
+        "dosage": "75 mg",
+        "posologie": "1 comprimé par jour",
+        "duree": "5 jours",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Dermatite atopique",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-06",
+    "certifiePar": "BFA-MED-2026-0033",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:15CCF58D1779AB540AFE2D64E8787326CF4F5645",
+    "observations": "Adapter la dose selon la fonction rénale",
+    "renouvellement": false,
+    "dateExpiration": "2027-07-23",
+    "createdAt": "2026-06-06T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0020",
+    "patientId": "BFA-PAT-2026-0069",
+    "medecinId": "BFA-MED-2026-0038",
+    "consultationId": "CONS-2026-0018",
+    "structureId": "STR-2026-0043",
+    "date": "2026-06-05",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0026",
+        "medicamentNom": "Quinine IV MS",
+        "dci": "Quinine",
+        "dosage": "500 mg",
+        "posologie": "8 mg/kg/8h IV lente (paludisme sévère)",
+        "duree": "1 mois",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0013",
+        "medicamentNom": "Glibenclamide MS",
+        "dci": "Glibenclamide",
+        "dosage": "5 mg",
+        "posologie": "1 à 2 comprimés par jour (matin)",
+        "duree": "10 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0015",
+        "medicamentNom": "Salbutamol Spray",
+        "dci": "Salbutamol",
+        "dosage": "100 µg/dose",
+        "posologie": "1 à 2 inhalations 3 à 4 fois par jour",
+        "duree": "5 jours",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Dermatite atopique",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-05",
+    "certifiePar": "BFA-MED-2026-0038",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:D3F68B91606C1AF459F5EAFD478B945D169E32B7",
+    "observations": "À prendre avec repas",
+    "renouvellement": true,
+    "dateExpiration": "2027-05-06",
+    "createdAt": "2026-06-05T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0021",
+    "patientId": "BFA-PAT-2026-0047",
+    "medecinId": "BFA-MED-2026-0004",
+    "consultationId": "CONS-2026-0080",
+    "structureId": "STR-2026-0001",
+    "date": "2026-06-05",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0008",
+        "medicamentNom": "Ibuprofène MS",
+        "dci": "Ibuprofène",
+        "dosage": "400 mg",
+        "posologie": "1 comprimé 3 fois par jour (max 1200 mg/j)",
+        "duree": "7 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0041",
+        "medicamentNom": "Phénobarbital MS",
+        "dci": "Phénobarbital",
+        "dosage": "50 mg",
+        "posologie": "50 à 200 mg par jour",
+        "duree": "1 mois",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0018",
+        "medicamentNom": "Furosémide BF",
+        "dci": "Furosémide",
+        "dosage": "40 mg",
+        "posologie": "1 comprimé 1 à 2 fois par jour",
+        "duree": "14 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0033",
+        "medicamentNom": "Gentamicine MS",
+        "dci": "Gentamicine",
+        "dosage": "80 mg",
+        "posologie": "3 à 5 mg/kg/jour en 1 prise IV ou IM",
+        "duree": "1 mois",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Migraine commune",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-05",
+    "certifiePar": "BFA-MED-2026-0004",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:F8D08E1C8C55D9D75CC3CA01D436CD11CFB68C79",
+    "observations": "Surveillance rénale demandée",
+    "renouvellement": true,
+    "dateExpiration": "2026-12-18",
+    "createdAt": "2026-06-05T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0022",
+    "patientId": "BFA-PAT-2026-0013",
+    "medecinId": "BFA-MED-2026-0001",
+    "consultationId": "CONS-2026-0045",
+    "structureId": "STR-2026-0003",
+    "date": "2026-06-03",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0023",
+        "medicamentNom": "Zinc Sulfate BF",
+        "dci": "Zinc sulfate",
+        "dosage": "20 mg",
+        "posologie": "20 mg/jour pendant 10-14 jours (diarrhée)",
+        "duree": "1 mois",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Rhinite virale",
+    "statut": "certifiée",
+    "dateCertification": "2026-06-03",
+    "certifiePar": "BFA-MED-2026-0001",
+    "valideParMinistere": true,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:E538D97A808EF31ED76A06B67B713BFA3092E72E",
+    "observations": "Revenir consulter si pas d'amélioration après 3 jours",
+    "renouvellement": false,
+    "dateExpiration": "2026-12-17",
+    "createdAt": "2026-06-03T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0023",
+    "patientId": "BFA-PAT-2026-0072",
+    "medecinId": "BFA-MED-2026-0010",
+    "consultationId": "CONS-2026-0037",
+    "structureId": "STR-2026-0001",
+    "date": "2026-05-31",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0010",
+        "medicamentNom": "Amlodipine BF",
+        "dci": "Amlodipine",
+        "dosage": "5 mg",
+        "posologie": "Non indiqué chez l'enfant < 6 ans",
+        "duree": "10 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0029",
+        "medicamentNom": "Azithromycine CareSync",
+        "dci": "Azithromycine",
+        "dosage": "250 mg",
+        "posologie": "10 mg/kg/jour pendant 3 jours",
+        "duree": "3 mois",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0037",
+        "medicamentNom": "Loperamide BF",
+        "dci": "Loperamide",
+        "dosage": "2 mg",
+        "posologie": "Non recommandé < 12 ans",
+        "duree": "14 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0040",
+        "medicamentNom": "Phénytoine BF",
+        "dci": "Phénytoine",
+        "dosage": "100 mg",
+        "posologie": "5 mg/kg/jour en 2 prises",
+        "duree": "5 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Gastroentérite aiguë",
+    "statut": "certifiée",
+    "dateCertification": "2026-05-31",
+    "certifiePar": "BFA-MED-2026-0010",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:684D0F3F528E6F4757695613DCE43F48230E6901",
+    "observations": "",
+    "renouvellement": false,
+    "dateExpiration": "2026-11-19",
+    "createdAt": "2026-05-31T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0024",
+    "patientId": "BFA-PAT-2026-0039",
+    "medecinId": "BFA-MED-2026-0038",
+    "consultationId": "CONS-2026-0017",
+    "structureId": "STR-2026-0043",
+    "date": "2026-05-28",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0019",
+        "medicamentNom": "Spironolactone MS",
+        "dci": "Spironolactone",
+        "dosage": "75 mg",
+        "posologie": "1 comprimé par jour",
+        "duree": "1 mois",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0016",
+        "medicamentNom": "Hydrocortisone Crème",
+        "dci": "Hydrocortisone",
+        "dosage": "1 %",
+        "posologie": "1 application 2 fois par jour (max 7 jours)",
+        "duree": "7 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0050",
+        "medicamentNom": "Ketoconazole Shampooing",
+        "dci": "Kétoconazole",
+        "dosage": "2 %",
+        "posologie": "2 fois par semaine pendant 2-4 semaines",
+        "duree": "3 mois",
+        "quantite": 30
+      }
+    ],
+    "diagnosticAssocie": "Paludisme sévère",
+    "statut": "certifiée",
+    "dateCertification": "2026-05-28",
+    "certifiePar": "BFA-MED-2026-0038",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:B978546C9EBCFE152FA229AE87BD0DC01D6B65BB",
+    "observations": "Surveillance rénale demandée",
+    "renouvellement": false,
+    "dateExpiration": "2026-11-18",
+    "createdAt": "2026-05-28T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0025",
+    "patientId": "BFA-PAT-2026-0103",
+    "medecinId": "BFA-MED-2026-0024",
+    "consultationId": "CONS-2026-0044",
+    "structureId": "STR-2026-0051",
+    "date": "2026-05-28",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0027",
+        "medicamentNom": "Chloroquine BF",
+        "dci": "Chloroquine",
+        "dosage": "100 mg",
+        "posologie": "Résistance fréquente - usage limité",
+        "duree": "5 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Angine streptococcique",
+    "statut": "certifiée",
+    "dateCertification": "2026-05-28",
+    "certifiePar": "BFA-MED-2026-0024",
+    "valideParMinistere": true,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:DE29AE60272E77692833E1BCE59AEC50CC02D016",
+    "observations": "Adapter la dose selon la fonction rénale",
+    "renouvellement": true,
+    "dateExpiration": "2027-03-26",
+    "createdAt": "2026-05-28T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0026",
+    "patientId": "BFA-PAT-2026-0083",
+    "medecinId": "BFA-MED-2026-0022",
+    "consultationId": "CONS-2026-0075",
+    "structureId": "STR-2026-0028",
+    "date": "2026-05-28",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0014",
+        "medicamentNom": "Insuline NPH",
+        "dci": "Insuline isophane",
+        "dosage": "100 UI/mL",
+        "posologie": "Adapté au poids et glycémie",
+        "duree": "14 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0022",
+        "medicamentNom": "Vitamine A Enfant",
+        "dci": "Rétinol",
+        "dosage": "100 000 UI",
+        "posologie": "100 000 UI (6-12 mois), 200 000 UI (> 12 mois)",
+        "duree": "5 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0017",
+        "medicamentNom": "Prednisolone MS",
+        "dci": "Prednisolone",
+        "dosage": "20 mg",
+        "posologie": "1 à 2 mg/kg/jour (maladie inflammatoire)",
+        "duree": "10 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Rhinite virale",
+    "statut": "en_attente",
+    "dateCertification": null,
+    "certifiePar": null,
+    "valideParMinistere": false,
+    "tamponVirtuel": false,
+    "hashCertification": null,
+    "observations": "Adapter la dose selon la fonction rénale",
+    "renouvellement": false,
+    "dateExpiration": null,
+    "createdAt": "2026-05-28T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0027",
+    "patientId": "BFA-PAT-2026-0075",
+    "medecinId": "BFA-MED-2026-0011",
+    "consultationId": "CONS-2026-0027",
+    "structureId": "STR-2026-0001",
+    "date": "2026-05-27",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0007",
+        "medicamentNom": "Métronidazole CareSync",
+        "dci": "Métronidazole",
+        "dosage": "500 mg",
+        "posologie": "500 mg 3 fois par jour pendant 7 jours",
+        "duree": "5 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Bronchite aiguë",
+    "statut": "en_attente",
+    "dateCertification": null,
+    "certifiePar": null,
+    "valideParMinistere": false,
+    "tamponVirtuel": false,
+    "hashCertification": null,
+    "observations": "Surveillance rénale demandée",
+    "renouvellement": false,
+    "dateExpiration": null,
+    "createdAt": "2026-05-27T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0028",
+    "patientId": "BFA-PAT-2026-0111",
+    "medecinId": "BFA-MED-2026-0029",
+    "consultationId": "CONS-2026-0004",
+    "structureId": "STR-2026-0023",
+    "date": "2026-05-26",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0006",
+        "medicamentNom": "Méfloquine Prophylaxie",
+        "dci": "Méfloquine",
+        "dosage": "250 mg",
+        "posologie": "1 comprimé par semaine (prophylaxie)",
+        "duree": "7 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0049",
+        "medicamentNom": "Aciclovir MS",
+        "dci": "Aciclovir",
+        "dosage": "200 mg",
+        "posologie": "200 mg 5 fois par jour pendant 5 jours",
+        "duree": "7 jours",
+        "quantite": 30
+      }
+    ],
+    "diagnosticAssocie": "Infection respiratoire basse",
+    "statut": "certifiée",
+    "dateCertification": "2026-05-26",
+    "certifiePar": "BFA-MED-2026-0029",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:B4FB43CF536A5BCB3C6DB10BAB3758796E4D84E0",
+    "observations": "Adapter la dose selon la fonction rénale",
+    "renouvellement": false,
+    "dateExpiration": "2027-03-04",
+    "createdAt": "2026-05-26T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0029",
+    "patientId": "BFA-PAT-2026-0034",
+    "medecinId": "BFA-MED-2026-0001",
+    "consultationId": "CONS-2026-0013",
+    "structureId": "STR-2026-0003",
+    "date": "2026-05-24",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0035",
+        "medicamentNom": "Ranitidine BF (remplacé)",
+        "dci": "Ranitidine",
+        "dosage": "150 mg",
+        "posologie": "2 à 4 mg/kg 2 fois par jour",
+        "duree": "5 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0016",
+        "medicamentNom": "Hydrocortisone Crème",
+        "dci": "Hydrocortisone",
+        "dosage": "1 %",
+        "posologie": "Idem adulte (zone limitée)",
+        "duree": "5 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0006",
+        "medicamentNom": "Méfloquine Prophylaxie",
+        "dci": "Méfloquine",
+        "dosage": "250 mg",
+        "posologie": "5 mg/kg une fois par semaine",
+        "duree": "10 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0012",
+        "medicamentNom": "Metformine CareSync",
+        "dci": "Metformine",
+        "dosage": "500 mg",
+        "posologie": "Non indiqué chez l'enfant < 10 ans",
+        "duree": "10 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Otite moyenne aiguë",
+    "statut": "certifiée",
+    "dateCertification": "2026-05-24",
+    "certifiePar": "BFA-MED-2026-0001",
+    "valideParMinistere": true,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:5ED6B932148228AB09B276B93C0F0AAFB46E3A46",
+    "observations": "Compléter le traitement même si amélioration",
+    "renouvellement": false,
+    "dateExpiration": "2026-09-25",
+    "createdAt": "2026-05-24T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0030",
+    "patientId": "BFA-PAT-2026-0052",
+    "medecinId": "BFA-MED-2026-0019",
+    "consultationId": "CONS-2026-0053",
+    "structureId": "STR-2026-0012",
+    "date": "2026-05-19",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0042",
+        "medicamentNom": "Acide Valproique MS",
+        "dci": "Valproate de sodium",
+        "dosage": "500 mg",
+        "posologie": "500 à 2000 mg/jour en 2 prises",
+        "duree": "5 jours",
+        "quantite": 30
+      }
+    ],
+    "diagnosticAssocie": "Angine streptococcique",
+    "statut": "en_attente",
+    "dateCertification": null,
+    "certifiePar": null,
+    "valideParMinistere": false,
+    "tamponVirtuel": false,
+    "hashCertification": null,
+    "observations": "Revenir consulter si pas d'amélioration après 3 jours",
+    "renouvellement": false,
+    "dateExpiration": null,
+    "createdAt": "2026-05-19T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0031",
+    "patientId": "BFA-PAT-2026-0011",
+    "medecinId": "BFA-MED-2026-0013",
+    "consultationId": "CONS-2026-0014",
+    "structureId": "STR-2026-0001",
+    "date": "2026-05-10",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0011",
+        "medicamentNom": "Lisinopril MS",
+        "dci": "Lisinopril",
+        "dosage": "10 mg",
+        "posologie": "1 comprimé par jour (initiale 5 mg)",
+        "duree": "3 mois",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0029",
+        "medicamentNom": "Azithromycine CareSync",
+        "dci": "Azithromycine",
+        "dosage": "250 mg",
+        "posologie": "500 mg le jour 1 puis 250 mg/jour pendant 4 jours",
+        "duree": "3 mois",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0015",
+        "medicamentNom": "Salbutamol Spray",
+        "dci": "Salbutamol",
+        "dosage": "100 µg/dose",
+        "posologie": "1 à 2 inhalations 3 à 4 fois par jour",
+        "duree": "7 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0008",
+        "medicamentNom": "Ibuprofène MS",
+        "dci": "Ibuprofène",
+        "dosage": "400 mg",
+        "posologie": "1 comprimé 3 fois par jour (max 1200 mg/j)",
+        "duree": "3 mois",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Conjonctivite allergique",
+    "statut": "certifiée",
+    "dateCertification": "2026-05-10",
+    "certifiePar": "BFA-MED-2026-0013",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:D31C1BAD36C73F9D27EFF82DF420CDC459802FAA",
+    "observations": "Bien respecter les horaires",
+    "renouvellement": true,
+    "dateExpiration": "2027-02-10",
+    "createdAt": "2026-05-10T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0032",
+    "patientId": "BFA-PAT-2026-0068",
+    "medecinId": "BFA-MED-2026-0027",
+    "consultationId": "CONS-2026-0076",
+    "structureId": "STR-2026-0013",
+    "date": "2026-05-10",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0008",
+        "medicamentNom": "Ibuprofène MS",
+        "dci": "Ibuprofène",
+        "dosage": "400 mg",
+        "posologie": "1 comprimé 3 fois par jour (max 1200 mg/j)",
+        "duree": "14 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0031",
+        "medicamentNom": "Doxycycline MS",
+        "dci": "Doxycycline",
+        "dosage": "100 mg",
+        "posologie": "100 mg 2 fois par jour pendant 7 jours",
+        "duree": "3 mois",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0019",
+        "medicamentNom": "Spironolactone MS",
+        "dci": "Spironolactone",
+        "dosage": "75 mg",
+        "posologie": "1 comprimé par jour",
+        "duree": "14 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Asthme - crise modérée",
+    "statut": "certifiée",
+    "dateCertification": "2026-05-10",
+    "certifiePar": "BFA-MED-2026-0027",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:E59182ECF59EEAA7950CBE4741BA40810611B27E",
+    "observations": "Compléter le traitement même si amélioration",
+    "renouvellement": false,
+    "dateExpiration": "2027-02-17",
+    "createdAt": "2026-05-10T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0033",
+    "patientId": "BFA-PAT-2026-0057",
+    "medecinId": "BFA-MED-2026-0027",
+    "consultationId": "CONS-2026-0029",
+    "structureId": "STR-2026-0013",
+    "date": "2026-05-08",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0025",
+        "medicamentNom": "SRO OMS",
+        "dci": "Sels de réhydratation orale",
+        "dosage": "1 L",
+        "posologie": "1 sachet dilué dans 1 L d'eau potable",
+        "duree": "10 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0014",
+        "medicamentNom": "Insuline NPH",
+        "dci": "Insuline isophane",
+        "dosage": "100 UI/mL",
+        "posologie": "Adapté à la glycémie (0,5 à 1 UI/kg/jour)",
+        "duree": "14 jours",
+        "quantite": 30
+      }
+    ],
+    "diagnosticAssocie": "Dysménorrhée",
+    "statut": "certifiée",
+    "dateCertification": "2026-05-08",
+    "certifiePar": "BFA-MED-2026-0027",
+    "valideParMinistere": true,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:A0E52D9B656A1BCB0595EFB6097559EFF789079F",
+    "observations": "Compléter le traitement même si amélioration",
+    "renouvellement": true,
+    "dateExpiration": "2027-01-07",
+    "createdAt": "2026-05-08T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0034",
+    "patientId": "BFA-PAT-2026-0044",
+    "medecinId": "BFA-MED-2026-0008",
+    "consultationId": "CONS-2026-0067",
+    "structureId": "STR-2026-0001",
+    "date": "2026-05-07",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0005",
+        "medicamentNom": "Artéméther Luméfantrine",
+        "dci": "Artéméther + Luméfantrine",
+        "dosage": "20/120 mg",
+        "posologie": "4 comprimés matin et soir pendant 3 jours (8 comprimés/jour adulte)",
+        "duree": "1 mois",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Paludisme simple",
+    "statut": "certifiée",
+    "dateCertification": "2026-05-07",
+    "certifiePar": "BFA-MED-2026-0008",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:A70CCBE6F83985FF46C0F7D9AFA1C747C471C558",
+    "observations": "Surveillance rénale demandée",
+    "renouvellement": false,
+    "dateExpiration": "2027-01-23",
+    "createdAt": "2026-05-07T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0035",
+    "patientId": "BFA-PAT-2026-0063",
+    "medecinId": "BFA-MED-2026-0023",
+    "consultationId": "CONS-2026-0073",
+    "structureId": "STR-2026-0014",
+    "date": "2026-05-06",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0037",
+        "medicamentNom": "Loperamide BF",
+        "dci": "Loperamide",
+        "dosage": "2 mg",
+        "posologie": "2 gélules initiales puis 1 après chaque selle molle (max 8/jour)",
+        "duree": "7 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0042",
+        "medicamentNom": "Acide Valproique MS",
+        "dci": "Valproate de sodium",
+        "dosage": "500 mg",
+        "posologie": "500 à 2000 mg/jour en 2 prises",
+        "duree": "7 jours",
+        "quantite": 30
+      }
+    ],
+    "diagnosticAssocie": "Infection respiratoire basse",
+    "statut": "certifiée",
+    "dateCertification": "2026-05-06",
+    "certifiePar": "BFA-MED-2026-0023",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:6C08833781965C8B237F3F73A91FCADC11E385C9",
+    "observations": "Surveillance rénale demandée",
+    "renouvellement": true,
+    "dateExpiration": "2027-07-20",
+    "createdAt": "2026-05-06T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0036",
+    "patientId": "BFA-PAT-2026-0003",
+    "medecinId": "BFA-MED-2026-0038",
+    "consultationId": "CONS-2026-0059",
+    "structureId": "STR-2026-0043",
+    "date": "2026-04-19",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0028",
+        "medicamentNom": "Céfixime MS",
+        "dci": "Céfixime",
+        "dosage": "200 mg",
+        "posologie": "8 mg/kg/jour en 2 prises",
+        "duree": "5 jours",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Suivi post-natal normal",
+    "statut": "en_attente",
+    "dateCertification": null,
+    "certifiePar": null,
+    "valideParMinistere": false,
+    "tamponVirtuel": false,
+    "hashCertification": null,
+    "observations": "Compléter le traitement même si amélioration",
+    "renouvellement": false,
+    "dateExpiration": null,
+    "createdAt": "2026-04-19T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0037",
+    "patientId": "BFA-PAT-2026-0027",
+    "medecinId": "BFA-MED-2026-0035",
+    "consultationId": "CONS-2026-0032",
+    "structureId": "STR-2026-0009",
+    "date": "2026-04-17",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0049",
+        "medicamentNom": "Aciclovir MS",
+        "dci": "Aciclovir",
+        "dosage": "200 mg",
+        "posologie": "5 à 10 mg/kg 4 fois par jour",
+        "duree": "1 mois",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0044",
+        "medicamentNom": "L-Thyroxine MS",
+        "dci": "Lévothyroxine",
+        "dosage": "100 µg",
+        "posologie": "10 à 15 µg/kg/jour (enfant)",
+        "duree": "3 mois",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Colique néphrétique",
+    "statut": "certifiée",
+    "dateCertification": "2026-04-17",
+    "certifiePar": "BFA-MED-2026-0035",
+    "valideParMinistere": true,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:02244D6BC69C530F1F86CF2B1AEF9F9D4B256F88",
+    "observations": "Adapter la dose selon la fonction rénale",
+    "renouvellement": true,
+    "dateExpiration": "2027-07-18",
+    "createdAt": "2026-04-17T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0038",
+    "patientId": "BFA-PAT-2026-0054",
+    "medecinId": "BFA-MED-2026-0037",
+    "consultationId": "CONS-2026-0038",
+    "structureId": "STR-2026-0063",
+    "date": "2026-04-10",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0013",
+        "medicamentNom": "Glibenclamide MS",
+        "dci": "Glibenclamide",
+        "dosage": "5 mg",
+        "posologie": "1 à 2 comprimés par jour (matin)",
+        "duree": "14 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0026",
+        "medicamentNom": "Quinine IV MS",
+        "dci": "Quinine",
+        "dosage": "500 mg",
+        "posologie": "8 mg/kg/8h IV lente (paludisme sévère)",
+        "duree": "7 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0024",
+        "medicamentNom": "Sérum Physiologique",
+        "dci": "NaCl 0,9%",
+        "dosage": "500 mL",
+        "posologie": "Adapté à l'état clinique",
+        "duree": "7 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Drépanocytose - crise vaso-occlusive",
+    "statut": "certifiée",
+    "dateCertification": "2026-04-10",
+    "certifiePar": "BFA-MED-2026-0037",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:FC4216BE51D1F20365752BB1A7EC5D609929372F",
+    "observations": "À prendre avec repas",
+    "renouvellement": false,
+    "dateExpiration": "2026-09-25",
+    "createdAt": "2026-04-10T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0039",
+    "patientId": "BFA-PAT-2026-0017",
+    "medecinId": "BFA-MED-2026-0007",
+    "consultationId": "CONS-2026-0061",
+    "structureId": "STR-2026-0002",
+    "date": "2026-04-03",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0042",
+        "medicamentNom": "Acide Valproique MS",
+        "dci": "Valproate de sodium",
+        "dosage": "500 mg",
+        "posologie": "500 à 2000 mg/jour en 2 prises",
+        "duree": "5 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0048",
+        "medicamentNom": "Acide Acétylsalicylique 500",
+        "dci": "Aspirine",
+        "dosage": "500 mg",
+        "posologie": "1 à 2 comprimés 3 fois par jour (max 3 g/jour)",
+        "duree": "3 mois",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Angine streptococcique",
+    "statut": "en_attente",
+    "dateCertification": null,
+    "certifiePar": null,
+    "valideParMinistere": false,
+    "tamponVirtuel": false,
+    "hashCertification": null,
+    "observations": "Bien respecter les horaires",
+    "renouvellement": false,
+    "dateExpiration": null,
+    "createdAt": "2026-04-03T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0040",
+    "patientId": "BFA-PAT-2026-0063",
+    "medecinId": "BFA-MED-2026-0007",
+    "consultationId": "CONS-2026-0049",
+    "structureId": "STR-2026-0002",
+    "date": "2026-04-01",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0027",
+        "medicamentNom": "Chloroquine BF",
+        "dci": "Chloroquine",
+        "dosage": "100 mg",
+        "posologie": "Résistance fréquente - usage limité",
+        "duree": "1 mois",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Drépanocytose - crise vaso-occlusive",
+    "statut": "certifiée",
+    "dateCertification": "2026-04-01",
+    "certifiePar": "BFA-MED-2026-0007",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:A2EF348E41885CC4CF13372A8EA9B86D50786ADB",
+    "observations": "Bien respecter les horaires",
+    "renouvellement": true,
+    "dateExpiration": "2027-03-17",
+    "createdAt": "2026-04-01T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0041",
+    "patientId": "BFA-PAT-2026-0004",
+    "medecinId": "BFA-MED-2026-0026",
+    "consultationId": "CONS-2026-0039",
+    "structureId": "STR-2026-0057",
+    "date": "2026-03-27",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0027",
+        "medicamentNom": "Chloroquine BF",
+        "dci": "Chloroquine",
+        "dosage": "100 mg",
+        "posologie": "Adapté au poids",
+        "duree": "7 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0035",
+        "medicamentNom": "Ranitidine BF (remplacé)",
+        "dci": "Ranitidine",
+        "dosage": "150 mg",
+        "posologie": "2 à 4 mg/kg 2 fois par jour",
+        "duree": "14 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0045",
+        "medicamentNom": "Carbimazole MS",
+        "dci": "Carbimazole",
+        "dosage": "5 mg",
+        "posologie": "0,25 à 1 mg/kg/jour",
+        "duree": "1 mois",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0014",
+        "medicamentNom": "Insuline NPH",
+        "dci": "Insuline isophane",
+        "dosage": "100 UI/mL",
+        "posologie": "Adapté au poids et glycémie",
+        "duree": "14 jours",
+        "quantite": 30
+      }
+    ],
+    "diagnosticAssocie": "Colique néphrétique",
+    "statut": "en_attente",
+    "dateCertification": null,
+    "certifiePar": null,
+    "valideParMinistere": false,
+    "tamponVirtuel": false,
+    "hashCertification": null,
+    "observations": "Revenir consulter si pas d'amélioration après 3 jours",
+    "renouvellement": false,
+    "dateExpiration": null,
+    "createdAt": "2026-03-27T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0042",
+    "patientId": "BFA-PAT-2026-0012",
+    "medecinId": "BFA-MED-2026-0020",
+    "consultationId": "CONS-2026-0063",
+    "structureId": "STR-2026-0023",
+    "date": "2026-03-24",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0007",
+        "medicamentNom": "Métronidazole CareSync",
+        "dci": "Métronidazole",
+        "dosage": "500 mg",
+        "posologie": "20 à 30 mg/kg/jour en 3 prises",
+        "duree": "10 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0050",
+        "medicamentNom": "Ketoconazole Shampooing",
+        "dci": "Kétoconazole",
+        "dosage": "2 %",
+        "posologie": "À partir de 12 ans",
+        "duree": "7 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0041",
+        "medicamentNom": "Phénobarbital MS",
+        "dci": "Phénobarbital",
+        "dosage": "50 mg",
+        "posologie": "3 à 5 mg/kg/jour",
+        "duree": "14 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0014",
+        "medicamentNom": "Insuline NPH",
+        "dci": "Insuline isophane",
+        "dosage": "100 UI/mL",
+        "posologie": "Adapté au poids et glycémie",
+        "duree": "1 mois",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Colique néphrétique",
+    "statut": "certifiée",
+    "dateCertification": "2026-03-24",
+    "certifiePar": "BFA-MED-2026-0020",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:EA9CE1656BE4A9FACE7186540C047C783AD9ABAB",
+    "observations": "Compléter le traitement même si amélioration",
+    "renouvellement": false,
+    "dateExpiration": "2027-02-15",
+    "createdAt": "2026-03-24T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0043",
+    "patientId": "BFA-PAT-2026-0005",
+    "medecinId": "BFA-MED-2026-0032",
+    "consultationId": "CONS-2026-0042",
+    "structureId": "STR-2026-0012",
+    "date": "2026-03-21",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0006",
+        "medicamentNom": "Méfloquine Prophylaxie",
+        "dci": "Méfloquine",
+        "dosage": "250 mg",
+        "posologie": "1 comprimé par semaine (prophylaxie)",
+        "duree": "14 jours",
+        "quantite": 30
+      }
+    ],
+    "diagnosticAssocie": "Grossesse normale",
+    "statut": "certifiée",
+    "dateCertification": "2026-03-21",
+    "certifiePar": "BFA-MED-2026-0032",
+    "valideParMinistere": true,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:3A320FAD04BB3E165DAF2BCD6B5D4E55FC319014",
+    "observations": "",
+    "renouvellement": true,
+    "dateExpiration": "2027-01-22",
+    "createdAt": "2026-03-21T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0044",
+    "patientId": "BFA-PAT-2026-0033",
+    "medecinId": "BFA-MED-2026-0009",
+    "consultationId": "CONS-2026-0015",
+    "structureId": "STR-2026-0002",
+    "date": "2026-03-20",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0004",
+        "medicamentNom": "Artésunate Amodiaquine BF",
+        "dci": "Artésunate + Amodiaquine",
+        "dosage": "100/270 mg",
+        "posologie": "Selon poids (voir protocole national)",
+        "duree": "7 jours",
+        "quantite": 30
+      }
+    ],
+    "diagnosticAssocie": "Paludisme simple",
+    "statut": "certifiée",
+    "dateCertification": "2026-03-20",
+    "certifiePar": "BFA-MED-2026-0009",
+    "valideParMinistere": true,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:77C9E1487B94C0D0C0EDA9012DBC5A0620970573",
+    "observations": "Compléter le traitement même si amélioration",
+    "renouvellement": false,
+    "dateExpiration": "2026-11-13",
+    "createdAt": "2026-03-20T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0045",
+    "patientId": "BFA-PAT-2026-0044",
+    "medecinId": "BFA-MED-2026-0024",
+    "consultationId": "CONS-2026-0074",
+    "structureId": "STR-2026-0051",
+    "date": "2026-03-19",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0002",
+        "medicamentNom": "Amoxicilline BF",
+        "dci": "Amoxicilline",
+        "dosage": "500 mg",
+        "posologie": "1 gélule 3 fois par jour pendant 7 jours",
+        "duree": "7 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0005",
+        "medicamentNom": "Artéméther Luméfantrine",
+        "dci": "Artéméther + Luméfantrine",
+        "dosage": "20/120 mg",
+        "posologie": "4 comprimés matin et soir pendant 3 jours (8 comprimés/jour adulte)",
+        "duree": "14 jours",
+        "quantite": 30
+      }
+    ],
+    "diagnosticAssocie": "Dysménorrhée",
+    "statut": "certifiée",
+    "dateCertification": "2026-03-19",
+    "certifiePar": "BFA-MED-2026-0024",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:7DF1BE444406F94EEE33F71528D2E66C68AE17D9",
+    "observations": "À prendre avec repas",
+    "renouvellement": false,
+    "dateExpiration": "2026-10-15",
+    "createdAt": "2026-03-19T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0046",
+    "patientId": "BFA-PAT-2026-0027",
+    "medecinId": "BFA-MED-2026-0011",
+    "consultationId": "CONS-2026-0068",
+    "structureId": "STR-2026-0001",
+    "date": "2026-03-13",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0005",
+        "medicamentNom": "Artéméther Luméfantrine",
+        "dci": "Artéméther + Luméfantrine",
+        "dosage": "20/120 mg",
+        "posologie": "Adapté au poids (voir tableau protocole MS)",
+        "duree": "10 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0041",
+        "medicamentNom": "Phénobarbital MS",
+        "dci": "Phénobarbital",
+        "dosage": "50 mg",
+        "posologie": "3 à 5 mg/kg/jour",
+        "duree": "3 mois",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0013",
+        "medicamentNom": "Glibenclamide MS",
+        "dci": "Glibenclamide",
+        "dosage": "5 mg",
+        "posologie": "Non indiqué chez l'enfant",
+        "duree": "5 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0019",
+        "medicamentNom": "Spironolactone MS",
+        "dci": "Spironolactone",
+        "dosage": "75 mg",
+        "posologie": "1 à 3 mg/kg/jour",
+        "duree": "1 mois",
+        "quantite": 10
+      }
+    ],
+    "diagnosticAssocie": "Cystite bactérienne",
+    "statut": "certifiée",
+    "dateCertification": "2026-03-13",
+    "certifiePar": "BFA-MED-2026-0011",
+    "valideParMinistere": true,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:45CB2EFA7037CF50D7062A87D041E8734D149D41",
+    "observations": "Bien respecter les horaires",
+    "renouvellement": false,
+    "dateExpiration": "2026-12-24",
+    "createdAt": "2026-03-13T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0047",
+    "patientId": "BFA-PAT-2026-0076",
+    "medecinId": "BFA-MED-2026-0028",
+    "consultationId": "CONS-2026-0031",
+    "structureId": "STR-2026-0064",
+    "date": "2026-03-07",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0004",
+        "medicamentNom": "Artésunate Amodiaquine BF",
+        "dci": "Artésunate + Amodiaquine",
+        "dosage": "100/270 mg",
+        "posologie": "2 comprimés par jour pendant 3 jours",
+        "duree": "5 jours",
+        "quantite": 10
+      },
+      {
+        "medicamentId": "MED-2026-0046",
+        "medicamentNom": "Allopurinol BF",
+        "dci": "Allopurinol",
+        "dosage": "100 mg",
+        "posologie": "100 à 300 mg/jour",
+        "duree": "10 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0040",
+        "medicamentNom": "Phénytoine BF",
+        "dci": "Phénytoine",
+        "dosage": "100 mg",
+        "posologie": "200 à 500 mg/jour en 2 prises",
+        "duree": "14 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Otite moyenne aiguë",
+    "statut": "certifiée",
+    "dateCertification": "2026-03-07",
+    "certifiePar": "BFA-MED-2026-0028",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:72B81A72822C893A759AE48055650FE5542AA3BC",
+    "observations": "Compléter le traitement même si amélioration",
+    "renouvellement": false,
+    "dateExpiration": "2027-04-27",
+    "createdAt": "2026-03-07T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0048",
+    "patientId": "BFA-PAT-2026-0058",
+    "medecinId": "BFA-MED-2026-0002",
+    "consultationId": "CONS-2026-0062",
+    "structureId": "STR-2026-0001",
+    "date": "2026-03-07",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0044",
+        "medicamentNom": "L-Thyroxine MS",
+        "dci": "Lévothyroxine",
+        "dosage": "100 µg",
+        "posologie": "1,6 µg/kg/jour (adapté à la TSH)",
+        "duree": "7 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0047",
+        "medicamentNom": "Hydroxyurée MS",
+        "dci": "Hydroxyurée",
+        "dosage": "500 mg",
+        "posologie": "15 à 35 mg/kg/jour (drépanocytose)",
+        "duree": "5 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Angine streptococcique",
+    "statut": "en_attente",
+    "dateCertification": null,
+    "certifiePar": null,
+    "valideParMinistere": false,
+    "tamponVirtuel": false,
+    "hashCertification": null,
+    "observations": "",
+    "renouvellement": false,
+    "dateExpiration": null,
+    "createdAt": "2026-03-07T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0049",
+    "patientId": "BFA-PAT-2026-0089",
+    "medecinId": "BFA-MED-2026-0013",
+    "consultationId": "CONS-2026-0007",
+    "structureId": "STR-2026-0001",
+    "date": "2026-03-05",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0049",
+        "medicamentNom": "Aciclovir MS",
+        "dci": "Aciclovir",
+        "dosage": "200 mg",
+        "posologie": "200 mg 5 fois par jour pendant 5 jours",
+        "duree": "14 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0022",
+        "medicamentNom": "Vitamine A Enfant",
+        "dci": "Rétinol",
+        "dosage": "100 000 UI",
+        "posologie": "Uniquement pour supplémentation programmée",
+        "duree": "5 jours",
+        "quantite": 30
+      },
+      {
+        "medicamentId": "MED-2026-0010",
+        "medicamentNom": "Amlodipine BF",
+        "dci": "Amlodipine",
+        "dosage": "5 mg",
+        "posologie": "1 comprimé par jour (max 10 mg)",
+        "duree": "10 jours",
+        "quantite": 20
+      },
+      {
+        "medicamentId": "MED-2026-0029",
+        "medicamentNom": "Azithromycine CareSync",
+        "dci": "Azithromycine",
+        "dosage": "250 mg",
+        "posologie": "500 mg le jour 1 puis 250 mg/jour pendant 4 jours",
+        "duree": "14 jours",
+        "quantite": 20
+      }
+    ],
+    "diagnosticAssocie": "Hypertension non contrôlée",
+    "statut": "certifiée",
+    "dateCertification": "2026-03-05",
+    "certifiePar": "BFA-MED-2026-0013",
+    "valideParMinistere": true,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:041DB1ADF34461AC5E3605893169BA8B3D7F478B",
+    "observations": "",
+    "renouvellement": false,
+    "dateExpiration": "2027-06-12",
+    "createdAt": "2026-03-05T10:30:00Z"
+  },
+  {
+    "id": "ORD-2026-0050",
+    "patientId": "BFA-PAT-2026-0038",
+    "medecinId": "BFA-MED-2026-0005",
+    "consultationId": "CONS-2026-0060",
+    "structureId": "STR-2026-0001",
+    "date": "2026-03-04",
+    "lignes": [
+      {
+        "medicamentId": "MED-2026-0025",
+        "medicamentNom": "SRO OMS",
+        "dci": "Sels de réhydratation orale",
+        "dosage": "1 L",
+        "posologie": "1 sachet dilué dans 1 L d'eau potable",
+        "duree": "10 jours",
+        "quantite": 30
+      }
+    ],
+    "diagnosticAssocie": "Conjonctivite allergique",
+    "statut": "certifiée",
+    "dateCertification": "2026-03-04",
+    "certifiePar": "BFA-MED-2026-0005",
+    "valideParMinistere": false,
+    "tamponVirtuel": true,
+    "hashCertification": "SHA256:B67F69039341A6AF30DF56FC03709E1ED17AAFB9",
+    "observations": "Revenir consulter si pas d'amélioration après 3 jours",
+    "renouvellement": true,
+    "dateExpiration": "2027-04-07",
+    "createdAt": "2026-03-04T10:30:00Z"
+  }
+]
