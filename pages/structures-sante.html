@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Structures sanitaires du Burkina Faso — CareSync EHR">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Structures de santé — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body>
+  <a href="#cs-content" class="cs-sr-only">Aller au contenu</a>
+  <div id="cs-sim-elements"></div>
+  <div id="cs-sidebar-wrapper"></div>
+  <main class="cs-main-content">
+    <div id="cs-topbar-wrapper"></div>
+    <div class="cs-content-area" id="cs-content">
+      <div class="cs-card p-10 text-center">
+        <div class="inline-block cs-spinner cs-spinner-dark" style="width: 28px; height: 28px;"></div>
+        <p class="mt-3 text-sm text-neutral-500">Chargement des structures...</p>
+      </div>
+    </div>
+  </main>
+  <div id="cs-modal-root"></div>
+  <script>
+    var user = requireAuth();
+    var filtSearch = '';
+    var filtType = 'all';
+    var filtProvince = 'all';
+    var currentPage = 1;
+    var PER_PAGE = 6;
+
+    if (user) {
+      try { initPage(); } catch (err) {
+        document.getElementById('cs-content').innerHTML =
+          '<div class="cs-card p-8 text-center text-danger-700">Erreur: ' + echapperHTML(err.message) + '</div>';
+      }
+    }
+
+    function initPage() {
+      document.getElementById('cs-sidebar-wrapper').innerHTML = renderSidebar(user.role, 'structures-sante');
+      document.getElementById('cs-topbar-wrapper').innerHTML = renderTopbar('Structures de santé', 'CSPS, CMA, CHR, CHU et cliniques du Burkina');
+      document.getElementById('cs-sim-elements').innerHTML = renderSimElements();
+      initApp();
+      renderPage();
+    }
+
+    function getStructures() {
+      var all = Storage.getAll('structures');
+      var provinces = {};
+      all.forEach(function (s) { provinces[s.province] = true; });
+      window.__provinces = Object.keys(provinces).sort();
+      return all.filter(function (s) {
+        if (filtType !== 'all' && s.type !== filtType) return false;
+        if (filtProvince !== 'all' && s.province !== filtProvince) return false;
+        if (filtSearch) {
+          var q = filtSearch.toLowerCase();
+          var hay = (s.nom + ' ' + s.commune + ' ' + s.region + ' ' + s.adresse).toLowerCase();
+          if (hay.indexOf(q) === -1) return false;
+        }
+        return true;
+      });
+    }
+
+    function typeBadge(type) {
+      var map = {
+        'CHU': 'cs-badge-admin', 'CHR': 'cs-badge-info',
+        'CMA': 'cs-badge-success', 'CSPS': 'cs-badge-warning',
+        'Clinique': 'cs-badge-neutral'
+      };
+      return map[type] || 'cs-badge-neutral';
+    }
+
+    function renderPage() {
+      var structures = getStructures();
+      var totalPages = Math.max(1, Math.ceil(structures.length / PER_PAGE));
+      if (currentPage > totalPages) currentPage = totalPages;
+      var start = (currentPage - 1) * PER_PAGE;
+      var page = structures.slice(start, start + PER_PAGE);
+
+      var provinces = window.__provinces || [];
+      var html = '<div class="cs-card p-4 mb-4 flex flex-wrap gap-3 items-center">' +
+        '<div class="relative flex-1 min-w-[200px]">' +
+          '<input type="search" placeholder="Rechercher une structure..." value="' + echapperHTML(filtSearch) + '" oninput="filtSearch=this.value; debounceFilter()" class="cs-input pl-9 w-full" aria-label="Rechercher">' +
+          '<span class="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">' + icon('search', 16) + '</span>' +
+        '</div>' +
+        '<select onchange="filtType=this.value; currentPage=1; renderPage();" class="cs-select" aria-label="Type">' +
+          '<option value="all"' + (filtType === 'all' ? ' selected' : '') + '>Tous types</option>' +
+          ['CSPS','CMA','CHR','CHU','Clinique'].map(function (t) { return '<option value="' + t + '"' + (filtType === t ? ' selected' : '') + '>' + t + '</option>'; }).join('') +
+        '</select>' +
+        '<select onchange="filtProvince=this.value; currentPage=1; renderPage();" class="cs-select" aria-label="Province">' +
+          '<option value="all"' + (filtProvince === 'all' ? ' selected' : '') + '>Toutes provinces</option>' +
+          provinces.map(function (p) { return '<option value="' + echapperHTML(p) + '"' + (filtProvince === p ? ' selected' : '') + '>' + echapperHTML(p) + '</option>'; }).join('') +
+        '</select>' +
+        '<span class="text-xs text-neutral-500 ml-auto">' + structures.length + ' structure(s)</span>' +
+      '</div>';
+
+      if (!page.length) {
+        html += '<div class="cs-card p-10 text-center text-neutral-400">' + icon('building', 36) + '<p class="mt-2 text-sm">Aucune structure trouvée.</p></div>';
+      } else {
+        html += '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">';
+        page.forEach(function (s) {
+          var nbMed = (s.medecins || []).length;
+          var dotClass = s.statut === 'actif' ? 'cs-dot-success' : 'cs-dot-neutral';
+          html += '<div class="cs-card p-4 flex flex-col">' +
+            '<div class="flex items-start justify-between gap-2 mb-2">' +
+              '<div class="flex items-center gap-2"><span class="cs-dot ' + dotClass + '"></span><span class="cs-badge ' + typeBadge(s.type) + '">' + echapperHTML(s.type) + '</span></div>' +
+              '<button onclick="voirMedecins(\'' + s.id + '\')" class="cs-btn cs-btn-ghost cs-btn-sm" aria-label="Voir médecins">' + icon('users', 14) + ' ' + nbMed + '</button>' +
+            '</div>' +
+            '<h3 class="font-semibold text-neutral-800">' + echapperHTML(s.nom) + '</h3>' +
+            '<div class="text-xs text-neutral-500 mt-1 flex items-center gap-1">' + icon('map-pin', 12) + ' ' + echapperHTML(s.commune || '') + ', ' + echapperHTML(s.province || '') + ' (' + echapperHTML(s.region || '') + ')</div>' +
+            '<div class="text-xs text-neutral-600 mt-1 flex items-center gap-1">' + icon('phone', 12) + ' ' + echapperHTML(s.telephone || '—') + '</div>' +
+            '<div class="grid grid-cols-2 gap-2 mt-3 text-xs">' +
+              '<div class="bg-neutral-50 rounded-cs-sm p-2"><div class="text-neutral-500">Médecins</div><div class="font-semibold text-neutral-800">' + nbMed + '</div></div>' +
+              '<div class="bg-neutral-50 rounded-cs-sm p-2"><div class="text-neutral-500">Lits</div><div class="font-semibold text-neutral-800">' + (s.capaciteLit || '—') + '</div></div>' +
+              '<div class="bg-neutral-50 rounded-cs-sm p-2"><div class="text-neutral-500">Patients</div><div class="font-semibold text-neutral-800">' + (s.nbPatients || '—') + '</div></div>' +
+              '<div class="bg-neutral-50 rounded-cs-sm p-2"><div class="text-neutral-500">Horaires</div><div class="font-semibold text-neutral-800">24/7</div></div>' +
+            '</div>' +
+            '<div class="mt-3"><div class="text-xs text-neutral-500 mb-1">Services</div>' +
+              '<div class="flex flex-wrap gap-1">' + (s.specialites || []).slice(0, 4).map(function (sp) { return '<span class="cs-badge cs-badge-neutral text-[10px]">' + echapperHTML(sp) + '</span>'; }).join('') + ((s.specialites || []).length > 4 ? '<span class="cs-badge cs-badge-neutral text-[10px]">+' + (s.specialites.length - 4) + '</span>' : '') + '</div>' +
+            '</div>' +
+            '<div class="mt-4 flex gap-2 pt-3 border-t border-neutral-100">' +
+              '<a href="calendar.html" class="cs-btn cs-btn-secondary cs-btn-sm flex-1">' + icon('calendar', 14) + ' RDV</a>' +
+              '<a href="https://maps.google.com/?q=' + encodeURIComponent(s.nom + ' ' + (s.commune || '')) + '" target="_blank" rel="noopener" class="cs-btn cs-btn-ghost cs-btn-sm flex-1" aria-label="Itinéraire vers ' + echapperHTML(s.nom) + '">' + icon('map', 14) + ' Itinéraire</a>' +
+            '</div>' +
+          '</div>';
+        });
+        html += '</div>';
+      }
+
+      // Pagination
+      if (totalPages > 1) {
+        html += '<div class="flex justify-center items-center gap-2 mt-6">';
+        html += '<button onclick="goPage(' + (currentPage - 1) + ')" class="cs-btn cs-btn-ghost cs-btn-sm"' + (currentPage === 1 ? ' disabled' : '') + ' aria-label="Page précédente">' + icon('chevron-left', 14) + '</button>';
+        for (var p = 1; p <= totalPages; p++) {
+          html += '<button onclick="goPage(' + p + ')" class="cs-btn cs-btn-sm ' + (p === currentPage ? 'cs-btn-primary' : 'cs-btn-ghost') + '">' + p + '</button>';
+        }
+        html += '<button onclick="goPage(' + (currentPage + 1) + ')" class="cs-btn cs-btn-ghost cs-btn-sm"' + (currentPage === totalPages ? ' disabled' : '') + ' aria-label="Page suivante">' + icon('chevron-right', 14) + '</button>';
+        html += '</div>';
+      }
+
+      // Légende
+      html += '<div class="cs-card p-4 mt-6"><h3 class="font-semibold text-neutral-800 mb-3 flex items-center gap-2">' + icon('info', 16) + ' Légende des types</h3>' +
+        '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 text-sm">';
+      var legend = [
+        { t: 'CSPS', l: 'Centre de Santé et de Promotion Sociale — Soins primaires', c: 'cs-badge-warning' },
+        { t: 'CMA', l: 'Centre Médical avec Antenne chirurgicale', c: 'cs-badge-success' },
+        { t: 'CHR', l: 'Centre Hospitalier Régional', c: 'cs-badge-info' },
+        { t: 'CHU', l: 'Centre Hospitalier Universitaire — Niveau tertiaire', c: 'cs-badge-admin' },
+        { t: 'Clinique', l: 'Établissement privé conventionné', c: 'cs-badge-neutral' }
+      ];
+      legend.forEach(function (x) {
+        html += '<div class="flex items-start gap-2"><span class="cs-badge ' + x.c + '">' + x.t + '</span><span class="text-xs text-neutral-600">' + echapperHTML(x.l) + '</span></div>';
+      });
+      html += '</div></div>';
+
+      document.getElementById('cs-content').innerHTML = html;
+    }
+
+    var debounceTimer = null;
+    function debounceFilter() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(function () { currentPage = 1; renderPage(); }, 200);
+    }
+    function goPage(p) {
+      var total = Math.ceil(getStructures().length / PER_PAGE);
+      if (p < 1 || p > total) return;
+      currentPage = p;
+      renderPage();
+    }
+
+    function voirMedecins(strId) {
+      var s = Storage.getById('structures', strId);
+      if (!s) return;
+      var medecins = (s.medecins || []).map(function (mid) { return Storage.getById('medecins', mid); }).filter(function (m) { return m; });
+
+      // Groupe les médecins par spécialité pour faciliter la sélection
+      var parSpecialite = {};
+      medecins.forEach(function (m) {
+        var spec = m.specialite || 'Autre';
+        if (!parSpecialite[spec]) parSpecialite[spec] = [];
+        parSpecialite[spec].push(m);
+      });
+
+      var html = '<div class="cs-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="cs-med-title">' +
+        '<div class="cs-modal cs-modal-lg" onclick="event.stopPropagation()">' +
+          '<div class="cs-modal-header">' +
+            '<div class="flex items-center gap-3">' +
+              '<div class="w-10 h-10 rounded-cs-sm bg-info-100 text-info-700 flex items-center justify-center">' + icon('building-2', 22) + '</div>' +
+              '<div><h3 class="cs-modal-title" id="cs-med-title">' + echapperHTML(s.nom) + '</h3>' +
+              '<p class="text-sm text-neutral-500">' + echapperHTML(s.type) + ' · ' + echapperHTML(s.commune || '') + ', ' + echapperHTML(s.region || '') + '</p></div>' +
+            '</div>' +
+            '<button onclick="closeModal()" class="cs-btn cs-btn-icon" aria-label="Fermer">' + icon('x', 18) + '</button>' +
+          '</div>' +
+          '<div class="cs-modal-body">';
+
+      // Informations sur la structure
+      html += '<div class="cs-card p-3 mb-4 bg-info-50">' +
+        '<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">' +
+          '<div><div class="text-xs text-neutral-500">Capacité</div><div class="text-sm font-semibold text-neutral-800">' + (s.capaciteLit || '—') + ' lits</div></div>' +
+          '<div><div class="text-xs text-neutral-500">Patients</div><div class="text-sm font-semibold text-neutral-800">' + (s.nbPatients || '—') + '</div></div>' +
+          '<div><div class="text-xs text-neutral-500">Téléphone</div><div class="text-sm font-semibold text-neutral-800">' + echapperHTML(s.telephone || '—') + '</div></div>' +
+          '<div><div class="text-xs text-neutral-500">Certification</div><div class="text-sm font-semibold text-neutral-800">' + echapperHTML(s.niveauCertification || '—') + '</div></div>' +
+        '</div>' +
+      '</div>';
+
+      if (!medecins.length) {
+        html += '<p class="text-sm text-neutral-500 text-center py-6">Aucun médecin enregistré pour cette structure.</p>';
+      } else {
+        // Pour chaque spécialité, affiche les médecins avec leur rôle
+        Object.keys(parSpecialite).sort().forEach(function (spec) {
+          html += '<div class="mb-4">' +
+            '<h4 class="text-sm font-semibold text-neutral-700 mb-2 flex items-center gap-2">' +
+              icon('stethoscope', 16) + ' ' + echapperHTML(spec) + ' <span class="text-xs text-neutral-500">(' + parSpecialite[spec].length + ')</span>' +
+            '</h4>' +
+            '<div class="space-y-2">';
+          parSpecialite[spec].forEach(function (m) {
+            var role = m.roleStructure || 'Médecin';
+            var roleClass = role.indexOf('Chef') !== -1 ? 'cs-role-medecin-Chef' :
+                            role.indexOf('Sage') !== -1 ? 'cs-role-medecin-Sage' : 'cs-role-medecin-Médecin';
+            var heartsHtml = '';
+            if (m.noteMoyenne && m.nbAvis > 0) {
+              var coeurs = HeartsRating.noteToCoeurs(m.noteMoyenne);
+              heartsHtml = '<div class="flex items-center gap-1">' + HeartsRating.renderCoeurs(coeurs, false) +
+                '<span class="text-xs text-neutral-500 ml-1">' + m.noteMoyenne.toFixed(1) + ' (' + m.nbAvis + ')</span></div>';
+            }
+            html += '<div class="flex items-center gap-3 p-3 border border-neutral-200 rounded-cs-sm hover:bg-neutral-50 transition">' +
+              '<div class="cs-avatar cs-avatar-md ' + avatarColor(m.id) + '">' + echapperHTML(initiales(m.prenom, m.nom)) + '</div>' +
+              '<div class="flex-1 min-w-0">' +
+                '<div class="font-semibold text-neutral-800">' + echapperHTML((m.nom || '').replace('Dr. ', 'Dr ') + ' ' + (m.prenom || '')) + '</div>' +
+                '<div class="text-xs text-neutral-500 mt-0.5">' + echapperHTML(m.telephone || '') + '</div>' +
+                '<div class="text-[10px] text-neutral-400 font-mono mt-0.5">' + echapperHTML(m.id) + '</div>' +
+                '<div class="mt-1 flex items-center gap-2">' +
+                  '<span class="cs-role-medecin ' + roleClass + '">' + echapperHTML(role) + '</span>' +
+                  (m.numeroAgrement ? '<span class="text-[10px] text-neutral-400">Agrément : ' + echapperHTML(m.numeroAgrement) + '</span>' : '') +
+                '</div>' +
+                heartsHtml +
+              '</div>' +
+              (user.role === 'patient' ?
+                '<a href="calendar.html?medecin=' + m.id + '" class="cs-btn cs-btn-secondary cs-btn-sm">' + icon('calendar', 14) + ' RDV</a>' :
+                '<a href="dossier-patient.html?medecin=' + m.id + '" class="cs-btn cs-btn-ghost cs-btn-sm">' + icon('folder-open', 14) + ' Voir</a>') +
+            '</div>';
+          });
+          html += '</div></div>';
+        });
+
+        // Bouton de sélection pour patient/admin
+        if (user.role === 'patient') {
+          html += '<div class="mt-4 p-3 bg-primary-50 rounded-cs-sm border border-primary-200">' +
+            '<div class="flex items-center justify-between gap-2">' +
+              '<div class="text-sm text-neutral-700">' + icon('info', 16) + ' Sélectionnez cette structure comme votre établissement de référence.</div>' +
+              '<button onclick="selectionnerStructure(\'' + s.id + '\', \'' + echapperHTML(s.nom).replace(/'/g, "\\'") + '\')" class="cs-btn cs-btn-primary cs-btn-sm">' +
+                icon('check', 14) + ' Sélectionner</button>' +
+            '</div>' +
+          '</div>';
+        }
+      }
+
+      html += '</div><div class="cs-modal-footer"><button onclick="closeModal()" class="cs-btn cs-btn-secondary">Fermer</button></div></div></div>';
+      document.getElementById('cs-modal-root').innerHTML = html;
+    }
+
+    function selectionnerStructure(strId, strNom) {
+      var user = Storage.get('user');
+      if (!user) return;
+      // Met à jour le patient avec la structure sélectionnée
+      if (user.role === 'patient') {
+        Storage.update('patients', user.id, { structurePreference: strId, etablissementId: strId });
+        Storage.logAction('selection_structure', user.id, 'patient',
+          'Structure de référence sélectionnée : ' + strNom, { structureId: strId });
+      }
+      showToast('Structure sélectionnée', strNom + ' est maintenant votre établissement de référence.', 'success');
+      closeModal();
+    }
+
+    function closeModal() { document.getElementById('cs-modal-root').innerHTML = ''; }
+  </script>
+</body>
+</html>
