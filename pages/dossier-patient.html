@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dossier patient centralisé — CareSync EHR Burkina Faso">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Dossier patient — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body>
+  <a href="#cs-content" class="cs-sr-only">Aller au contenu</a>
+  <div id="cs-sim-elements"></div>
+  <div id="cs-sidebar-wrapper"></div>
+  <main class="cs-main-content">
+    <div id="cs-topbar-wrapper"></div>
+    <div class="cs-content-area" id="cs-content">
+      <div class="cs-card p-10 text-center">
+        <div class="inline-block cs-spinner cs-spinner-dark" style="width: 28px; height: 28px;"></div>
+        <p class="mt-3 text-sm text-neutral-500">Chargement du dossier...</p>
+      </div>
+    </div>
+  </main>
+  <script>
+    var user = requireAuth();
+    var patient = null;
+    var currentTab = 'synthese';
+
+    if (user) {
+      try { initPage(); } catch (err) {
+        document.getElementById('cs-content').innerHTML =
+          '<div class="cs-card p-8 text-center text-danger-700">Erreur: ' + echapperHTML(err.message) + '</div>';
+      }
+    }
+
+    function initPage() {
+      // Médecin : recherche un patient via paramètre URL ; patient : lui-même
+      if (user.role === 'medecin' || user.role === 'admin') {
+        var pid = getURLParam('id');
+        if (pid) patient = Storage.getById('patients', pid);
+      } else if (user.role === 'patient') {
+        patient = Storage.getById('patients', user.id) || {
+          id: user.id, nom: user.nom, prenom: user.prenom,
+          dateNaissance: user.dateNaissance, sexe: user.sexe,
+          telephone: user.telephone, email: user.email
+        };
+      }
+
+      document.getElementById('cs-sidebar-wrapper').innerHTML = renderSidebar(user.role, 'dossier-patient');
+      var title = user.role === 'medecin' ? 'Dossier patient' : 'Mon dossier médical';
+      document.getElementById('cs-topbar-wrapper').innerHTML = renderTopbar(title, 'Synthèse, consultations, famille');
+      document.getElementById('cs-sim-elements').innerHTML = renderSimElements();
+      initApp();
+
+      // Si médecin sans patient sélectionné : afficher la barre de recherche
+      if ((user.role === 'medecin' || user.role === 'admin') && !patient) {
+        renderRecherchePatient();
+        return;
+      }
+      renderPage();
+    }
+
+    // Page de recherche intelligente de patient (médecin/admin sans ?id=)
+    function renderRecherchePatient() {
+      var html = '<div class="cs-card p-6 mb-4">' +
+        '<h2 class="text-xl font-bold text-neutral-800 mb-2 flex items-center gap-2">' +
+          icon('search', 22) + ' Rechercher un patient</h2>' +
+        '<p class="text-sm text-neutral-600 mb-4">Saisissez le nom, prénom, identifiant BFA, numéro CIN ou téléphone du patient.</p>' +
+        '<div class="relative">' +
+          '<input type="search" id="cs-patient-search" class="cs-input pl-10" placeholder="Ex : Aminata, BFA-PAT-2026-0001, +226 70..." autocomplete="off">' +
+          '<span class="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">' + icon('search', 18) + '</span>' +
+          '<div id="cs-patient-results" class="cs-search-results"></div>' +
+        '</div>' +
+        '<div class="mt-4 p-3 bg-info-50 rounded-cs-sm border border-info-200">' +
+          '<div class="flex items-start gap-2">' +
+            icon('info', 16) +
+            '<p class="text-xs text-neutral-600">La recherche est intelligente : elle cherche dans le nom, prénom, identifiant BFA (BFA-PAT-2026-XXXX), numéro CIN burkinabè et numéro de téléphone.</p>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+      // Suggestions de patients récents
+      var recents = Storage.getAll('patients').slice(0, 6);
+      html += '<div class="cs-card p-5">' +
+        '<h3 class="font-semibold text-neutral-800 mb-3 flex items-center gap-2">' + icon('clock', 16) + ' Patients récents</h3>' +
+        '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">';
+      recents.forEach(function (p) {
+        html += '<button onclick="location.href=\'dossier-patient.html?id=' + p.id + '\'" class="text-left p-3 border border-neutral-200 hover:border-primary-400 rounded-cs-sm transition">' +
+          '<div class="flex items-center gap-2 mb-1">' +
+            '<div class="cs-avatar cs-avatar-sm ' + avatarColor(p.id) + '">' + initiales(p.prenom, p.nom) + '</div>' +
+            '<div class="text-sm font-medium text-neutral-800">' + echapperHTML(p.prenom + ' ' + p.nom) + '</div>' +
+          '</div>' +
+          '<div class="text-xs text-neutral-500 font-mono">' + echapperHTML(p.id) + '</div>' +
+        '</button>';
+      });
+      html += '</div></div>';
+
+      document.getElementById('cs-content').innerHTML = html;
+
+      // Attache la recherche intelligente
+      IntelligentSearch.attach({
+        inputSelector: '#cs-patient-search',
+        resultsSelector: '#cs-patient-results',
+        entityType: 'patients',
+        onSelect: function (p) {
+          window.location.href = 'dossier-patient.html?id=' + p.id;
+        }
+      });
+    }
+
+    function renderPage() {
+      var isMedecin = (user.role === 'medecin' || user.role === 'admin');
+      var html = renderHeader() + renderTabs();
+      if (isMedecin) {
+        html += '<div class="flex justify-end mb-3 gap-2">' +
+          '<button onclick="nouvelleConsultation()" class="cs-btn cs-btn-primary cs-btn-sm">' +
+            icon('plus', 16) + ' Nouvelle consultation</button>' +
+          '<button onclick="prescrireOrdonnance()" class="cs-btn cs-btn-secondary cs-btn-sm">' +
+            icon('file-text', 16) + ' Prescrire</button>' +
+        '</div>';
+      } else {
+        html += '<div class="flex justify-end mb-3 gap-2">' +
+          '<button onclick="telechargerResume()" class="cs-btn cs-btn-secondary cs-btn-sm">' +
+            icon('download', 16) + ' Télécharger le résumé</button>' +
+        '</div>';
+      }
+      html += '<div id="cs-tab-content"></div>';
+      document.getElementById('cs-content').innerHTML = html;
+      renderTab();
+    }
+
+    // En-tête avec carte urgence intégrée
+    function renderHeader() {
+      var init = initiales(patient.prenom, patient.nom);
+      var age = formatAge(patient.dateNaissance);
+      var sexeLabel = patient.sexe === 'F' ? 'Féminin' : (patient.sexe === 'M' ? 'Masculin' : '—');
+
+      var badges = '';
+      if (patient.groupeSanguin) badges += '<span class="cs-badge cs-badge-danger">' + icon('droplet', 12) + ' ' + echapperHTML(patient.groupeSanguin) + '</span>';
+      if (patient.electrophorese) {
+        var electroBadge = (patient.electrophorese === 'SS' || patient.electrophorese === 'SC') ? 'cs-badge-danger' :
+                            (patient.electrophorese === 'AS' || patient.electrophorese === 'AC') ? 'cs-badge-warning' : 'cs-badge-success';
+        badges += '<span class="cs-badge ' + electroBadge + '">' + icon('test-tube', 12) + ' ' + echapperHTML(patient.electrophorese) + '</span>';
+      }
+      if (patient.allergies && patient.allergies.length) {
+        patient.allergies.forEach(function (a) {
+          badges += '<span class="cs-badge cs-badge-warning">' + icon('alert-circle', 12) + ' ' + echapperHTML(a) + '</span>';
+        });
+      } else {
+        badges += '<span class="cs-badge cs-badge-success">Aucune allergie connue</span>';
+      }
+      if (patient.niveauCertification) {
+        badges += '<span class="cs-badge cs-badge-info">' + icon('badge-check', 12) + ' ' + echapperHTML(patient.niveauCertification) + '</span>';
+      }
+
+      var html = '<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">' +
+        // Colonne principale : identité patient
+        '<div class="cs-card p-6 lg:col-span-2">' +
+          '<div class="flex flex-col md:flex-row gap-4 items-start">' +
+            '<div class="cs-avatar cs-avatar-xl ' + avatarColor(patient.id || '') + '">' + echapperHTML(init) + '</div>' +
+            '<div class="flex-1 min-w-0">' +
+              '<h2 class="text-xl font-bold text-neutral-800">' + echapperHTML((patient.prenom || '') + ' ' + (patient.nom || '')) + '</h2>' +
+              '<p class="text-xs text-neutral-500 font-mono mt-0.5">' + echapperHTML(patient.id || '—') + '</p>' +
+              (patient.numeroCIN ? '<p class="text-xs text-neutral-400 font-mono mt-0.5">CIN : ' + echapperHTML(patient.numeroCIN) + '</p>' : '') +
+              '<div class="flex flex-wrap gap-2 mt-2">' + badges + '</div>' +
+              '<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 text-sm">' +
+                '<div><span class="text-neutral-500 block text-xs">Naissance</span><span class="font-medium">' + formatDate(patient.dateNaissance) + '</span></div>' +
+                '<div><span class="text-neutral-500 block text-xs">Âge</span><span class="font-medium">' + echapperHTML(age) + '</span></div>' +
+                '<div><span class="text-neutral-500 block text-xs">Sexe</span><span class="font-medium">' + echapperHTML(sexeLabel) + '</span></div>' +
+                '<div><span class="text-neutral-500 block text-xs">Région</span><span class="font-medium">' + echapperHTML(patient.region || '—') + '</span></div>' +
+              '</div>' +
+              (patient.telephone ? '<div class="text-xs text-neutral-600 mt-3">' + icon('phone', 12) + ' ' + echapperHTML(patient.telephone) + '</div>' : '') +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        // Colonne droite : carte urgence + personne de confiance
+        renderCarteUrgence() +
+      '</div>';
+
+      return html;
+    }
+
+    // Carte d'urgence : toujours visible (accès rapide aux informations vitales)
+    function renderCarteUrgence() {
+      var html = '<div class="cs-urgence-card">' +
+        '<div class="cs-urgence-header">' +
+          icon('heart-pulse', 22) +
+          '<div class="cs-urgence-title">Carte d\'urgence</div>' +
+        '</div>' +
+        '<div class="cs-urgence-row">' +
+          '<span class="cs-urgence-label">Groupe sanguin</span>' +
+          '<span class="cs-urgence-value">' + echapperHTML(patient.groupeSanguin || '—') + '</span>' +
+        '</div>' +
+        '<div class="cs-urgence-row">' +
+          '<span class="cs-urgence-label">Électrophorèse</span>' +
+          '<span class="cs-urgence-value">' + echapperHTML(patient.electrophorese || '—') + '</span>' +
+        '</div>' +
+        '<div class="cs-urgence-row">' +
+          '<span class="cs-urgence-label">Allergies</span>' +
+          '<span class="cs-urgence-value">' + (patient.allergies && patient.allergies.length ? echapperHTML(patient.allergies.join(', ')) : 'Aucune') + '</span>' +
+        '</div>';
+
+      // Personne de confiance
+      if (patient.personneConfiance) {
+        var pc = patient.personneConfiance;
+        html += '<div class="cs-trusted-person">' +
+          '<div class="cs-trusted-person-avatar">' + icon('user-check', 18) + '</div>' +
+          '<div class="cs-trusted-person-info">' +
+            '<div class="cs-trusted-person-name">' + echapperHTML(pc.prenom + ' ' + pc.nom) + '</div>' +
+            '<div class="cs-trusted-person-relation">' + echapperHTML(pc.relation) + ' · ' + echapperHTML(pc.telephone) + '</div>' +
+          '</div>' +
+          '<div class="cs-trusted-person-actions">' +
+            '<button onclick="contacterPersonneConfiance()" class="cs-btn cs-btn-icon cs-btn-sm" aria-label="Contacter">' + icon('phone', 14) + '</button>' +
+          '</div>' +
+        '</div>';
+        html += '<button onclick="demanderAccesPersonneConfiance()" class="cs-urgence-btn">' +
+          icon('lock', 16) + ' Demander l\'accès via la personne de confiance</button>';
+      } else {
+        html += '<p class="text-xs text-neutral-500 mt-3 italic">Aucune personne de confiance désignée.</p>';
+      }
+
+      html += '</div>';
+      return html;
+    }
+
+    function contacterPersonneConfiance() {
+      var pc = patient.personneConfiance;
+      if (!pc) return;
+      showToast('Appel à la personne de confiance',
+        pc.prenom + ' ' + pc.nom + ' (' + pc.relation + ') - ' + pc.telephone, 'info');
+    }
+
+    function demanderAccesPersonneConfiance() {
+      var pc = patient.personneConfiance;
+      if (!pc) return;
+      if (!confirm('Demande d\'accès au dossier médical de ' + patient.prenom + ' ' + patient.nom +
+                   ' via la personne de confiance (' + pc.prenom + ' ' + pc.nom + ').\n\n' +
+                   'Cette action sera tracée dans le journal d\'audit. Continuer ?')) return;
+      Storage.logAction('acces_personne_confiance', user.id, user.role,
+        'Demande d\'accès au dossier ' + patient.id + ' via ' + pc.prenom + ' ' + pc.nom,
+        { patientId: patient.id, personneConfiance: pc.nom + ' ' + pc.prenom });
+      showToast('Demande enregistrée',
+        'La demande a été journalisée. La personne de confiance sera contactée pour validation.', 'success');
+    }
+
+    function renderTabs() {
+      var tabs = [
+        { id: 'synthese', label: 'Synthèse', icone: 'activity' },
+        { id: 'consultations', label: 'Consultations', icone: 'stethoscope' },
+        { id: 'famille', label: 'Famille & génétique', icone: 'users' },
+        { id: 'antecedents', label: 'Antécédents', icone: 'history' }
+      ];
+      var html = '<div class="cs-card mb-4 p-1 flex gap-1 overflow-x-auto">';
+      tabs.forEach(function (t) {
+        var active = currentTab === t.id ? ' bg-primary-50 text-primary-700' : ' text-neutral-600 hover:bg-neutral-50';
+        html += '<button onclick="switchTab(\'' + t.id + '\')" class="cs-btn cs-btn-ghost cs-btn-sm whitespace-nowrap' + active + '">' +
+          icon(t.icone, 16) + ' ' + t.label + '</button>';
+      });
+      html += '</div>';
+      return html;
+    }
+
+    function switchTab(t) { currentTab = t; renderTab(); }
+
+    function renderTab() {
+      var el = document.getElementById('cs-tab-content');
+      if (currentTab === 'synthese') el.innerHTML = renderSynthese();
+      else if (currentTab === 'consultations') el.innerHTML = renderConsultations();
+      else if (currentTab === 'famille') el.innerHTML = renderFamille();
+      else el.innerHTML = renderAntecedents();
+      // Re-bind hearts si on est sur synthese et patient
+      if (currentTab === 'synthese' && user.role === 'patient') {
+        setTimeout(function () {
+          HeartsRating.bindCoeurs(document.getElementById('cs-tab-content'));
+        }, 50);
+      }
+    }
+
+    // Synthèse : constantes + allergies + médicaments + (patient) notation médecin
+    function renderSynthese() {
+      var html = '<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">';
+
+      // Constantes vitales
+      html += '<div class="cs-card p-5">' +
+        '<h3 class="font-semibold text-neutral-800 mb-3 flex items-center gap-2">' + icon('activity', 18) + ' Constantes vitales</h3>' +
+        '<div class="grid grid-cols-2 gap-3">' +
+          constanceBloc('Tension artérielle', '120/80 mmHg', 'heart') +
+          constanceBloc('Poids', patient.poids ? patient.poids + ' kg' : '—', 'activity') +
+          constanceBloc('Taille', patient.taille ? patient.taille + ' cm' : '—', 'arrow-up') +
+          constanceBloc('IMC', patient.poids && patient.taille ? calculerIMC(patient.poids, patient.taille) : '—', 'bar-chart') +
+        '</div>' +
+      '</div>';
+
+      // Allergies et alertes
+      html += '<div class="cs-card p-5">' +
+        '<h3 class="font-semibold text-neutral-800 mb-3 flex items-center gap-2">' + icon('alert-triangle', 18) + ' Allergies & alertes</h3>';
+      if (patient.allergies && patient.allergies.length) {
+        html += '<ul class="space-y-2">';
+        patient.allergies.forEach(function (a) {
+          html += '<li class="flex items-center gap-2 text-sm bg-gold-50 text-gold-800 px-3 py-2 rounded-cs-sm">' + icon('alert-circle', 14) + ' ' + echapperHTML(a) + '</li>';
+        });
+        html += '</ul>';
+      } else {
+        html += '<p class="text-sm text-neutral-500">Aucune allergie enregistrée.</p>';
+      }
+      html += '</div>';
+
+      // Médicaments en cours
+      var ord = Storage.getOrdonnancesByPatient(patient.id).filter(function (o) { return o.statut === 'certifiée' || o.statut === 'active'; });
+      var meds = [];
+      ord.forEach(function (o) {
+        (o.lignes || []).forEach(function (l) {
+          meds.push({ medicament: l.medicamentNom || l.medicament, posologie: l.posologie, date: o.date });
+        });
+      });
+      html += '<div class="cs-card p-5 lg:col-span-2">' +
+        '<h3 class="font-semibold text-neutral-800 mb-3 flex items-center gap-2">' + icon('pill', 18) + ' Médicaments en cours (' + meds.length + ')</h3>';
+      if (!meds.length) html += '<p class="text-sm text-neutral-500">Aucun traitement actif.</p>';
+      else {
+        html += '<ul class="divide-y divide-neutral-100">';
+        meds.forEach(function (m) {
+          html += '<li class="py-2 flex justify-between gap-3">' +
+            '<div><div class="text-sm font-medium text-neutral-800">' + echapperHTML(m.medicament) + '</div>' +
+            '<div class="text-xs text-neutral-500">' + echapperHTML(m.posologie || '') + '</div></div>' +
+            '<div class="text-xs text-neutral-400">Depuis ' + formatDate(m.date) + '</div>' +
+          '</li>';
+        });
+        html += '</ul>';
+      }
+      html += '</div>';
+
+      // Si patient : afficher le widget de notation des médecins consultés
+      if (user.role === 'patient') {
+        html += '<div class="cs-card p-5 lg:col-span-2">' +
+          '<h3 class="font-semibold text-neutral-800 mb-3 flex items-center gap-2">' +
+            icon('heart-pulse', 18) + ' Mes médecins — Notation BETA</h3>' +
+          renderNotationMedecins() +
+        '</div>';
+      }
+
+      html += '</div>';
+      return html;
+    }
+
+    function constanceBloc(label, val, iconName) {
+      return '<div class="bg-neutral-50 rounded-cs-md p-3">' +
+        '<div class="flex items-center gap-2 text-neutral-500 text-xs">' + icon(iconName, 14) + ' ' + echapperHTML(label) + '</div>' +
+        '<div class="text-lg font-semibold text-neutral-800 mt-1">' + echapperHTML(val) + '</div>' +
+      '</div>';
+    }
+
+    // Liste des médecins consultés par le patient, avec widget notation
+    function renderNotationMedecins() {
+      var cons = Storage.getConsultationsByPatient(patient.id);
+      var medecinIds = {};
+      cons.forEach(function (c) { if (c.medecinId) medecinIds[c.medecinId] = true; });
+      var ids = Object.keys(medecinIds);
+      if (!ids.length) {
+        return '<p class="text-sm text-neutral-500">Vous n\'avez pas encore consulté de médecin sur la plateforme.</p>';
+      }
+      var html = '<div class="space-y-3">';
+      ids.forEach(function (mid) {
+        var m = Storage.getById('medecins', mid);
+        if (!m) return;
+        html += '<div class="p-3 border border-neutral-200 rounded-cs-sm">' +
+          '<div class="flex items-start justify-between gap-3 mb-2">' +
+            '<div class="flex items-center gap-2">' +
+              '<div class="cs-avatar cs-avatar-sm ' + avatarColor(m.id) + '">' + initiales(m.prenom, m.nom) + '</div>' +
+              '<div>' +
+                '<div class="text-sm font-semibold text-neutral-800">' + echapperHTML((m.prenom || '') + ' ' + (m.nom || '')) + '</div>' +
+                '<div class="text-xs text-neutral-500">' + echapperHTML(m.specialite || '') + ' · ' + echapperHTML(m.etablissement || '') + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<button onclick="HeartsRating.ouvrirFormulaireNotation(\'' + m.id + '\', \'' + patient.id + '\')" class="cs-btn cs-btn-sm cs-btn-ghost">' +
+              icon('pencil', 14) + ' Noter</button>' +
+          '</div>' +
+          HeartsRating.renderWidget(m.id) +
+        '</div>';
+      });
+      html += '</div>';
+      return html;
+    }
+
+    // Onglet Famille & génétique : analyse intelligente
+    function renderFamille() {
+      var isMedecin = (user.role === 'medecin' || user.role === 'admin');
+      var familleId = patient.familleId;
+
+      if (!familleId) {
+        return '<div class="cs-card p-8 text-center">' +
+          icon('users', 48) +
+          '<h3 class="font-semibold text-neutral-800 mt-3">Aucune famille enregistrée</h3>' +
+          '<p class="text-sm text-neutral-500 mt-1">Ce patient n\'est pas encore rattaché à un dossier familial.</p>' +
+          (user.role === 'patient' ?
+            '<button onclick="creerFamille()" class="cs-btn cs-btn-primary mt-4">' + icon('plus', 16) + ' Créer ma famille</button>' : '') +
+        '</div>';
+      }
+
+      var analyse = FamilyHealth.analyserFamille(familleId);
+      if (!analyse) {
+        return '<div class="cs-card p-8 text-center text-danger-700">Famille introuvable.</div>';
+      }
+
+      var html = '';
+
+      // Carte famille (visible tous rôles)
+      html += '<div class="cs-card p-5 mb-4">' +
+        '<div class="flex items-center justify-between mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+            icon('users', 18) + ' Famille ' + echapperHTML(analyse.famille.nomFamille || '') + '</h3>' +
+          '<span class="cs-badge cs-badge-info">' + analyse.stats.nbMembres + ' membres</span>' +
+        '</div>' +
+        '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">';
+
+      analyse.membres.forEach(function (m) {
+        var role = m.roleFamille || 'Membre';
+        var electroColor = (m.electrophorese === 'SS' || m.electrophorese === 'SC') ? 'cs-badge-danger'
+                          : (m.electrophorese === 'AS' || m.electrophorese === 'AC') ? 'cs-badge-warning'
+                          : 'cs-badge-success';
+        html += '<div class="p-3 border border-neutral-200 rounded-cs-sm">' +
+          '<div class="flex items-center gap-2 mb-2">' +
+            '<div class="cs-avatar cs-avatar-sm ' + avatarColor(m.id) + '">' + initiales(m.prenom, m.nom) + '</div>' +
+            '<div class="flex-1 min-w-0">' +
+              '<div class="text-sm font-medium text-neutral-800 truncate">' + echapperHTML(m.prenom + ' ' + m.nom) + '</div>' +
+              '<div class="text-xs text-neutral-500">' + echapperHTML(role) + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="flex flex-wrap gap-1 mt-1">' +
+            (m.groupeSanguin ? '<span class="cs-badge cs-badge-danger">' + echapperHTML(m.groupeSanguin) + '</span>' : '') +
+            (m.electrophorese ? '<span class="cs-badge ' + electroColor + '">' + echapperHTML(m.electrophorese) + '</span>' : '') +
+            '<span class="cs-badge cs-badge-neutral">' + formatAge(m.dateNaissance) + '</span>' +
+          '</div>' +
+        '</div>';
+      });
+
+      html += '</div></div>';
+
+      // Analyse médicale intelligente (visible médecin seulement)
+      if (isMedecin) {
+        html += '<div data-cs-collapsible="analyse" data-cs-title="Analyse génétique et risques familiaux" data-cs-icon="heart-pulse">';
+        html += FamilyHealth.renderAnalyse(analyse);
+        html += '</div>';
+
+        // Recherche de donneurs compatibles
+        html += '<div data-cs-collapsible="donneurs" data-cs-title="Recherche de donneurs compatibles (transfusion)" data-cs-icon="droplets">';
+        html += renderDonneursCompatibles(familleId, patient.id);
+        html += '</div>';
+      } else {
+        // Patient : affiche seulement les recommandations de santé publique
+        html += '<div class="cs-card p-5">' +
+          '<h3 class="font-semibold text-neutral-800 mb-3 flex items-center gap-2">' +
+            icon('lightbulb', 18) + ' Recommandations de santé familiale</h3>';
+        if (analyse.recommandations.length === 0) {
+          html += '<p class="text-sm text-neutral-500">Aucune recommandation particulière.</p>';
+        } else {
+          html += '<div class="space-y-2">';
+          analyse.recommandations.forEach(function (r) {
+            if (r.niveau === 'urgent' || r.niveau === 'élevé') return; // Caché au patient
+            html += '<div class="p-3 bg-info-50 rounded-cs-sm">' +
+              '<div class="font-medium text-neutral-800 text-sm">' + echapperHTML(r.titre) + '</div>' +
+              '<p class="text-sm text-neutral-600 mt-1">' + echapperHTML(r.message) + '</p>' +
+            '</div>';
+          });
+          html += '</div>';
+        }
+        html += '</div>';
+      }
+
+      setTimeout(function () { CollapsibleMenus.autoInit(); }, 50);
+      return html;
+    }
+
+    function renderDonneursCompatibles(familleId, receveurId) {
+      var result = FamilyHealth.trouverDonneursFamille(familleId, receveurId);
+      var html = '<div class="cs-card p-5">';
+
+      if (result.compatibles.length === 0 && result.incompatibles.length === 0) {
+        html += '<p class="text-sm text-neutral-500">Aucun donneur potentiel dans la famille.</p>';
+        html += '</div>';
+        return html;
+      }
+
+      if (result.compatibles.length > 0) {
+        html += '<h4 class="font-semibold text-success-700 mb-2 flex items-center gap-2">' +
+          icon('check-circle', 18) + ' Donneurs compatibles (' + result.compatibles.length + ')</h4>' +
+          '<div class="space-y-2 mb-4">';
+        result.compatibles.forEach(function (d) {
+          html += '<div class="p-3 bg-primary-50 rounded-cs-sm border border-primary-200">' +
+            '<div class="flex items-center justify-between">' +
+              '<div>' +
+                '<div class="text-sm font-medium text-neutral-800">' + echapperHTML(d.prenom + ' ' + d.nom) + '</div>' +
+                '<div class="text-xs text-neutral-500">' + echapperHTML(d.roleFamille || '') + ' · GS ' + echapperHTML(d.groupeSanguin) + ' · Électrophorèse ' + echapperHTML(d.electrophorese) + '</div>' +
+              '</div>' +
+              '<span class="cs-badge cs-badge-success">Compatible</span>' +
+            '</div>' +
+          '</div>';
+        });
+        html += '</div>';
+      }
+
+      if (result.incompatibles.length > 0) {
+        html += '<h4 class="font-semibold text-danger-700 mb-2 flex items-center gap-2">' +
+          icon('x-circle', 18) + ' Incompatibles (' + result.incompatibles.length + ')</h4>' +
+          '<div class="space-y-2">';
+        result.incompatibles.forEach(function (d) {
+          html += '<div class="p-3 bg-neutral-50 rounded-cs-sm">' +
+            '<div class="flex items-center justify-between">' +
+              '<div>' +
+                '<div class="text-sm font-medium text-neutral-700">' + echapperHTML(d.prenom + ' ' + d.nom) + '</div>' +
+                '<div class="text-xs text-neutral-500">' + echapperHTML(d.roleFamille || '') + ' · GS ' + echapperHTML(d.groupeSanguin) + '</div>' +
+              '</div>' +
+              '<span class="cs-badge cs-badge-danger" title="' + echapperHTML(d.motif) + '">Incompatible</span>' +
+            '</div>' +
+            '<div class="text-xs text-neutral-400 mt-1">' + echapperHTML(d.motif) + '</div>' +
+          '</div>';
+        });
+        html += '</div>';
+      }
+
+      html += '<div class="mt-4 p-3 bg-info-50 rounded-cs-sm">' +
+        '<div class="flex items-start gap-2">' +
+          icon('info', 16) +
+          '<p class="text-xs text-neutral-600"><strong>Sources :</strong> ' +
+            'Compatibilité AB0 selon les règles transfusionnelles standard (HAS). ' +
+            'Les donneurs drépanocytaires (SS/SC) sont exclus pour éviter la transmission de l\'hémoglobine anormale. ' +
+            'En cas d\'urgence, privilégier un donneur universel (O-) ou consulter la banque nationale de sang.</p>' +
+        '</div>' +
+      '</div>';
+
+      return html;
+    }
+
+    function creerFamille() {
+      showToast('Création de famille', 'Fonctionnalité à activer depuis la page Famille.', 'info');
+    }
+
+    function renderConsultations() {
+      var cons = Storage.getConsultationsByPatient(patient.id);
+      if (!cons.length) return '<div class="cs-card p-8 text-center text-neutral-400">' + icon('inbox', 32) + '<p class="mt-2 text-sm">Aucune consultation enregistrée.</p></div>';
+      var html = '<div class="cs-card p-5"><div class="relative pl-6 space-y-5">';
+      cons.forEach(function (c) {
+        var med = Storage.getById('medecins', c.medecinId);
+        var medName = med ? (med.prenom + ' ' + med.nom) : '—';
+        var dotColor = c.statut === 'terminée' ? 'cs-dot-success' : (c.statut === 'à venir' ? 'cs-dot-info' : 'cs-dot-warning');
+        html += '<div class="relative">' +
+          '<span class="cs-dot ' + dotColor + ' absolute -left-6 top-1"></span>' +
+          '<div class="flex justify-between gap-2 items-start">' +
+            '<div><div class="text-sm font-semibold text-neutral-800">' + echapperHTML(c.motif || 'Consultation') + '</div>' +
+              '<div class="text-xs text-neutral-500 mt-0.5">' + formatDate(c.date) + ' · ' + echapperHTML(medName) + '</div>' +
+              (c.diagnostic ? '<div class="text-xs text-neutral-600 mt-1"><strong>Diagnostic :</strong> ' + echapperHTML(c.diagnostic) + '</div>' : '') +
+              (c.ordonnancePrescrite ? '<div class="text-xs text-info-600 mt-1">' + icon('file-text', 12) + ' Ordonnance prescrite</div>' : '') +
+            '</div>' +
+            '<span class="cs-badge ' + badgeForStatut(c.statut) + '">' + echapperHTML(c.statut || '—') + '</span>' +
+          '</div></div>';
+      });
+      html += '</div></div>';
+      return html;
+    }
+
+    function renderAntecedents() {
+      var sections = [
+        { id: 'medicaux', label: 'Antécédents médicaux', icon: 'heart', items: patient.antecedents || [] },
+        { id: 'familiaux', label: 'Antécédents familiaux', icon: 'users', items: (patient.antecedents || []).filter(function (a) { return /famille|parent|hérédit/i.test(a); }) },
+        { id: 'vaccins', label: 'Vaccinations', icon: 'syringe', items: ['BCG (à jour)', 'DTCoq (à jour)', 'Polio (à jour)', 'ROR (à jour)', 'Fièvre jaune (à jour)'] }
+      ];
+      var html = '<div class="space-y-3">';
+      sections.forEach(function (s) {
+        html += '<details class="cs-card group">' +
+          '<summary class="cursor-pointer p-4 flex items-center gap-3 font-semibold text-neutral-800">' +
+            icon(s.icon, 18) + ' ' + echapperHTML(s.label) +
+            '<span class="ml-auto text-xs text-neutral-400">' + s.items.length + '</span>' +
+            icon('chevron-down', 16) + '</summary>' +
+          '<div class="p-4 pt-0 border-t border-neutral-100">';
+        if (!s.items.length) html += '<p class="text-sm text-neutral-500 py-2">Aucun élément enregistré.</p>';
+        else {
+          html += '<ul class="space-y-2 mt-2">';
+          s.items.forEach(function (i) { html += '<li class="text-sm text-neutral-700 flex items-start gap-2">' + icon('check', 12) + ' ' + echapperHTML(i) + '</li>'; });
+          html += '</ul>';
+        }
+        html += '</div></details>';
+      });
+      html += '</div>';
+      return html;
+    }
+
+    function nouvelleConsultation() {
+      showToast('Nouvelle consultation', 'Formulaire de consultation (simulation).', 'info');
+    }
+
+    function prescrireOrdonnance() {
+      // Ouvre une modale de prescription avec recherche intelligente de médicament
+      var existing = document.getElementById('cs-prescrire-modal');
+      if (existing) existing.remove();
+      var backdrop = document.createElement('div');
+      backdrop.id = 'cs-prescrire-modal';
+      backdrop.className = 'cs-modal-backdrop';
+      backdrop.setAttribute('role', 'dialog');
+      backdrop.setAttribute('aria-modal', 'true');
+      backdrop.innerHTML = '<div class="cs-modal cs-modal-lg cs-anim-scale-in">' +
+        '<div class="cs-modal-header">' +
+          '<div class="flex items-center gap-3">' +
+            '<div class="w-10 h-10 rounded-cs-sm bg-primary-100 text-primary-700 flex items-center justify-center">' + icon('file-text', 22) + '</div>' +
+            '<div><h2 class="cs-modal-title">Prescrire une ordonnance</h2>' +
+            '<p class="text-sm text-neutral-500">Patient : ' + echapperHTML(patient.prenom + ' ' + patient.nom) + '</p></div>' +
+          '</div>' +
+          '<button class="cs-btn cs-btn-icon" onclick="this.closest(\'.cs-modal-backdrop\').remove()" aria-label="Fermer">' + icon('x', 20) + '</button>' +
+        '</div>' +
+        '<div class="cs-modal-body">' +
+          '<div class="mb-4">' +
+            '<label class="block text-sm font-medium text-neutral-700 mb-2">Rechercher un médicament</label>' +
+            '<div class="relative">' +
+              '<input type="search" id="cs-med-search-input" class="cs-input pl-10" placeholder="Ex : Paracétamol, Amoxicilline..." autocomplete="off">' +
+              '<span class="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">' + icon('search', 18) + '</span>' +
+              '<div id="cs-med-search-results" class="cs-search-results"></div>' +
+            '</div>' +
+            '<p class="text-xs text-neutral-400 mt-2">Base vérifiée par le ministère de la Santé et l\'Ordre des Pharmaciens.</p>' +
+          '</div>' +
+          '<div id="cs-med-selected" class="space-y-2"></div>' +
+        '</div>' +
+        '<div class="cs-modal-footer">' +
+          '<button class="cs-btn cs-btn-secondary" onclick="this.closest(\'.cs-modal-backdrop\').remove()">Annuler</button>' +
+          '<button class="cs-btn cs-btn-primary" onclick="validerPrescription()">' + icon('check', 16) + ' Valider l\'ordonnance</button>' +
+        '</div>' +
+      '</div>';
+      document.body.appendChild(backdrop);
+
+      // Attache la recherche de médicament
+      MedicamentSearch.attach({
+        inputSelector: '#cs-med-search-input',
+        resultsSelector: '#cs-med-search-results',
+        onSelect: function (med) {
+          ajouterMedicamentPrescription(med);
+        }
+      });
+
+      // Écoute l'événement custom
+      document.addEventListener('medicament:ajouter', function (e) {
+        ajouterMedicamentPrescription(e.detail.med);
+      });
+    }
+
+    var medicamentsSelectionnes = [];
+    function ajouterMedicamentPrescription(med) {
+      medicamentsSelectionnes.push(med);
+      renderMedicamentsSelectionnes();
+      // Clear input
+      var input = document.getElementById('cs-med-search-input');
+      if (input) input.value = '';
+      var results = document.getElementById('cs-med-search-results');
+      if (results) results.classList.remove('cs-search-active');
+      showToast('Médicament ajouté', med.nom + ' ajouté à l\'ordonnance.', 'success');
+    }
+
+    function renderMedicamentsSelectionnes() {
+      var el = document.getElementById('cs-med-selected');
+      if (!el) return;
+      if (!medicamentsSelectionnes.length) {
+        el.innerHTML = '<p class="text-sm text-neutral-500">Aucun médicament sélectionné.</p>';
+        return;
+      }
+      var html = '<h4 class="text-sm font-semibold text-neutral-700 mb-2">Médicaments sélectionnés</h4>';
+      medicamentsSelectionnes.forEach(function (m, i) {
+        html += '<div class="p-3 border border-neutral-200 rounded-cs-sm flex items-center justify-between">' +
+          '<div class="flex-1">' +
+            '<div class="text-sm font-medium text-neutral-800">' + echapperHTML(m.nom) + '</div>' +
+            '<div class="text-xs text-neutral-500">' + echapperHTML(m.dci + ' · ' + m.dosage) + '</div>' +
+            '<div class="text-xs text-neutral-600 mt-1">' + echapperHTML(m.posologieAdulte) + '</div>' +
+          '</div>' +
+          '<button onclick="medicamentsSelectionnes.splice(' + i + ',1); renderMedicamentsSelectionnes();" class="cs-btn cs-btn-icon cs-btn-ghost cs-btn-sm" aria-label="Retirer">' + icon('x', 14) + '</button>' +
+        '</div>';
+      });
+      el.innerHTML = html;
+    }
+
+    function validerPrescription() {
+      if (!medicamentsSelectionnes.length) {
+        showToast('Aucun médicament', 'Veuillez ajouter au moins un médicament.', 'warning');
+        return;
+      }
+      // Crée l'ordonnance
+      var ord = {
+        patientId: patient.id,
+        medecinId: user.id,
+        consultationId: null,
+        structureId: Storage.getById('medecins', user.id) ? Storage.getById('medecins', user.id).etablissementId : null,
+        date: new Date().toISOString().slice(0, 10),
+        lignes: medicamentsSelectionnes.map(function (m) {
+          return {
+            medicamentId: m.id,
+            medicamentNom: m.nom,
+            dci: m.dci,
+            dosage: m.dosage,
+            posologie: m.posologieAdulte,
+            duree: '7 jours',
+            quantite: 10
+          };
+        }),
+        diagnosticAssocie: 'Prescription du ' + formatDate(new Date().toISOString()),
+        statut: 'certifiée',
+        dateCertification: new Date().toISOString(),
+        certifiePar: user.id,
+        valideParMinistere: false,
+        tamponVirtuel: true,
+        hashCertification: 'SHA256:' + Math.random().toString(36).slice(2, 42),
+        observations: '',
+        renouvellement: false
+      };
+      var created = Storage.create('ordonnances', ord);
+      Storage.logAction('creation_ordonnance', user.id, 'medecin',
+        'Ordonnance ' + created.id + ' pour patient ' + patient.id, { patientId: patient.id });
+      Storage.addNotification(patient.id, 'success', 'Nouvelle ordonnance',
+        'Une ordonnance a été prescrite par ' + user.prenom + ' ' + user.nom + '.', { action: 'ordonnance' });
+
+      var modal = document.getElementById('cs-prescrire-modal');
+      if (modal) modal.remove();
+      medicamentsSelectionnes = [];
+      showToast('Ordonnance créée', 'Ordonnance ' + created.id + ' certifiée.', 'success');
+    }
+
+    function telechargerResume() {
+      try {
+        Storage.downloadExport();
+        showToast('Résumé téléchargé', 'Export JSON généré.', 'success');
+      } catch (e) { showToast('Erreur', e.message, 'error'); }
+    }
+  </script>
+</body>
+</html>
