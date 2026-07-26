@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FAQ CareSync EHR : réponses aux questions sur l'inscription, la connexion, les rôles patient/médecin/admin, la sécurité et le mode simulation.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>FAQ — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body class="bg-neutral-50">
+  <a href="#main" class="cs-skip-link">Aller au contenu</a>
+  <div id="cs-header"></div>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="bg-gradient-to-br from-primary-800 to-primary-900 text-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 text-center cs-anim-slide-up">
+        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur text-xs font-semibold mb-5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+          Centre d'aide
+        </span>
+        <h1 class="text-4xl sm:text-5xl font-bold leading-tight mb-5">Foire aux questions</h1>
+        <p class="text-lg text-primary-100 leading-relaxed mb-8">Trouvez rapidement une réponse à vos questions sur CareSync EHR. Utilisez la recherche ou filtrez par catégorie.</p>
+
+        <!-- Barre de recherche -->
+        <div class="relative max-w-2xl mx-auto">
+          <input type="search" id="faq-search" placeholder="Rechercher une question, un mot-clé..." class="cs-input pl-12 pr-4 py-4 text-base shadow-cs-medium" aria-label="Rechercher dans la FAQ">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ONGLETS CATÉGORIES -->
+    <section class="py-10 bg-white border-b border-neutral-100 sticky top-16 z-30">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap justify-center gap-2" role="tablist" aria-label="Catégories de questions">
+          <button onclick="filtrerCategorie('toutes')" id="cat-toutes" class="cs-faq-cat active" role="tab" aria-selected="true">Toutes</button>
+          <button onclick="filtrerCategorie('patient')" id="cat-patient" class="cs-faq-cat" role="tab" aria-selected="false">Patient</button>
+          <button onclick="filtrerCategorie('medecin')" id="cat-medecin" class="cs-faq-cat" role="tab" aria-selected="false">Médecin</button>
+          <button onclick="filtrerCategorie('admin')" id="cat-admin" class="cs-faq-cat" role="tab" aria-selected="false">Admin</button>
+          <button onclick="filtrerCategorie('technique')" id="cat-technique" class="cs-faq-cat" role="tab" aria-selected="false">Technique</button>
+          <button onclick="filtrerCategorie('simulation')" id="cat-simulation" class="cs-faq-cat" role="tab" aria-selected="false">Simulation</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- LISTE FAQ -->
+    <section class="py-12">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="faq-liste" class="space-y-3"></div>
+        <div id="faq-empty" class="hidden text-center py-12">
+          <div class="w-16 h-16 mx-auto rounded-full bg-neutral-100 text-neutral-400 flex items-center justify-center mb-4">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-neutral-700 mb-1">Aucune question trouvée</h3>
+          <p class="text-sm text-neutral-500">Essayez un autre mot-clé ou une autre catégorie.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAS TROUVÉ -->
+    <section class="py-16 bg-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="rounded-2xl bg-gradient-to-br from-primary-50 to-info-50 border border-primary-100 p-8 text-center">
+          <div class="w-14 h-14 mx-auto rounded-full bg-primary-100 text-primary-700 flex items-center justify-center mb-4">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+          </div>
+          <h2 class="text-2xl font-bold text-neutral-800 mb-2">Pas trouvé votre réponse ?</h2>
+          <p class="text-neutral-600 mb-6 max-w-xl mx-auto">Notre équipe est à votre écoute pour répondre à toutes vos questions, qu'il s'agisse de support technique, d'inscription ou de partenariat.</p>
+          <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <a href="contact.html" class="cs-btn cs-btn-primary cs-btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              Contacter l'équipe
+            </a>
+            <a href="auth.html" class="cs-btn cs-btn-lg bg-white border border-primary-200 text-primary-700 hover:bg-primary-50">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Accéder à la plateforme
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="cs-footer"></div>
+
+  <script>
+    document.getElementById('cs-header').innerHTML = renderPublicHeader('faq');
+    document.getElementById('cs-footer').innerHTML = renderPublicFooter(false);
+
+    var QUESTIONS_FAQ = [
+      { q: "Comment obtenir un identifiant BFA pour ma première connexion ?", r: "Pour obtenir un identifiant BFA (BFA-PAT, BFA-MED ou BFA-ADM), vous devez d'abord demander un code ministère au format MIN-PAT/MED/ADM-2026-XXXX. Ce code est délivré par le ministère de la Santé après vérification de votre identité. Une fois le code obtenu, vous pouvez compléter votre inscription sur la page correspondant à votre rôle.", cat: "patient", tags: ["inscription", "identifiant", "bfa", "code"] },
+      { q: "Quelle est la différence entre un compte patient, médecin et administrateur ?", r: "Le compte patient permet de consulter son dossier médical et prendre des rendez-vous. Le compte médecin donne accès aux dossiers des patients, à la prescription d'ordonnances certifiées et à un agenda. Le compte administrateur gère les inscriptions, valide les comptes médecins et supervise la sécurité nationale.", cat: "patient", tags: ["role", "compte"] },
+      { q: "Comment puis-je accéder au dossier médical d'un membre de ma famille ?", r: "En tant que patient, vous pouvez ajouter des membres de votre famille depuis la section « Famille ». Une fois ajoutés, vous pouvez consulter leur dossier avec leur consentement explicite. Chaque accès est tracé dans le journal d'audit.", cat: "patient", tags: ["famille", "dossier", "consentement"] },
+      { q: "Mes données médicales sont-elles vraiment sécurisées ?", r: "CareSync EHR applique un chiffrement des données et un journal d'audit complet. Chaque accès, consultation et modification est horodaté et tracé. Ce prototype pédagogique utilise localStorage pour la démonstration ; en production, les données seraient stockées sur des serveurs sécurisés conformes aux standards de la SNDSN.", cat: "patient", tags: ["securite", "donnees", "rgpd"] },
+      { q: "Que faire si j'oublie mon mot de passe ?", r: "Pour des raisons de sécurité, la réinitialisation des mots de passe se fait uniquement via le ministère de la Santé. Vous devez contacter l'équipe support avec une pièce d'identité pour initier la procédure de réinitialisation. Le délai de traitement est généralement de 48 heures ouvrées.", cat: "patient", tags: ["mot de passe", "oubli", "reset"] },
+      { q: "Comment un médecin peut-il être certifié OR, ARGENT ou BRONZE ?", r: "Les niveaux de certification sont attribués par le ministère de la Santé après vérification des diplômes, de l'inscription au Conseil de l'Ordre et de l'exercice effectif. Le niveau OR correspond à une vérification complète, ARGENT à une vérification partielle et BRONZE à un compte préliminaire en attente de validation finale.", cat: "medecin", tags: ["certification", "niveau", "or", "argent", "bronze"] },
+      { q: "Comment rédiger une ordonnance certifiée par tampon virtuel ?", r: "Depuis le tableau de bord médecin, accédez au dossier du patient, cliquez sur « Nouvelle ordonnance », ajoutez les médicaments et validez. Le système applique automatiquement un tampon virtuel horodaté, signé électroniquement avec votre identifiant BFA-MED. L'ordonnance est ensuite visible par le patient dans son espace.", cat: "medecin", tags: ["ordonnance", "tampon", "prescription"] },
+      { q: "Un médecin peut-il accéder à tous les dossiers patients ?", r: "Non. Un médecin ne peut accéder qu'aux dossiers des patients qu'il a consultés ou qui lui ont été explicitement assignés. Chaque accès est tracé dans le journal d'audit. L'accès à un dossier sans motif médical est considéré comme une faute grave.", cat: "medecin", tags: ["acces", "dossier", "securite", "audit"] },
+      { q: "Comment fonctionne l'agenda du médecin ?", r: "L'agenda médecin affiche les rendez-vous à venir, les consultations programmées et les disponibilités. Vous pouvez filtrer par jour, par structure sanitaire et par statut. Les patients peuvent prendre rendez-vous en ligne si vous avez activé les créneaux disponibles.", cat: "medecin", tags: ["agenda", "rendez-vous", "calendar"] },
+      { q: "Comment valider une inscription médecin en attente ?", r: "Depuis le tableau de bord administrateur, accédez à la section « Inscriptions en attente », vérifiez les documents fournis (diplôme, Conseil de l'Ordre, structure), puis cliquez sur « Valider » ou « Rejeter ». Une notification est automatiquement envoyée au médecin concerné.", cat: "admin", tags: ["validation", "medecin", "inscription"] },
+      { q: "Comment générer un code ministère pour un nouvel utilisateur ?", r: "Depuis le tableau de bord admin, cliquez sur « Générer un code ministère », sélectionnez le rôle (PAT, MED ou ADM), puis validez. Le code au format MIN-PAT/MED/ADM-2026-XXXX est généré automatiquement et peut être communiqué à l'utilisateur. Chaque code est à usage unique et a une durée de validité de 30 jours.", cat: "admin", tags: ["code", "ministere", "generation"] },
+      { q: "Que faire en cas de suspicion de fraude ou d'usage abusif ?", r: "L'administrateur peut consulter le journal d'audit complet depuis la section « Sécurité ». En cas d'anomalie, il peut suspendre un compte, révoquer un accès ou signaler l'incident au ministère. Toutes les actions sont elles-mêmes journalisées.", cat: "admin", tags: ["fraude", "audit", "securite", "suspension"] },
+      { q: "Sur quels navigateurs CareSync EHR fonctionne-t-il ?", r: "CareSync EHR est optimisé pour les navigateurs modernes : Chrome 100+, Firefox 100+, Edge 100+, Safari 15+. JavaScript doit être activé. Le prototype utilise localStorage, veillez à ne pas naviguer en mode navigation privée si vous souhaitez conserver vos données entre les sessions.", cat: "technique", tags: ["navigateur", "compatibilite", "javascript"] },
+      { q: "CareSync EHR fonctionne-t-il hors connexion ou en zone à faible connectivité ?", r: "Le prototype pédagogique actuel nécessite une connexion pour charger les ressources. La version de production vise une compatibilité avec les zones à faible connectivité grâce à la mise en cache locale des dossiers consultés récemment. Une version mobile native est à l'étude.", cat: "technique", tags: ["connexion", "offline", "mobile"] },
+      { q: "Comment sont sauvegardées les données sur ce prototype ?", r: "Dans ce prototype pédagogique, toutes les données sont stockées dans le localStorage du navigateur. Elles ne sont pas envoyées sur un serveur distant. Si vous videz le cache de votre navigateur ou utilisez un autre appareil, vos données ne seront pas présentes. Une fonction « Réinitialiser » est disponible dans la section simulation.", cat: "technique", tags: ["localstorage", "donnees", "sauvegarde"] },
+      { q: "Le code source de CareSync EHR est-il open source ?", r: "CareSync EHR est un prototype pédagogique développé dans le cadre d'un projet de formation. Le code source peut être partagé à des fins éducatives sur demande auprès de l'équipe. La version de production nationale serait propriété du Ministère de la Santé du Burkina Faso.", cat: "technique", tags: ["open source", "code", "licence"] },
+      { q: "Comment lancer le mode démonstration ?", r: "Cliquez sur le bouton « Démo » dans l'en-tête ou rendez-vous sur la page de connexion et cliquez sur « Lancer la démonstration ». Vous pourrez choisir un rôle (patient, médecin, admin, aléatoire) et explorer la plateforme avec un compte prérempli. Toutes les données sont fictives.", cat: "simulation", tags: ["demo", "simulation", "role"] },
+      { q: "Puis-je générer un compte aléatoire pour tester la plateforme ?", r: "Oui. Sur la page de connexion, cliquez sur « Générer un compte ». Vous pouvez alors créer un compte patient, médecin ou administrateur avec des données fictives aléatoires, ou demander un code ministère pour une inscription plus réaliste. Le compte généré est immédiatement utilisable.", cat: "simulation", tags: ["generation", "compte", "test", "aleatoire"] },
+      { q: "Comment réinitialiser les données de la simulation ?", r: "Quand le mode simulation est actif, une bannière orange s'affiche en haut de chaque page. Cliquez sur « Réinitialiser » dans cette bannière pour effacer toutes les données de simulation et revenir à l'état initial. Vous pouvez aussi utiliser le bouton FAB (bulle flottante) en bas à droite de l'écran.", cat: "simulation", tags: ["reset", "reinitialiser", "donnees"] }
+    ];
+
+    var categorieActive = 'toutes';
+    var rechercheActive = '';
+
+    function normaliser(texte) {
+      return (texte || '').toLowerCase().trim();
+    }
+
+    function filtrerFAQ() {
+      var liste = document.getElementById('faq-liste');
+      var empty = document.getElementById('faq-empty');
+      if (!liste) return;
+
+      var filtres = QUESTIONS_FAQ.filter(function (item) {
+        var matchCat = categorieActive === 'toutes' || item.cat === categorieActive;
+        var q = normaliser(rechercheActive);
+        if (!q) return matchCat;
+        var matchQ = normaliser(item.q).indexOf(q) !== -1 || normaliser(item.r).indexOf(q) !== -1;
+        var matchTags = (item.tags || []).some(function (t) { return normaliser(t).indexOf(q) !== -1; });
+        return matchCat && (matchQ || matchTags);
+      });
+
+      liste.innerHTML = '';
+      if (filtres.length === 0) {
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+
+      filtres.forEach(function (item, index) {
+        var details = document.createElement('details');
+        details.className = 'cs-card p-4 group';
+        if (index === 0) details.setAttribute('open', '');
+        var summary = document.createElement('summary');
+        summary.className = 'font-semibold text-neutral-800 cursor-pointer flex items-start justify-between gap-4';
+        summary.innerHTML = '<span class="flex items-start gap-3"><span class="flex-shrink-0 mt-0.5 w-7 h-7 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs font-bold">' + (index + 1) + '</span><span>' + echapperHTML(item.q) + '</span></span>' +
+          '<svg class="transition-transform group-open:rotate-180 flex-shrink-0 mt-1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>';
+        var reponse = document.createElement('div');
+        reponse.className = 'mt-3 pl-10 text-sm text-neutral-600 leading-relaxed';
+        reponse.innerHTML = '<p>' + echapperHTML(item.r) + '</p><div class="mt-3 flex flex-wrap gap-1.5">' +
+          (item.tags || []).map(function (t) { return '<span class="cs-badge cs-badge-neutral" style="font-size:10px;padding:2px 6px;">' + echapperHTML(t) + '</span>'; }).join('') +
+          '<span class="cs-badge cs-badge-' + item.cat + '" style="font-size:10px;padding:2px 6px;">' + item.cat + '</span></div>';
+        details.appendChild(summary);
+        details.appendChild(reponse);
+        liste.appendChild(details);
+      });
+    }
+
+    function filtrerCategorie(cat) {
+      categorieActive = cat;
+      var cats = ['toutes', 'patient', 'medecin', 'admin', 'technique', 'simulation'];
+      cats.forEach(function (c) {
+        var btn = document.getElementById('cat-' + c);
+        if (btn) {
+          if (c === cat) { btn.classList.add('active'); btn.setAttribute('aria-selected', 'true'); }
+          else { btn.classList.remove('active'); btn.setAttribute('aria-selected', 'false'); }
+        }
+      });
+      filtrerFAQ();
+    }
+
+    var searchInput = document.getElementById('faq-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', function (e) {
+        rechercheActive = e.target.value;
+        filtrerFAQ();
+      });
+    }
+
+    filtrerFAQ();
+  </script>
+
+  <style>
+    .cs-faq-cat {
+      padding: 0.4rem 0.9rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #495057;
+      background: #F8F9FA;
+      border: 1px solid #DEE2E6;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .cs-faq-cat:hover { color: #146C43; border-color: #198754; }
+    .cs-faq-cat.active {
+      background: #0F5132;
+      color: white;
+      border-color: #0F5132;
+    }
+  </style>
+</body>
+</html>
