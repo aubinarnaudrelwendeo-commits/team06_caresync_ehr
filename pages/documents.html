@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Documents médicaux — CareSync EHR Burkina Faso">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Documents — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body>
+  <a href="#cs-content" class="cs-sr-only">Aller au contenu</a>
+  <div id="cs-sim-elements"></div>
+  <div id="cs-sidebar-wrapper"></div>
+  <main class="cs-main-content">
+    <div id="cs-topbar-wrapper"></div>
+    <div class="cs-content-area" id="cs-content">
+      <div class="cs-card p-10 text-center">
+        <div class="inline-block cs-spinner cs-spinner-dark" style="width: 28px; height: 28px;"></div>
+        <p class="mt-3 text-sm text-neutral-500">Chargement des documents...</p>
+      </div>
+    </div>
+  </main>
+  <div id="cs-modal-root"></div>
+  <script>
+    var user = requireAuth();
+    var currentCat = 'all';
+    var filtSearch = '';
+    var filtDateDebut = '';
+    var filtDateFin = '';
+    var DOCS = [];
+
+    if (user) {
+      try { initPage(); } catch (err) {
+        document.getElementById('cs-content').innerHTML =
+          '<div class="cs-card p-8 text-center text-danger-700">Erreur: ' + echapperHTML(err.message) + '</div>';
+      }
+    }
+
+    function initPage() {
+      document.getElementById('cs-sidebar-wrapper').innerHTML = renderSidebar(user.role, 'documents');
+      document.getElementById('cs-topbar-wrapper').innerHTML = renderTopbar('Documents', 'Ordonnances, analyses, certificats et imagerie');
+      document.getElementById('cs-sim-elements').innerHTML = renderSimElements();
+      initApp();
+      loadDocs();
+      renderPage();
+    }
+
+    function loadDocs() {
+      DOCS = Storage.getAll('documents');
+      // Compléter avec les ordonnances du patient/médecin courant
+      var ord = Storage.getAll('ordonnances');
+      ord.forEach(function (o) {
+        if (user.role === 'patient' && o.patientId !== user.id) return;
+        if (user.role === 'medecin' && o.medecinId !== user.id) return;
+        DOCS.push({
+          id: o.id, nom: 'Ordonnance ' + o.id, categorie: 'ordonnance',
+          date: o.date, taille: 24 * 1024, auteur: 'Dr. ' + (Storage.getById('medecins', o.medecinId) || {}).prenom + ' ' + (Storage.getById('medecins', o.medecinId) || {}).nom,
+          statut: o.statut, type: 'pdf'
+        });
+      });
+      // Documents simulés
+      var sim = [
+        { id: 'DOC-2026-0001', nom: 'Analyse NFS complète', categorie: 'analyse', date: '2026-02-10', taille: 128 * 1024, auteur: 'Labo CHU Yalgado', statut: 'validé', type: 'pdf' },
+        { id: 'DOC-2026-0002', nom: 'Radiographie thorax', categorie: 'imagerie', date: '2026-01-22', taille: 2.4 * 1024 * 1024, auteur: 'CHU Tengandogo', statut: 'validé', type: 'image' },
+        { id: 'DOC-2026-0003', nom: 'Certificat médical', categorie: 'certificat', date: '2026-01-15', taille: 18 * 1024, auteur: 'Dr. Sawadogo Abdoul', statut: 'validé', type: 'pdf' },
+        { id: 'DOC-2026-0004', nom: 'Échographie abdominale', categorie: 'imagerie', date: '2026-02-05', taille: 1.8 * 1024 * 1024, auteur: 'Dr. Konaté Aïcha', statut: 'validé', type: 'image' },
+        { id: 'DOC-2026-0005', nom: 'Bilan lipidique', categorie: 'analyse', date: '2026-02-08', taille: 96 * 1024, auteur: 'Labo CMA Yalgado', statut: 'en attente', type: 'pdf' },
+        { id: 'DOC-2026-0006', nom: 'Certificat d\'aptitude sportive', categorie: 'certificat', date: '2026-01-30', taille: 22 * 1024, auteur: 'Dr. Ouédraogo Fatou', statut: 'validé', type: 'pdf' }
+      ];
+      DOCS = DOCS.concat(sim);
+      DOCS.sort(function (a, b) { return (b.date || '').localeCompare(a.date || ''); });
+    }
+
+    function catBadge(cat) {
+      return { ordonnance: 'cs-badge-info', analyse: 'cs-badge-success', certificat: 'cs-badge-warning', imagerie: 'cs-badge-admin' }[cat] || 'cs-badge-neutral';
+    }
+    function catIcon(cat) {
+      return { ordonnance: 'file-text', analyse: 'test-tube', certificat: 'award', imagerie: 'image' }[cat] || 'file';
+    }
+    function catCount(cat) {
+      if (cat === 'all') return DOCS.length;
+      return DOCS.filter(function (d) { return d.categorie === cat; }).length;
+    }
+
+    function getFilteredDocs() {
+      return DOCS.filter(function (d) {
+        if (currentCat !== 'all' && d.categorie !== currentCat) return false;
+        if (filtSearch) {
+          var q = filtSearch.toLowerCase();
+          if ((d.nom + ' ' + d.auteur + ' ' + d.id).toLowerCase().indexOf(q) === -1) return false;
+        }
+        if (filtDateDebut && d.date < filtDateDebut) return false;
+        if (filtDateFin && d.date > filtDateFin) return false;
+        return true;
+      });
+    }
+
+    function renderPage() {
+      var cats = [
+        { id: 'all', label: 'Tous' },
+        { id: 'ordonnance', label: 'Ordonnances' },
+        { id: 'analyse', label: 'Analyses' },
+        { id: 'certificat', label: 'Certificats' },
+        { id: 'imagerie', label: 'Imagerie' }
+      ];
+      var html = '<div class="cs-card p-1 mb-4 flex gap-1 overflow-x-auto">';
+      cats.forEach(function (c) {
+        var active = currentCat === c.id ? ' bg-primary-50 text-primary-700' : ' text-neutral-600 hover:bg-neutral-50';
+        html += '<button onclick="currentCat=\'' + c.id + '\'; renderPage();" class="cs-btn cs-btn-ghost cs-btn-sm whitespace-nowrap' + active + '">' + icon(catIcon(c.id), 14) + ' ' + c.label + ' <span class="cs-badge cs-badge-neutral text-[10px] ml-1">' + catCount(c.id) + '</span></button>';
+      });
+      html += '</div>';
+
+      html += '<div class="cs-card p-4 mb-4 flex flex-wrap gap-3 items-center">' +
+        '<div class="relative flex-1 min-w-[200px]">' +
+          '<input type="search" placeholder="Rechercher..." value="' + echapperHTML(filtSearch) + '" oninput="filtSearch=this.value; debounceFilter()" class="cs-input pl-9 w-full" aria-label="Rechercher">' +
+          '<span class="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">' + icon('search', 16) + '</span>' +
+        '</div>' +
+        '<div class="flex items-center gap-2 text-xs text-neutral-600"><label for="filt-ddeb">Du</label><input type="date" id="filt-ddeb" value="' + filtDateDebut + '" onchange="filtDateDebut=this.value; renderPage();" class="cs-input cs-btn-sm"></div>' +
+        '<div class="flex items-center gap-2 text-xs text-neutral-600"><label for="filt-dfin">Au</label><input type="date" id="filt-dfin" value="' + filtDateFin + '" onchange="filtDateFin=this.value; renderPage();" class="cs-input cs-btn-sm"></div>' +
+        '<button onclick="openAddDoc()" class="cs-btn cs-btn-primary cs-btn-sm">' + icon('upload', 16) + ' Ajouter un document</button>' +
+      '</div>';
+
+      var docs = getFilteredDocs();
+      html += '<div class="cs-card overflow-hidden"><table class="cs-table"><thead><tr><th>Nom</th><th>Catégorie</th><th>Date</th><th>Taille</th><th>Auteur</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
+      if (!docs.length) {
+        html += '<tr><td colspan="7" class="text-center text-neutral-400 py-8">' + icon('inbox', 28) + '<p class="text-sm mt-2">Aucun document.</p></td></tr>';
+      } else {
+        docs.forEach(function (d) {
+          html += '<tr>' +
+            '<td><div class="flex items-center gap-2"><span class="text-neutral-400">' + icon(catIcon(d.categorie), 16) + '</span><span class="font-medium text-neutral-800">' + echapperHTML(d.nom) + '</span></div></td>' +
+            '<td><span class="cs-badge ' + catBadge(d.categorie) + '">' + echapperHTML(d.categorie) + '</span></td>' +
+            '<td>' + formatDate(d.date) + '</td>' +
+            '<td class="text-neutral-500">' + formatFileSize(d.taille) + '</td>' +
+            '<td class="text-neutral-700">' + echapperHTML(d.auteur || '—') + '</td>' +
+            '<td><span class="cs-badge ' + badgeForStatut(d.statut) + '">' + echapperHTML(d.statut || '—') + '</span></td>' +
+            '<td><div class="flex gap-1">' +
+              '<button onclick="previewDoc(\'' + d.id + '\')" class="cs-btn cs-btn-ghost cs-btn-icon" aria-label="Voir ' + echapperHTML(d.nom) + '">' + icon('eye', 14) + '</button>' +
+              '<button onclick="showToast(\'Téléchargement\', \'' + echapperHTML(d.nom) + ' (simulé)\', \'info\')" class="cs-btn cs-btn-ghost cs-btn-icon" aria-label="Télécharger ' + echapperHTML(d.nom) + '">' + icon('download', 14) + '</button>' +
+              '<button onclick="deleteDoc(\'' + d.id + '\')" class="cs-btn cs-btn-ghost cs-btn-icon text-danger-600" aria-label="Supprimer ' + echapperHTML(d.nom) + '">' + icon('trash-2', 14) + '</button>' +
+            '</div></td>' +
+          '</tr>';
+        });
+      }
+      html += '</tbody></table></div>';
+
+      html += renderUploadZone();
+      document.getElementById('cs-content').innerHTML = html;
+    }
+
+    function renderUploadZone() {
+      return '<div class="cs-card p-6 mt-4" id="cs-upload-zone">' +
+        '<div class="border-2 border-dashed border-neutral-200 rounded-cs-md p-8 text-center transition hover:border-primary-400 hover:bg-primary-50/30" id="cs-drop" tabindex="0" role="button" aria-label="Zone de dépôt de fichier">' +
+          '<div class="text-neutral-400 flex justify-center">' + icon('upload-cloud', 36) + '</div>' +
+          '<p class="text-sm text-neutral-700 mt-3 font-medium">Glissez-déposez un fichier ici</p>' +
+          '<p class="text-xs text-neutral-500 mt-1">ou</p>' +
+          '<button onclick="showToast(\'Upload\', \'Sélection de fichier simulée\', \'info\')" class="cs-btn cs-btn-secondary cs-btn-sm mt-2">Parcourir</button>' +
+          '<p class="text-[10px] text-neutral-400 mt-3">Formats acceptés : PDF, JPG, PNG, DICOM (max 10 Mo)</p>' +
+        '</div>' +
+      '</div>';
+    }
+
+    var debounceTimer = null;
+    function debounceFilter() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(renderPage, 200);
+    }
+
+    function previewDoc(id) {
+      var d = DOCS.find(function (x) { return x.id === id; });
+      if (!d) return;
+      var html = '<div class="cs-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="cs-doc-title">' +
+        '<div class="cs-modal cs-modal-lg" onclick="event.stopPropagation()">' +
+          '<div class="cs-modal-header"><h3 class="cs-modal-title" id="cs-doc-title">' + echapperHTML(d.nom) + '</h3>' +
+            '<button onclick="closeModal()" class="cs-btn cs-btn-icon" aria-label="Fermer">' + icon('x', 18) + '</button></div>' +
+          '<div class="cs-modal-body">' +
+            '<div class="flex flex-wrap gap-2 mb-4 text-xs">' +
+              '<span class="cs-badge ' + catBadge(d.categorie) + '">' + echapperHTML(d.categorie) + '</span>' +
+              '<span class="cs-badge ' + badgeForStatut(d.statut) + '">' + echapperHTML(d.statut) + '</span>' +
+              '<span class="cs-badge cs-badge-neutral">' + formatFileSize(d.taille) + '</span>' +
+            '</div>' +
+            '<div class="grid grid-cols-2 gap-3 text-sm mb-4">' +
+              '<div><div class="text-xs text-neutral-500">Auteur</div><div class="font-medium">' + echapperHTML(d.auteur || '—') + '</div></div>' +
+              '<div><div class="text-xs text-neutral-500">Date</div><div class="font-medium">' + formatDate(d.date) + '</div></div>' +
+            '</div>';
+      if (d.type === 'image') {
+        html += '<div class="bg-neutral-100 rounded-cs-md p-6 text-center text-neutral-400">' + icon('image', 80) + '<p class="text-xs mt-2">Prévisualisation image simulée</p></div>';
+      } else {
+        html += '<div class="bg-neutral-100 rounded-cs-md p-6 text-center text-neutral-400">' + icon('file-text', 80) + '<p class="text-xs mt-2">Prévisualisation PDF simulée</p></div>';
+      }
+      html += '</div>' +
+        '<div class="cs-modal-footer"><button onclick="closeModal()" class="cs-btn cs-btn-secondary">Fermer</button>' +
+          '<button onclick="showToast(\'Téléchargement\', \'' + echapperHTML(d.nom) + ' simulé\', \'info\')" class="cs-btn cs-btn-primary">' + icon('download', 16) + ' Télécharger</button></div>' +
+        '</div></div>';
+      document.getElementById('cs-modal-root').innerHTML = html;
+    }
+
+    function deleteDoc(id) {
+      if (!confirm('Supprimer ce document ? Cette action est irréversible.')) return;
+      var removed = Storage.removeById('documents', id);
+      Storage.logAction('suppression_document', user.id, user.role, 'Document ' + id + ' supprimé', { docId: id });
+      showToast('Supprimé', removed ? 'Document supprimé.' : 'Document simulé supprimé.', 'success');
+      loadDocs();
+      renderPage();
+    }
+
+    function openAddDoc() {
+      var cats = [{ v: 'ordonnance', l: 'Ordonnance' }, { v: 'analyse', l: 'Analyse' }, { v: 'certificat', l: 'Certificat' }, { v: 'imagerie', l: 'Imagerie' }];
+      var cOpts = cats.map(function (c) { return '<option value="' + c.v + '">' + c.l + '</option>'; }).join('');
+      var html = '<div class="cs-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="cs-add-doc-title">' +
+        '<div class="cs-modal" onclick="event.stopPropagation()">' +
+          '<div class="cs-modal-header"><h3 class="cs-modal-title" id="cs-add-doc-title">Ajouter un document</h3>' +
+            '<button onclick="closeModal()" class="cs-btn cs-btn-icon" aria-label="Fermer">' + icon('x', 18) + '</button></div>' +
+          '<div class="cs-modal-body"><form id="cs-add-doc-form" onsubmit="event.preventDefault(); submitDoc();"><div class="space-y-3">' +
+            '<div><label class="cs-label">Nom du document</label><input name="nom" required class="cs-input w-full" placeholder="Ex : Bilan sanguin"></div>' +
+            '<div class="grid grid-cols-2 gap-3"><div><label class="cs-label">Catégorie</label><select name="categorie" class="cs-select w-full">' + cOpts + '</select></div>' +
+              '<div><label class="cs-label">Date</label><input type="date" name="date" required class="cs-input w-full"></div></div>' +
+            '<div><label class="cs-label">Auteur / Source</label><input name="auteur" class="cs-input w-full" placeholder="Ex : Dr. Sawadogo"></div>' +
+            '<div class="border-2 border-dashed border-neutral-200 rounded-cs-md p-4 text-center text-neutral-400 text-xs">' + icon('upload-cloud', 24) + '<p class="mt-1">Fichier (simulé)</p></div>' +
+          '</div></form></div>' +
+          '<div class="cs-modal-footer"><button onclick="closeModal()" class="cs-btn cs-btn-secondary">Annuler</button>' +
+            '<button onclick="submitDoc()" class="cs-btn cs-btn-primary">' + icon('check', 16) + ' Enregistrer</button></div>' +
+        '</div></div>';
+      document.getElementById('cs-modal-root').innerHTML = html;
+    }
+
+    function submitDoc() {
+      var form = document.getElementById('cs-add-doc-form');
+      if (!form) return;
+      var fd = new FormData(form);
+      var item = {
+        nom: fd.get('nom'),
+        categorie: fd.get('categorie'),
+        date: fd.get('date'),
+        taille: Math.floor(Math.random() * 5000) * 1024,
+        auteur: fd.get('auteur') || (user.role === 'medecin' ? 'Dr. ' + user.prenom + ' ' + user.nom : user.prenom + ' ' + user.nom),
+        statut: 'en attente',
+        type: 'pdf'
+      };
+      var created = Storage.create('documents', item);
+      Storage.logAction('ajout_document', user.id, user.role, 'Document ' + created.id + ' ajouté', { docId: created.id });
+      closeModal();
+      showToast('Document ajouté', created.id + ' enregistré.', 'success');
+      loadDocs();
+      renderPage();
+    }
+
+    function closeModal() { document.getElementById('cs-modal-root').innerHTML = ''; }
+  </script>
+</body>
+</html>
