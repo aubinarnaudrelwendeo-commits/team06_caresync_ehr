@@ -1,0 +1,2330 @@
+[
+  {
+    "id": "MED-2026-0001",
+    "nom": "Paracétamol CareSync",
+    "dci": "Paracétamol",
+    "classe": "Antalgique",
+    "forme": "Comprimé",
+    "dosage": "500 mg",
+    "posologieAdulte": "1 à 2 comprimés, 3 fois par jour (max 4 g/j)",
+    "posologieEnfant": "30 à 60 mg/kg/jour en 4 prises",
+    "contreIndications": [
+      "Insuffisance hépatique sévère",
+      "Hypersensibilité au paracétamol"
+    ],
+    "effetsIndesirables": [
+      "Nausées (rare)",
+      "Rash cutané (rare)",
+      "Hépatotoxicité en cas de surdosage"
+    ],
+    "prixPublicBF": 150,
+    "remboursement": "Oui - 70%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0002",
+    "nom": "Amoxicilline BF",
+    "dci": "Amoxicilline",
+    "classe": "Antibiotique - Bêtalactamine",
+    "forme": "Gélule",
+    "dosage": "500 mg",
+    "posologieAdulte": "1 gélule 3 fois par jour pendant 7 jours",
+    "posologieEnfant": "25 à 50 mg/kg/jour en 3 prises",
+    "contreIndications": [
+      "Allergie aux bêtalactamines",
+      "Mononucléose infectieuse"
+    ],
+    "effetsIndesirables": [
+      "Diarrhée",
+      "Candidose buccale",
+      "Rash allergique",
+      "Troubles digestifs"
+    ],
+    "prixPublicBF": 1200,
+    "remboursement": "Oui - 90%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Gélule",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0003",
+    "nom": "Co-trimoxazole MS",
+    "dci": "Sulfaméthoxazole + Triméthoprime",
+    "classe": "Antibiotique - Sulfamide",
+    "forme": "Comprimé",
+    "dosage": "400/80 mg",
+    "posologieAdulte": "1 comprimé 2 fois par jour pendant 5 jours",
+    "posologieEnfant": "6 à 8 mg/kg/jour de TMP en 2 prises",
+    "contreIndications": [
+      "Insuffisance rénale sévère",
+      "Déficit en G6PD",
+      "Porphyrie"
+    ],
+    "effetsIndesirables": [
+      "Nausées",
+      "Vomissements",
+      "Rash",
+      "Photosensibilité",
+      "Augmentation transaminases"
+    ],
+    "prixPublicBF": 850,
+    "remboursement": "Oui - 80%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0004",
+    "nom": "Artésunate Amodiaquine BF",
+    "dci": "Artésunate + Amodiaquine",
+    "classe": "Antipaludique - ACT",
+    "forme": "Comprimé",
+    "dosage": "100/270 mg",
+    "posologieAdulte": "2 comprimés par jour pendant 3 jours",
+    "posologieEnfant": "Selon poids (voir protocole national)",
+    "contreIndications": [
+      "Allergie à l'amodiaquine",
+      "Troubles de la conduction cardiaque"
+    ],
+    "effetsIndesirables": [
+      "Nausées",
+      "Vertiges",
+      "Troubles du sommeil",
+      "Coloration des urines"
+    ],
+    "prixPublicBF": 500,
+    "remboursement": "Oui - 100% (paludisme)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0005",
+    "nom": "Artéméther Luméfantrine",
+    "dci": "Artéméther + Luméfantrine",
+    "classe": "Antipaludique - ACT",
+    "forme": "Comprimé",
+    "dosage": "20/120 mg",
+    "posologieAdulte": "4 comprimés matin et soir pendant 3 jours (8 comprimés/jour adulte)",
+    "posologieEnfant": "Adapté au poids (voir tableau protocole MS)",
+    "contreIndications": [
+      "Allergie aux composants",
+      "Allaitement 1er mois"
+    ],
+    "effetsIndesirables": [
+      "Céphalées",
+      "Vertiges",
+      "Troubles digestifs",
+      "Allongement QT (rare)"
+    ],
+    "prixPublicBF": 750,
+    "remboursement": "Oui - 100% (paludisme)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0006",
+    "nom": "Méfloquine Prophylaxie",
+    "dci": "Méfloquine",
+    "classe": "Antipaludique",
+    "forme": "Comprimé",
+    "dosage": "250 mg",
+    "posologieAdulte": "1 comprimé par semaine (prophylaxie)",
+    "posologieEnfant": "5 mg/kg une fois par semaine",
+    "contreIndications": [
+      "Antécédents psychiatriques",
+      "Épilepsie",
+      "Troubles cardiaques"
+    ],
+    "effetsIndesirables": [
+      "Nausées",
+      "Vertiges",
+      "Cauchemars",
+      "Anxiété",
+      "Photosensibilité"
+    ],
+    "prixPublicBF": 2000,
+    "remboursement": "Non",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0007",
+    "nom": "Métronidazole CareSync",
+    "dci": "Métronidazole",
+    "classe": "Antibiotique - Nitro-imidazolé",
+    "forme": "Comprimé",
+    "dosage": "500 mg",
+    "posologieAdulte": "500 mg 3 fois par jour pendant 7 jours",
+    "posologieEnfant": "20 à 30 mg/kg/jour en 3 prises",
+    "contreIndications": [
+      "Premier trimestre grossesse",
+      "Allaitement",
+      "Alcool"
+    ],
+    "effetsIndesirables": [
+      "Goût métallique",
+      "Nausées",
+      "Neuropathie (usage prolongé)",
+      "Effet Antabuse"
+    ],
+    "prixPublicBF": 950,
+    "remboursement": "Oui - 70%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0008",
+    "nom": "Ibuprofène MS",
+    "dci": "Ibuprofène",
+    "classe": "Anti-inflammatoire (AINS)",
+    "forme": "Comprimé",
+    "dosage": "400 mg",
+    "posologieAdulte": "1 comprimé 3 fois par jour (max 1200 mg/j)",
+    "posologieEnfant": "20 à 30 mg/kg/jour en 3 prises",
+    "contreIndications": [
+      "Ulcère gastro-duodénal",
+      "Insuffisance rénale sévère",
+      "3e trimestre grossesse"
+    ],
+    "effetsIndesirables": [
+      "Troubles digestifs",
+      "Ulcère",
+      "Rétention hydrosodée",
+      "HTA"
+    ],
+    "prixPublicBF": 350,
+    "remboursement": "Non",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0009",
+    "nom": "Aspirine Protect",
+    "dci": "Acide acétylsalicylique",
+    "classe": "Antiagrégant plaquettaire",
+    "forme": "Comprimé",
+    "dosage": "100 mg",
+    "posologieAdulte": "1 comprimé par jour (antiagrégant)",
+    "posologieEnfant": "Non recommandé chez l'enfant (< 16 ans)",
+    "contreIndications": [
+      "Ulcère gastrique",
+      "Asthme aspirine",
+      "Hémophilie",
+      "Grossesse 3e trimestre"
+    ],
+    "effetsIndesirables": [
+      "Saignements digestifs",
+      "Ulcère",
+      "Tinnitus (surdosage)"
+    ],
+    "prixPublicBF": 300,
+    "remboursement": "Oui - 60%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0010",
+    "nom": "Amlodipine BF",
+    "dci": "Amlodipine",
+    "classe": "Antihypertenseur - ICA",
+    "forme": "Comprimé",
+    "dosage": "5 mg",
+    "posologieAdulte": "1 comprimé par jour (max 10 mg)",
+    "posologieEnfant": "Non indiqué chez l'enfant < 6 ans",
+    "contreIndications": [
+      "Hypersensibilité",
+      "Choc cardiogénique",
+      "Sténose aortique"
+    ],
+    "effetsIndesirables": [
+      "Œdèmes des chevilles",
+      "Céphalées",
+      "Vertiges",
+      "Flush"
+    ],
+    "prixPublicBF": 1800,
+    "remboursement": "Oui - 90%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0011",
+    "nom": "Lisinopril MS",
+    "dci": "Lisinopril",
+    "classe": "Antihypertenseur - IEC",
+    "forme": "Comprimé",
+    "dosage": "10 mg",
+    "posologieAdulte": "1 comprimé par jour (initiale 5 mg)",
+    "posologieEnfant": "0,07 mg/kg une fois par jour (enfant > 6 ans)",
+    "contreIndications": [
+      "Grossesse",
+      "Angio-oedème",
+      "Sténose bilatérale artère rénale"
+    ],
+    "effetsIndesirables": [
+      "Toux sèche",
+      "Hypotension",
+      "Hyperkaliémie",
+      "Insuffisance rénale"
+    ],
+    "prixPublicBF": 2200,
+    "remboursement": "Oui - 90%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0012",
+    "nom": "Metformine CareSync",
+    "dci": "Metformine",
+    "classe": "Antidiabétique - Biguanide",
+    "forme": "Comprimé",
+    "dosage": "500 mg",
+    "posologieAdulte": "500 à 1000 mg 2 fois par jour (max 3 g/j)",
+    "posologieEnfant": "Non indiqué chez l'enfant < 10 ans",
+    "contreIndications": [
+      "Insuffisance rénale",
+      "Acidocétose",
+      "Insuffisance hépatique sévère"
+    ],
+    "effetsIndesirables": [
+      "Troubles digestifs",
+      "Carence B12 (long terme)",
+      "Goût métallique"
+    ],
+    "prixPublicBF": 1500,
+    "remboursement": "Oui - 85%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0013",
+    "nom": "Glibenclamide MS",
+    "dci": "Glibenclamide",
+    "classe": "Antidiabétique - Sulfamide",
+    "forme": "Comprimé",
+    "dosage": "5 mg",
+    "posologieAdulte": "1 à 2 comprimés par jour (matin)",
+    "posologieEnfant": "Non indiqué chez l'enfant",
+    "contreIndications": [
+      "Diabète type 1",
+      "Grossesse",
+      "Insuffisance rénale sévère"
+    ],
+    "effetsIndesirables": [
+      "Hypoglycémie",
+      "Troubles digestifs",
+      "Rash"
+    ],
+    "prixPublicBF": 900,
+    "remboursement": "Oui - 85%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0014",
+    "nom": "Insuline NPH",
+    "dci": "Insuline isophane",
+    "classe": "Antidiabétique - Insuline",
+    "forme": "Injection",
+    "dosage": "100 UI/mL",
+    "posologieAdulte": "Adapté à la glycémie (0,5 à 1 UI/kg/jour)",
+    "posologieEnfant": "Adapté au poids et glycémie",
+    "contreIndications": [
+      "Hypoglycémie sévère",
+      "Hypersensibilité à l'insuline"
+    ],
+    "effetsIndesirables": [
+      "Hypoglycémie",
+      "Lipoatrophie au site d'injection",
+      "Prise de poids"
+    ],
+    "prixPublicBF": 5500,
+    "remboursement": "Oui - 100%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0015",
+    "nom": "Salbutamol Spray",
+    "dci": "Salbutamol",
+    "classe": "Bronchodilatateur - Bêta-2",
+    "forme": "Spray",
+    "dosage": "100 µg/dose",
+    "posologieAdulte": "1 à 2 inhalations 3 à 4 fois par jour",
+    "posologieEnfant": "0,1 mg/kg/dose (max 4 doses/jour)",
+    "contreIndications": [
+      "Hypersensibilité",
+      "Tachyarythmie sévère"
+    ],
+    "effetsIndesirables": [
+      "Tremblements",
+      "Tachycardie",
+      "Céphalées",
+      "Hypokaliémie"
+    ],
+    "prixPublicBF": 1200,
+    "remboursement": "Oui - 80%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Spray",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0016",
+    "nom": "Hydrocortisone Crème",
+    "dci": "Hydrocortisone",
+    "classe": "Corticostéroïde topique",
+    "forme": "Crème",
+    "dosage": "1 %",
+    "posologieAdulte": "1 application 2 fois par jour (max 7 jours)",
+    "posologieEnfant": "Idem adulte (zone limitée)",
+    "contreIndications": [
+      "Infection cutanée",
+      "Rosacée",
+      "Dermatite péri-orale"
+    ],
+    "effetsIndesirables": [
+      "Amincissement cutané",
+      "Tachyphylaxie",
+      "Acné"
+    ],
+    "prixPublicBF": 700,
+    "remboursement": "Non",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Crème",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0017",
+    "nom": "Prednisolone MS",
+    "dci": "Prednisolone",
+    "classe": "Corticostéroïde systémique",
+    "forme": "Comprimé",
+    "dosage": "20 mg",
+    "posologieAdulte": "0,5 à 1 mg/kg/jour (adapté à l'indication)",
+    "posologieEnfant": "1 à 2 mg/kg/jour (maladie inflammatoire)",
+    "contreIndications": [
+      "Infection systémique active",
+      "Ulcère gastrique",
+      "Psychose"
+    ],
+    "effetsIndesirables": [
+      "Diabète cortisonique",
+      "Rétention hydrosodée",
+      "Ostéoporose",
+      "Immunosuppression"
+    ],
+    "prixPublicBF": 1800,
+    "remboursement": "Oui - 75%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0018",
+    "nom": "Furosémide BF",
+    "dci": "Furosémide",
+    "classe": "Diurétique de l'anse",
+    "forme": "Comprimé",
+    "dosage": "40 mg",
+    "posologieAdulte": "1 comprimé 1 à 2 fois par jour",
+    "posologieEnfant": "1 à 2 mg/kg/jour",
+    "contreIndications": [
+      "Hypovolémie",
+      "Hypokaliémie sévère",
+      "Insuffisance rénale aiguë"
+    ],
+    "effetsIndesirables": [
+      "Hypokaliémie",
+      "Déshydratation",
+      "Hypotension",
+      "Ototoxicité (IV)"
+    ],
+    "prixPublicBF": 600,
+    "remboursement": "Oui - 80%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0019",
+    "nom": "Spironolactone MS",
+    "dci": "Spironolactone",
+    "classe": "Diurétique épargneur de potassium",
+    "forme": "Comprimé",
+    "dosage": "75 mg",
+    "posologieAdulte": "1 comprimé par jour",
+    "posologieEnfant": "1 à 3 mg/kg/jour",
+    "contreIndications": [
+      "Hyperkaliémie",
+      "Insuffisance rénale sévère",
+      "Maladie d'Addison"
+    ],
+    "effetsIndesirables": [
+      "Hyperkaliémie",
+      "Gynécomastie (homme)",
+      "Troubles menstruels"
+    ],
+    "prixPublicBF": 900,
+    "remboursement": "Oui - 80%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0020",
+    "nom": "Fer Sulfate MS",
+    "dci": "Sulfate de fer",
+    "classe": "Supplément martial",
+    "forme": "Comprimé",
+    "dosage": "80 mg",
+    "posologieAdulte": "1 comprimé 2 à 3 fois par jour",
+    "posologieEnfant": "3 à 6 mg/kg/jour de fer élément",
+    "contreIndications": [
+      "Hémochromatose",
+      "Thalassémie",
+      "Ulcère gastrique actif"
+    ],
+    "effetsIndesirables": [
+      "Constipation",
+      "Selles noires",
+      "Nausées",
+      "Douleurs épigastriques"
+    ],
+    "prixPublicBF": 400,
+    "remboursement": "Oui - 100% (anémie grossesse)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0021",
+    "nom": "Acide Folique MS",
+    "dci": "Acide folique",
+    "classe": "Vitamine B9",
+    "forme": "Comprimé",
+    "dosage": "5 mg",
+    "posologieAdulte": "1 comprimé par jour (grossesse : 0,4 mg)",
+    "posologieEnfant": "0,1 à 0,4 mg/kg/jour",
+    "contreIndications": [
+      "Hypersensibilité",
+      "Anémie pernicieuse non traitée"
+    ],
+    "effetsIndesirables": [
+      "Rare : troubles digestifs"
+    ],
+    "prixPublicBF": 250,
+    "remboursement": "Oui - 100% (grossesse)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0022",
+    "nom": "Vitamine A Enfant",
+    "dci": "Rétinol",
+    "classe": "Vitamine liposoluble",
+    "forme": "Gélule",
+    "dosage": "100 000 UI",
+    "posologieAdulte": "Uniquement pour supplémentation programmée",
+    "posologieEnfant": "100 000 UI (6-12 mois), 200 000 UI (> 12 mois)",
+    "contreIndications": [
+      "Hypervitaminose A",
+      "Insuffisance hépatique"
+    ],
+    "effetsIndesirables": [
+      "Hépatotoxicité (chronique)",
+      "Céphalées",
+      "Sécheresse cutanée"
+    ],
+    "prixPublicBF": 150,
+    "remboursement": "Oui - 100% (PEV)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Gélule",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0023",
+    "nom": "Zinc Sulfate BF",
+    "dci": "Zinc sulfate",
+    "classe": "Oligo-élément",
+    "forme": "Comprimé",
+    "dosage": "20 mg",
+    "posologieAdulte": "20 mg/jour pendant 10-14 jours (diarrhée)",
+    "posologieEnfant": "10 mg/jour (< 6 mois), 20 mg/jour (> 6 mois)",
+    "contreIndications": [
+      "Hypersensibilité"
+    ],
+    "effetsIndesirables": [
+      "Nausées (rare)"
+    ],
+    "prixPublicBF": 200,
+    "remboursement": "Oui - 100% (diarrhée enfant)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0024",
+    "nom": "Sérum Physiologique",
+    "dci": "NaCl 0,9%",
+    "classe": "Solution de réhydratation",
+    "forme": "Perfusion",
+    "dosage": "500 mL",
+    "posologieAdulte": "Adapté à l'état clinique",
+    "posologieEnfant": "Adapté au poids et déshydratation",
+    "contreIndications": [
+      "Hypernatrémie sévère",
+      "Surcharge hydrosodée"
+    ],
+    "effetsIndesirables": [
+      "Surcharge volémique",
+      "Œdèmes"
+    ],
+    "prixPublicBF": 350,
+    "remboursement": "Oui - 100% (urgence)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Perfusion",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0025",
+    "nom": "SRO OMS",
+    "dci": "Sels de réhydratation orale",
+    "classe": "Réhydratation orale",
+    "forme": "Sachet",
+    "dosage": "1 L",
+    "posologieAdulte": "1 sachet dilué dans 1 L d'eau potable",
+    "posologieEnfant": "Adapté à la déshydratation",
+    "contreIndications": [
+      "Aucune (utilisation universelle)"
+    ],
+    "effetsIndesirables": [
+      "Vomissements si administration trop rapide"
+    ],
+    "prixPublicBF": 100,
+    "remboursement": "Oui - 100% (diarrhée)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Sachet",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0026",
+    "nom": "Quinine IV MS",
+    "dci": "Quinine",
+    "classe": "Antipaludique",
+    "forme": "Injection",
+    "dosage": "500 mg",
+    "posologieAdulte": "8 mg/kg/8h IV lente (paludisme sévère)",
+    "posologieEnfant": "Idem adulte (calculé au poids)",
+    "contreIndications": [
+      "Allongement QT",
+      "Myasthénie",
+      "Troubles cardiaques"
+    ],
+    "effetsIndesirables": [
+      "Cinchonisme",
+      "Hypoglycémie",
+      "Troubles visuels",
+      "Céphalées"
+    ],
+    "prixPublicBF": 1800,
+    "remboursement": "Oui - 100% (paludisme sévère)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0027",
+    "nom": "Chloroquine BF",
+    "dci": "Chloroquine",
+    "classe": "Antipaludique (résistance)",
+    "forme": "Comprimé",
+    "dosage": "100 mg",
+    "posologieAdulte": "Résistance fréquente - usage limité",
+    "posologieEnfant": "Adapté au poids",
+    "contreIndications": [
+      "Psoriasis",
+      "Épilepsie",
+      "Rétinopathie"
+    ],
+    "effetsIndesirables": [
+      "Prurit (fréquent chez l'Africain)",
+      "Céphalées",
+      "Troubles visuels"
+    ],
+    "prixPublicBF": 500,
+    "remboursement": "Non - usage réservé",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0028",
+    "nom": "Céfixime MS",
+    "dci": "Céfixime",
+    "classe": "Antibiotique - Céphalosporine 3e",
+    "forme": "Comprimé",
+    "dosage": "200 mg",
+    "posologieAdulte": "200 mg 2 fois par jour pendant 5 à 7 jours",
+    "posologieEnfant": "8 mg/kg/jour en 2 prises",
+    "contreIndications": [
+      "Allergie céphalosporines",
+      "Porphyrie"
+    ],
+    "effetsIndesirables": [
+      "Diarrhée",
+      "Candidose",
+      "Rash",
+      "Troubles digestifs"
+    ],
+    "prixPublicBF": 2500,
+    "remboursement": "Oui - 85%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0029",
+    "nom": "Azithromycine CareSync",
+    "dci": "Azithromycine",
+    "classe": "Antibiotique - Macrolide",
+    "forme": "Comprimé",
+    "dosage": "250 mg",
+    "posologieAdulte": "500 mg le jour 1 puis 250 mg/jour pendant 4 jours",
+    "posologieEnfant": "10 mg/kg/jour pendant 3 jours",
+    "contreIndications": [
+      "Allergie macrolides",
+      "Allongement QT",
+      "Insuffisance hépatique"
+    ],
+    "effetsIndesirables": [
+      "Nausées",
+      "Diarrhée",
+      "Allongement QT",
+      "Troubles auditifs"
+    ],
+    "prixPublicBF": 2800,
+    "remboursement": "Oui - 80%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0030",
+    "nom": "Ciprofloxacine BF",
+    "dci": "Ciprofloxacine",
+    "classe": "Antibiotique - Fluoroquinolone",
+    "forme": "Comprimé",
+    "dosage": "500 mg",
+    "posologieAdulte": "500 mg 2 fois par jour pendant 7 jours",
+    "posologieEnfant": "Non recommandé < 18 ans",
+    "contreIndications": [
+      "Tendinopathie",
+      "Myasthénie",
+      "Epilepsie",
+      "Enfant < 18 ans"
+    ],
+    "effetsIndesirables": [
+      "Tendinite",
+      "Rupture tendineuse",
+      "Troubles digestifs",
+      "Photosensibilité"
+    ],
+    "prixPublicBF": 1800,
+    "remboursement": "Oui - 75%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0031",
+    "nom": "Doxycycline MS",
+    "dci": "Doxycycline",
+    "classe": "Antibiotique - Tétracycline",
+    "forme": "Comprimé",
+    "dosage": "100 mg",
+    "posologieAdulte": "100 mg 2 fois par jour pendant 7 jours",
+    "posologieEnfant": "Contre-indiqué < 8 ans",
+    "contreIndications": [
+      "Enfant < 8 ans",
+      "Grossesse 2e/3e trimestre",
+      "Lupus"
+    ],
+    "effetsIndesirables": [
+      "Photosensibilité",
+      "Œsophagite",
+      "Candidose",
+      "Troubles digestifs"
+    ],
+    "prixPublicBF": 1100,
+    "remboursement": "Oui - 70%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0032",
+    "nom": "Erythromycine BF",
+    "dci": "Erythromycine",
+    "classe": "Antibiotique - Macrolide",
+    "forme": "Comprimé",
+    "dosage": "500 mg",
+    "posologieAdulte": "500 mg 4 fois par jour pendant 7 jours",
+    "posologieEnfant": "30 à 50 mg/kg/jour en 4 prises",
+    "contreIndications": [
+      "Allergie macrolides",
+      "Insuffisance hépatique",
+      "Allongement QT"
+    ],
+    "effetsIndesirables": [
+      "Nausées",
+      "Douleurs épigastriques",
+      "Diarrhée",
+      "Rash"
+    ],
+    "prixPublicBF": 1400,
+    "remboursement": "Oui - 75%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0033",
+    "nom": "Gentamicine MS",
+    "dci": "Gentamicine",
+    "classe": "Antibiotique - Aminoside",
+    "forme": "Injection",
+    "dosage": "80 mg",
+    "posologieAdulte": "3 à 5 mg/kg/jour en 1 prise IV ou IM",
+    "posologieEnfant": "6 à 7,5 mg/kg/jour",
+    "contreIndications": [
+      "Myasthénie",
+      "Insuffisance rénale sévère"
+    ],
+    "effetsIndesirables": [
+      "Néphrotoxicité",
+      "Ototoxicité",
+      "Blocage neuromusculaire"
+    ],
+    "prixPublicBF": 1500,
+    "remboursement": "Oui - 90%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0034",
+    "nom": "Vancomycine MS",
+    "dci": "Vancomycine",
+    "classe": "Antibiotique - Glycopeptide",
+    "forme": "Injection",
+    "dosage": "500 mg",
+    "posologieAdulte": "500 mg IV 4 fois par jour",
+    "posologieEnfant": "40 mg/kg/jour en 4 prises",
+    "contreIndications": [
+      "Hypersensibilité"
+    ],
+    "effetsIndesirables": [
+      "Syndrome de l'homme rouge",
+      "Néphrotoxicité",
+      "Ototoxicité"
+    ],
+    "prixPublicBF": 5500,
+    "remboursement": "Oui - 100%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0035",
+    "nom": "Ranitidine BF (remplacé)",
+    "dci": "Ranitidine",
+    "classe": "Anti-H2",
+    "forme": "Comprimé",
+    "dosage": "150 mg",
+    "posologieAdulte": "150 mg 2 fois par jour",
+    "posologieEnfant": "2 à 4 mg/kg 2 fois par jour",
+    "contreIndications": [
+      "Porphyrie",
+      "Insuffisance rénale sévère"
+    ],
+    "effetsIndesirables": [
+      "Céphalées",
+      "Vertiges",
+      "Rash (rare)"
+    ],
+    "prixPublicBF": 450,
+    "remboursement": "Retiré du marché 2024",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Retiré",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0036",
+    "nom": "Oméprazole MS",
+    "dci": "Oméprazole",
+    "classe": "Inhibiteur de pompe à protons",
+    "forme": "Gélule",
+    "dosage": "20 mg",
+    "posologieAdulte": "1 gélule par jour (matin)",
+    "posologieEnfant": "0,5 à 1 mg/kg/jour",
+    "contreIndications": [
+      "Hypersensibilité",
+      "Tumeur gastrique suspectée"
+    ],
+    "effetsIndesirables": [
+      "Céphalées",
+      "Diarrhée",
+      "Carence B12 (long terme)",
+      "Fractures (long terme)"
+    ],
+    "prixPublicBF": 1300,
+    "remboursement": "Oui - 65%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Gélule",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0037",
+    "nom": "Loperamide BF",
+    "dci": "Loperamide",
+    "classe": "Antidiarrhéique",
+    "forme": "Comprimé",
+    "dosage": "2 mg",
+    "posologieAdulte": "2 gélules initiales puis 1 après chaque selle molle (max 8/jour)",
+    "posologieEnfant": "Non recommandé < 12 ans",
+    "contreIndications": [
+      "Colite ulcéreuse",
+      "Diarrhée bactérienne invasive",
+      "Occlusion"
+    ],
+    "effetsIndesirables": [
+      "Constipation",
+      "Crampes abdominales",
+      "Vertiges"
+    ],
+    "prixPublicBF": 500,
+    "remboursement": "Non",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0038",
+    "nom": "Ondansétron MS",
+    "dci": "Ondansétron",
+    "classe": "Antiémétique - 5HT3",
+    "forme": "Comprimé",
+    "dosage": "4 mg",
+    "posologieAdulte": "4 à 8 mg 3 fois par jour",
+    "posologieEnfant": "0,1 à 0,15 mg/kg 3 fois par jour",
+    "contreIndications": [
+      "Allongement QT",
+      "Utilisation concomitante apomorphine"
+    ],
+    "effetsIndesirables": [
+      "Céphalées",
+      "Constipation",
+      "Allongement QT"
+    ],
+    "prixPublicBF": 2200,
+    "remboursement": "Oui - 70%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0039",
+    "nom": "Diazépam MS",
+    "dci": "Diazépam",
+    "classe": "Anxiolytique - Benzodiazépine",
+    "forme": "Comprimé",
+    "dosage": "5 mg",
+    "posologieAdulte": "2 à 10 mg 2 à 4 fois par jour (max 40 mg/jour)",
+    "posologieEnfant": "0,1 à 0,3 mg/kg/jour",
+    "contreIndications": [
+      "Myasthénie",
+      "Insuffisance respiratoire sévère",
+      "Glaucome angle fermé"
+    ],
+    "effetsIndesirables": [
+      "Sédation",
+      "Dépendance",
+      "Hypotension",
+      "Troubles mnésiques"
+    ],
+    "prixPublicBF": 400,
+    "remboursement": "Oui - 50% (usage strict)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0040",
+    "nom": "Phénytoine BF",
+    "dci": "Phénytoine",
+    "classe": "Antiépileptique - Hydantoïne",
+    "forme": "Comprimé",
+    "dosage": "100 mg",
+    "posologieAdulte": "200 à 500 mg/jour en 2 prises",
+    "posologieEnfant": "5 mg/kg/jour en 2 prises",
+    "contreIndications": [
+      "Bloc auriculo-ventriculaire",
+      "Porphyrie"
+    ],
+    "effetsIndesirables": [
+      "Hyperplasie gingivale",
+      "Hirsutisme",
+      "Ataxie",
+      "Nystagmus"
+    ],
+    "prixPublicBF": 1100,
+    "remboursement": "Oui - 90%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0041",
+    "nom": "Phénobarbital MS",
+    "dci": "Phénobarbital",
+    "classe": "Antiépileptique - Barbiturique",
+    "forme": "Comprimé",
+    "dosage": "50 mg",
+    "posologieAdulte": "50 à 200 mg par jour",
+    "posologieEnfant": "3 à 5 mg/kg/jour",
+    "contreIndications": [
+      "Porphyrie",
+      "Insuffisance respiratoire sévère"
+    ],
+    "effetsIndesirables": [
+      "Sédation",
+      "Dépression",
+      "Ostéomalacie (long terme)"
+    ],
+    "prixPublicBF": 700,
+    "remboursement": "Oui - 90%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0042",
+    "nom": "Acide Valproique MS",
+    "dci": "Valproate de sodium",
+    "classe": "Antiépileptique",
+    "forme": "Comprimé",
+    "dosage": "500 mg",
+    "posologieAdulte": "500 à 2000 mg/jour en 2 prises",
+    "posologieEnfant": "15 à 30 mg/kg/jour",
+    "contreIndications": [
+      "Grossesse",
+      "Insuffisance hépatique",
+      "Porphyrie"
+    ],
+    "effetsIndesirables": [
+      "Hépatotoxicité",
+      "Prise de poids",
+      "Tremblements",
+      "Alopécie"
+    ],
+    "prixPublicBF": 1800,
+    "remboursement": "Oui - 85%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0043",
+    "nom": "Lévétiracétam BF",
+    "dci": "Lévétiracétam",
+    "classe": "Antiépileptique",
+    "forme": "Comprimé",
+    "dosage": "500 mg",
+    "posologieAdulte": "500 mg 2 fois par jour (max 1500 mg 2x/jour)",
+    "posologieEnfant": "10 à 30 mg/kg/jour en 2 prises",
+    "contreIndications": [
+      "Hypersensibilité"
+    ],
+    "effetsIndesirables": [
+      "Somnolence",
+      "Irritabilité",
+      "Vertiges"
+    ],
+    "prixPublicBF": 3500,
+    "remboursement": "Oui - 85%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0044",
+    "nom": "L-Thyroxine MS",
+    "dci": "Lévothyroxine",
+    "classe": "Hormone thyroïdienne",
+    "forme": "Comprimé",
+    "dosage": "100 µg",
+    "posologieAdulte": "1,6 µg/kg/jour (adapté à la TSH)",
+    "posologieEnfant": "10 à 15 µg/kg/jour (enfant)",
+    "contreIndications": [
+      "Hypersensibilité",
+      "Hyperthyroïdie non traitée",
+      "Infarctus récent"
+    ],
+    "effetsIndesirables": [
+      "Palpitations",
+      "Insomnie",
+      "Ostéoporose (surdosage long terme)"
+    ],
+    "prixPublicBF": 1500,
+    "remboursement": "Oui - 100%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0045",
+    "nom": "Carbimazole MS",
+    "dci": "Carbimazole",
+    "classe": "Antithyroïdien",
+    "forme": "Comprimé",
+    "dosage": "5 mg",
+    "posologieAdulte": "5 à 40 mg par jour (selon thyroïde)",
+    "posologieEnfant": "0,25 à 1 mg/kg/jour",
+    "contreIndications": [
+      "Grossesse 1er trimestre (préférer PTU)",
+      "Insuffisance hépatique"
+    ],
+    "effetsIndesirables": [
+      "Agranulocytose (urgente)",
+      "Rash",
+      "Hépatotoxicité",
+      "Arthralgies"
+    ],
+    "prixPublicBF": 1700,
+    "remboursement": "Oui - 85%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0046",
+    "nom": "Allopurinol BF",
+    "dci": "Allopurinol",
+    "classe": "Hypouricémiant",
+    "forme": "Comprimé",
+    "dosage": "100 mg",
+    "posologieAdulte": "100 à 300 mg/jour",
+    "posologieEnfant": "Non indiqué chez l'enfant < 12 ans",
+    "contreIndications": [
+      "Insuffisance rénale sévère",
+      "Crise de goutte aiguë"
+    ],
+    "effetsIndesirables": [
+      "Rash",
+      "Syndrome de Stevens-Johnson (rare)",
+      "Hépatotoxicité"
+    ],
+    "prixPublicBF": 800,
+    "remboursement": "Oui - 60%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0047",
+    "nom": "Hydroxyurée MS",
+    "dci": "Hydroxyurée",
+    "classe": "Antinéoplasique - Drépanocytose",
+    "forme": "Gélule",
+    "dosage": "500 mg",
+    "posologieAdulte": "15 à 35 mg/kg/jour (drépanocytose)",
+    "posologieEnfant": "15 à 35 mg/kg/jour (drépanocytose > 2 ans)",
+    "contreIndications": [
+      "Grossesse",
+      "Insuffisance médullaire",
+      "Leucopénie sévère"
+    ],
+    "effetsIndesirables": [
+      "Myélosuppression",
+      "Ulcères cutanés",
+      "Pigmentation"
+    ],
+    "prixPublicBF": 2200,
+    "remboursement": "Oui - 90% (drépanocytose)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Gélule",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0048",
+    "nom": "Acide Acétylsalicylique 500",
+    "dci": "Aspirine",
+    "classe": "Antalgique - AINS",
+    "forme": "Comprimé",
+    "dosage": "500 mg",
+    "posologieAdulte": "1 à 2 comprimés 3 fois par jour (max 3 g/jour)",
+    "posologieEnfant": "Contre-indiqué < 16 ans (Reye)",
+    "contreIndications": [
+      "Ulcère gastrique",
+      "Asthme aspirine",
+      "Hémophilie",
+      "Enfant < 16 ans"
+    ],
+    "effetsIndesirables": [
+      "Saignements",
+      "Tinnitus",
+      "Ulcère",
+      "Hémorragie"
+    ],
+    "prixPublicBF": 300,
+    "remboursement": "Non",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0049",
+    "nom": "Aciclovir MS",
+    "dci": "Aciclovir",
+    "classe": "Antiviral",
+    "forme": "Comprimé",
+    "dosage": "200 mg",
+    "posologieAdulte": "200 mg 5 fois par jour pendant 5 jours",
+    "posologieEnfant": "5 à 10 mg/kg 4 fois par jour",
+    "contreIndications": [
+      "Allaitement",
+      "Insuffisance rénale sévère"
+    ],
+    "effetsIndesirables": [
+      "Nausées",
+      "Troubles rénaux",
+      "Céphalées"
+    ],
+    "prixPublicBF": 1900,
+    "remboursement": "Oui - 70%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0050",
+    "nom": "Ketoconazole Shampooing",
+    "dci": "Kétoconazole",
+    "classe": "Antifongique topique",
+    "forme": "Shampooing",
+    "dosage": "2 %",
+    "posologieAdulte": "2 fois par semaine pendant 2-4 semaines",
+    "posologieEnfant": "À partir de 12 ans",
+    "contreIndications": [
+      "Hypersensibilité"
+    ],
+    "effetsIndesirables": [
+      "Irritation locale",
+      "Sécheresse cutanée"
+    ],
+    "prixPublicBF": 1200,
+    "remboursement": "Non",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Shampooing",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0051",
+    "nom": "Fluconazole BF",
+    "dci": "Fluconazole",
+    "classe": "Antifongique systémique",
+    "forme": "Gélule",
+    "dosage": "150 mg",
+    "posologieAdulte": "150 mg en une prise (candidose)",
+    "posologieEnfant": "3 à 6 mg/kg/jour",
+    "contreIndications": [
+      "Allaitement",
+      "Insuffisance hépatique",
+      "Allongement QT"
+    ],
+    "effetsIndesirables": [
+      "Nausées",
+      "Hépatotoxicité",
+      "Allongement QT"
+    ],
+    "prixPublicBF": 2400,
+    "remboursement": "Oui - 75%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Gélule",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0052",
+    "nom": "Bétaméthasone Crème",
+    "dci": "Bétaméthasone",
+    "classe": "Corticostéroïde topique fort",
+    "forme": "Crème",
+    "dosage": "0,1 %",
+    "posologieAdulte": "1 application 1 à 2 fois par jour (max 2 semaines)",
+    "posologieEnfant": "Sur zone limitée, surveillance",
+    "contreIndications": [
+      "Infection cutanée",
+      "Rosacée",
+      "Plis cutanés (sauf avis médical)"
+    ],
+    "effetsIndesirables": [
+      "Atrophie cutanée",
+      "Vergetures",
+      "Acné"
+    ],
+    "prixPublicBF": 1100,
+    "remboursement": "Non",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Crème",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0053",
+    "nom": "Gentamicine Collyre",
+    "dci": "Gentamicine",
+    "classe": "Antibiotique ophtalmique",
+    "forme": "Collyre",
+    "dosage": "0,3 %",
+    "posologieAdulte": "1 goutte 4 à 6 fois par jour",
+    "posologieEnfant": "Idem adulte",
+    "contreIndications": [
+      "Hypersensibilité aminoglycosides"
+    ],
+    "effetsIndesirables": [
+      "Irritation locale",
+      "Allergie de contact"
+    ],
+    "prixPublicBF": 800,
+    "remboursement": "Oui - 60%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Collyre",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0054",
+    "nom": "Tétracaïne Collyre",
+    "dci": "Tétracaïne",
+    "classe": "Anesthésique ophtalmique",
+    "forme": "Collyre",
+    "dosage": "1 %",
+    "posologieAdulte": "1 goutte avant examen",
+    "posologieEnfant": "Idem adulte (usage court)",
+    "contreIndications": [
+      "Hypersensibilité esters",
+      "Infection oculaire"
+    ],
+    "effetsIndesirables": [
+      "Irritation locale",
+      "Kératopathie (usage prolongé)"
+    ],
+    "prixPublicBF": 600,
+    "remboursement": "Non",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Collyre",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0055",
+    "nom": "Vitamine D3 MS",
+    "dci": "Cholécalciférol",
+    "classe": "Vitamine D",
+    "forme": "Gouttes",
+    "dosage": "400 UI/goutte",
+    "posologieAdulte": "1 à 2 gouttes par jour",
+    "posologieEnfant": "1 goutte par jour (nourrisson)",
+    "contreIndications": [
+      "Hypercalcémie",
+      "Hypervitaminose D"
+    ],
+    "effetsIndesirables": [
+      "Hypercalcémie (surdosage)",
+      "Constipation"
+    ],
+    "prixPublicBF": 400,
+    "remboursement": "Oui - 100% (prévention rachitisme)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Gouttes",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0056",
+    "nom": "Calcium BF",
+    "dci": "Carbonate de calcium",
+    "classe": "Supplément calcique",
+    "forme": "Comprimé",
+    "dosage": "500 mg",
+    "posologieAdulte": "1 à 2 comprimés par jour",
+    "posologieEnfant": "Adapté au besoin (grossesse, allaitement)",
+    "contreIndications": [
+      "Hypercalcémie",
+      "Néphrolithiase",
+      "Insuffisance rénale"
+    ],
+    "effetsIndesirables": [
+      "Constipation",
+      "Ballonnements"
+    ],
+    "prixPublicBF": 500,
+    "remboursement": "Oui - 70%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0057",
+    "nom": "Vitamine B12 MS",
+    "dci": "Cyanocobalamine",
+    "classe": "Vitamine B12",
+    "forme": "Injection",
+    "dosage": "1000 µg/mL",
+    "posologieAdulte": "1 injection IM par semaine (carence)",
+    "posologieEnfant": "Adapté au poids",
+    "contreIndications": [
+      "Hypersensibilité",
+      "Maladie de Leber"
+    ],
+    "effetsIndesirables": [
+      "Acné (rare)",
+      "Réactions allergiques"
+    ],
+    "prixPublicBF": 900,
+    "remboursement": "Oui - 100% (carence avérée)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0058",
+    "nom": "Penicilline V MS",
+    "dci": "Phénoxyméthylpénicilline",
+    "classe": "Antibiotique - Pénicilline",
+    "forme": "Comprimé",
+    "dosage": "500 mg",
+    "posologieAdulte": "500 mg 4 fois par jour pendant 10 jours",
+    "posologieEnfant": "25 à 50 mg/kg/jour en 4 prises",
+    "contreIndications": [
+      "Allergie pénicillines"
+    ],
+    "effetsIndesirables": [
+      "Diarrhée",
+      "Rash",
+      "Candidose"
+    ],
+    "prixPublicBF": 700,
+    "remboursement": "Oui - 90%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0059",
+    "nom": "Benzathine Pénicilline",
+    "dci": "Benzathine pénicilline G",
+    "classe": "Antibiotique - Pénicilline retard",
+    "forme": "Injection",
+    "dosage": "2,4 MUI",
+    "posologieAdulte": "1 injection IM unique (angine)",
+    "posologieEnfant": "30 000 à 50 000 UI/kg",
+    "contreIndications": [
+      "Allergie pénicillines"
+    ],
+    "effetsIndesirables": [
+      "Réaction allergique (choc)",
+      "Douleur au site d'injection"
+    ],
+    "prixPublicBF": 1200,
+    "remboursement": "Oui - 100%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0060",
+    "nom": "Vaccin BCG",
+    "dci": "BCG",
+    "classe": "Vaccin antituberculeux",
+    "forme": "Injection intradermique",
+    "dosage": "0,1 mL",
+    "posologieAdulte": "0,1 mL ID à la naissance",
+    "posologieEnfant": "0,1 mL à la naissance (dès 1er jour)",
+    "contreIndications": [
+      "Immunodéficience sévère",
+      "Tuberculose active"
+    ],
+    "effetsIndesirables": [
+      "Réaction locale (abcès froid)",
+      "Adénopathie"
+    ],
+    "prixPublicBF": 150,
+    "remboursement": "Oui - 100% (PEV)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "intradermique",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0061",
+    "nom": "Vaccin ROR",
+    "dci": "Rougeole-Oreillons-Rubéole",
+    "classe": "Vaccin vivant atténué",
+    "forme": "Injection SC",
+    "dosage": "1 dose",
+    "posologieAdulte": "1 dose à 9 mois puis rappel",
+    "posologieEnfant": "1 dose à 9 mois + 2e dose à 15-18 mois",
+    "contreIndications": [
+      "Grossesse",
+      "Immunodéficience",
+      "Allergie néomycine"
+    ],
+    "effetsIndesirables": [
+      "Fièvre",
+      "Rash",
+      "Adénopathies",
+      "Convulsions fébriles (rare)"
+    ],
+    "prixPublicBF": 500,
+    "remboursement": "Oui - 100% (PEV)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "SC",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0062",
+    "nom": "Vaccin DTCoq",
+    "dci": "Diphtérie-Tétanos-Coqueluche",
+    "classe": "Vaccin inactivé",
+    "forme": "Injection IM",
+    "dosage": "0,5 mL",
+    "posologieAdulte": "Rappels selon calendrier PEV",
+    "posologieEnfant": "3 doses à 6/10/14 semaines + rappels",
+    "contreIndications": [
+      "Encéphalopathie évolutive",
+      "Réaction grave dose précédente"
+    ],
+    "effetsIndesirables": [
+      "Fièvre",
+      "Réaction locale",
+      "Irritabilité"
+    ],
+    "prixPublicBF": 350,
+    "remboursement": "Oui - 100% (PEV)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "IM",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0063",
+    "nom": "Vaccin VPH",
+    "dci": "Papillomavirus humain",
+    "classe": "Vaccin recombinant",
+    "forme": "Injection IM",
+    "dosage": "0,5 mL",
+    "posologieAdulte": "Selon schéma (2 ou 3 doses selon âge)",
+    "posologieEnfant": "2 doses 9-14 ans (0, 6 mois)",
+    "contreIndications": [
+      "Grossesse",
+      "Hypersensibilité levure"
+    ],
+    "effetsIndesirables": [
+      "Syncope post-injection",
+      "Réaction locale",
+      "Céphalées"
+    ],
+    "prixPublicBF": 15000,
+    "remboursement": "Oui - 100% (programme national)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "IM",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0064",
+    "nom": "Vaccin Fièvre Jaune",
+    "dci": "Vaccin antiamarile",
+    "classe": "Vaccin vivant atténué",
+    "forme": "Injection SC",
+    "dosage": "0,5 mL",
+    "posologieAdulte": "1 dose à 9 mois + rappel 10 ans",
+    "posologieEnfant": "1 dose à 9 mois (PEV BF)",
+    "contreIndications": [
+      "Allergie oeuf",
+      "Immunodéficience",
+      "Grossesse (sauf épidémie)"
+    ],
+    "effetsIndesirables": [
+      "Fièvre",
+      "Céphalées",
+      "Myalgie (5-10 j après)"
+    ],
+    "prixPublicBF": 400,
+    "remboursement": "Oui - 100% (PEV obligatoire BF)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "SC",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0065",
+    "nom": "Vaccin Méningite A",
+    "dci": "MenAfriVac",
+    "classe": "Vaccin conjugué antiméningocoque",
+    "forme": "Injection SC",
+    "dosage": "0,5 mL",
+    "posologieAdulte": "1 dose unique",
+    "posologieEnfant": "1 dose 1-29 ans",
+    "contreIndications": [
+      "Hypersensibilité"
+    ],
+    "effetsIndesirables": [
+      "Réaction locale",
+      "Céphalées"
+    ],
+    "prixPublicBF": 600,
+    "remboursement": "Oui - 100% (campagnes nationales BF)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "SC",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0066",
+    "nom": "Sérothérapie Antirabique",
+    "dci": "Immunoglobuline antirabique",
+    "classe": "Sérum antirabique",
+    "forme": "Injection",
+    "dosage": "150 UI/mL",
+    "posologieAdulte": "20 UI/kg + vaccin (morsure gr. III)",
+    "posologieEnfant": "Idem adulte (poids)",
+    "contreIndications": [
+      "Hypersensibilité sérum"
+    ],
+    "effetsIndesirables": [
+      "Réaction allergique",
+      "Douleur locale"
+    ],
+    "prixPublicBF": 8500,
+    "remboursement": "Oui - 100% (urgence)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0067",
+    "nom": "Sulfate de Magnésium MS",
+    "dci": "MgSO4",
+    "classe": "Tocolytique / Anti-convulsivant",
+    "forme": "Injection",
+    "dosage": "4 g",
+    "posologieAdulte": "4 g IV puis 1 g/h (éclampsie)",
+    "posologieEnfant": "Non applicable",
+    "contreIndications": [
+      "Myasthénie",
+      "Bloc auriculo-ventriculaire"
+    ],
+    "effetsIndesirables": [
+      "Flush",
+      "Hypotension",
+      "Dépression respiratoire"
+    ],
+    "prixPublicBF": 700,
+    "remboursement": "Oui - 100% (éclampsie)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0068",
+    "nom": "Ocytocine MS",
+    "dci": "Ocytocine",
+    "classe": "Hormone utérotonique",
+    "forme": "Injection",
+    "dosage": "10 UI/mL",
+    "posologieAdulte": "5 à 10 UI IM post-partum hémorragie",
+    "posologieEnfant": "Non applicable",
+    "contreIndications": [
+      "Hypersensibilité",
+      "Dystocie mécanique"
+    ],
+    "effetsIndesirables": [
+      "Hyperstimulation utérine",
+      "Rupture utérine",
+      "Hyponatrémie"
+    ],
+    "prixPublicBF": 600,
+    "remboursement": "Oui - 100% (urgence obstétricale)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0069",
+    "nom": "Misoprostol BF",
+    "dci": "Misoprostol",
+    "classe": "Prostaglandine - Hémorragie post-partum",
+    "forme": "Comprimé",
+    "dosage": "200 µg",
+    "posologieAdulte": "600 µg per os ou sublingual (HPP)",
+    "posologieEnfant": "Non applicable",
+    "contreIndications": [
+      "Grossesse (avortement thérapeutique exclusivement)"
+    ],
+    "effetsIndesirables": [
+      "Diarrhée",
+      "Crampes",
+      "Frissons",
+      "Fièvre"
+    ],
+    "prixPublicBF": 1500,
+    "remboursement": "Oui - 100% (HPP)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0070",
+    "nom": "Acide Tranexamique MS",
+    "dci": "Acide tranexamique",
+    "classe": "Antifibrinolytique",
+    "forme": "Injection",
+    "dosage": "500 mg",
+    "posologieAdulte": "1 g IV 3 fois par jour (HPP)",
+    "posologieEnfant": "10 mg/kg 3 fois par jour",
+    "contreIndications": [
+      "Thrombose active",
+      "Insuffisance rénale sévère"
+    ],
+    "effetsIndesirables": [
+      "Thrombose (rare)",
+      "Hypotension (injection rapide)"
+    ],
+    "prixPublicBF": 1300,
+    "remboursement": "Oui - 80%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0071",
+    "nom": "Atropine Sulfate MS",
+    "dci": "Atropine",
+    "classe": "Parasympatholytique",
+    "forme": "Injection",
+    "dosage": "1 mg/mL",
+    "posologieAdulte": "0,5 à 1 mg IV (bradycardie)",
+    "posologieEnfant": "0,02 mg/kg (bradycardie)",
+    "contreIndications": [
+      "Glaucome angle fermé",
+      "Hypertrophie prostatique"
+    ],
+    "effetsIndesirables": [
+      "Tachycardie",
+      "Sécheresse buccale",
+      "Rétention urinaire",
+      "Mydriase"
+    ],
+    "prixPublicBF": 500,
+    "remboursement": "Oui - 100% (urgence)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0072",
+    "nom": "Adrénaline MS",
+    "dci": "Épinéphrine",
+    "classe": "Sympathomimétique",
+    "forme": "Injection",
+    "dosage": "1 mg/mL",
+    "posologieAdulte": "0,3 à 0,5 mg IM (anaphylaxie)",
+    "posologieEnfant": "0,01 mg/kg IM (anaphylaxie)",
+    "contreIndications": [
+      "Anesthésie par inhalation halogénée (relatif)"
+    ],
+    "effetsIndesirables": [
+      "Tachycardie",
+      "HTA",
+      "Tremblements",
+      "Angoisse"
+    ],
+    "prixPublicBF": 450,
+    "remboursement": "Oui - 100% (urgence anaphylaxie)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0073",
+    "nom": "Insuline Rapide",
+    "dci": "Insuline régulière",
+    "classe": "Antidiabétique - Insuline rapide",
+    "forme": "Injection",
+    "dosage": "100 UI/mL",
+    "posologieAdulte": "Adapté glycémie (0,1 UI/kg bolus)",
+    "posologieEnfant": "Adapté au poids",
+    "contreIndications": [
+      "Hypoglycémie sévère"
+    ],
+    "effetsIndesirables": [
+      "Hypoglycémie",
+      "Lipoatrophie"
+    ],
+    "prixPublicBF": 4500,
+    "remboursement": "Oui - 100%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0074",
+    "nom": "Glucose 30 % MS",
+    "dci": "Glucose hypertonique",
+    "classe": "Hypoglycémiant - Correction hypoglycémie",
+    "forme": "Injection",
+    "dosage": "30 %",
+    "posologieAdulte": "0,5 à 1 g/kg IV (hypoglycémie sévère)",
+    "posologieEnfant": "0,5 g/kg IV lente",
+    "contreIndications": [
+      "Hyperglycémie sévère"
+    ],
+    "effetsIndesirables": [
+      "Phlébite (injection prolongée)"
+    ],
+    "prixPublicBF": 300,
+    "remboursement": "Oui - 100% (urgence)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Injection",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0075",
+    "nom": "Nifédipine BF",
+    "dci": "Nifédipine",
+    "classe": "Inhibiteur calcique - HTA grossesse",
+    "forme": "Comprimé LP",
+    "dosage": "20 mg",
+    "posologieAdulte": "20 mg 2 fois par jour (HTA grossesse)",
+    "posologieEnfant": "Non indiqué enfant",
+    "contreIndications": [
+      "Hypotension sévère",
+      "Sténose aortique",
+      "Grossesse 1er trimestre"
+    ],
+    "effetsIndesirables": [
+      "Céphalées",
+      "Flush",
+      "Œdèmes",
+      "Reflex tachycardia"
+    ],
+    "prixPublicBF": 1200,
+    "remboursement": "Oui - 85%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "LP",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0076",
+    "nom": "Albendazole MS",
+    "dci": "Albendazole",
+    "classe": "Antihelminthique",
+    "forme": "Comprimé",
+    "dosage": "400 mg",
+    "posologieAdulte": "400 mg en une prise (oxyurose, ascaridiose)",
+    "posologieEnfant": "200 mg si < 2 ans, 400 mg si > 2 ans",
+    "contreIndications": [
+      "Grossesse 1er trimestre",
+      "Hypersensibilité"
+    ],
+    "effetsIndesirables": [
+      "Troubles digestifs",
+      "Céphalées",
+      "Hépatotoxicité (rare)"
+    ],
+    "prixPublicBF": 350,
+    "remboursement": "Oui - 100% (dénutrition enfantine)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "À évaluer",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0077",
+    "nom": "Praziquantel BF",
+    "dci": "Praziquantel",
+    "classe": "Antihelminthique - Bilharziose",
+    "forme": "Comprimé",
+    "dosage": "600 mg",
+    "posologieAdulte": "40 mg/kg en une prise (bilharziose)",
+    "posologieEnfant": "40 mg/kg en une prise (> 4 ans)",
+    "contreIndications": [
+      "Cysticercose oculaire",
+      "Allaitement"
+    ],
+    "effetsIndesirables": [
+      "Nausées",
+      "Douleurs abdominales",
+      "Somnolence",
+      "Céphalées"
+    ],
+    "prixPublicBF": 850,
+    "remboursement": "Oui - 100% (bilharziose)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0078",
+    "nom": "Pipéraquine Artésunate BF",
+    "dci": "Pipéraquine + Artésunate",
+    "classe": "Antipaludique ACT",
+    "forme": "Comprimé",
+    "dosage": "320/40 mg",
+    "posologieAdulte": "3 à 4 comprimés une fois par jour pendant 3 jours",
+    "posologieEnfant": "Adapté au poids (protocole national)",
+    "contreIndications": [
+      "Allongement QT",
+      "Allergie composants"
+    ],
+    "effetsIndesirables": [
+      "Céphalées",
+      "Troubles digestifs",
+      "Allongement QT"
+    ],
+    "prixPublicBF": 900,
+    "remboursement": "Oui - 100% (paludisme)",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0079",
+    "nom": "Chlorphénamine MS",
+    "dci": "Chlorphénamine",
+    "classe": "Antihistaminique H1",
+    "forme": "Comprimé",
+    "dosage": "4 mg",
+    "posologieAdulte": "4 mg 3 à 4 fois par jour",
+    "posologieEnfant": "0,3 mg/kg/jour en 4 prises",
+    "contreIndications": [
+      "Hypertrophie prostatique",
+      "Glaucome",
+      "Nouveau-né prématuré"
+    ],
+    "effetsIndesirables": [
+      "Sédation",
+      "Sécheresse buccale",
+      "Troubles visuels"
+    ],
+    "prixPublicBF": 400,
+    "remboursement": "Oui - 70%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0080",
+    "nom": "Cetirizine BF",
+    "dci": "Cetirizine",
+    "classe": "Antihistaminique H1 2e génération",
+    "forme": "Comprimé",
+    "dosage": "10 mg",
+    "posologieAdulte": "1 comprimé par jour",
+    "posologieEnfant": "5 mg/jour (6-12 ans), 2,5 mg/jour (2-6 ans)",
+    "contreIndications": [
+      "Insuffisance rénale sévère",
+      "Allaitement"
+    ],
+    "effetsIndesirables": [
+      "Somnolence (rare)",
+      "Sécheresse buccale",
+      "Céphalées"
+    ],
+    "prixPublicBF": 700,
+    "remboursement": "Non",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0081",
+    "nom": "Prométhazine MS",
+    "dci": "Prométhazine",
+    "classe": "Antihistaminique - Antiémétique",
+    "forme": "Sirop",
+    "dosage": "5 mg/5 mL",
+    "posologieAdulte": "1 cuillère à soupe 3 fois par jour",
+    "posologieEnfant": "0,5 mg/kg/jour en 3 prises",
+    "contreIndications": [
+      "Enfant < 2 ans",
+      "Glaucome",
+      "Hypertrophie prostatique"
+    ],
+    "effetsIndesirables": [
+      "Sédation",
+      "Hypotension",
+      "Syndrome malin (rare)"
+    ],
+    "prixPublicBF": 600,
+    "remboursement": "Oui - 60%",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Sirop",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  },
+  {
+    "id": "MED-2026-0082",
+    "nom": "Vitamine C MS",
+    "dci": "Acide ascorbique",
+    "classe": "Vitamine hydrosoluble",
+    "forme": "Comprimé",
+    "dosage": "500 mg",
+    "posologieAdulte": "1 comprimé par jour",
+    "posologieEnfant": "50 à 100 mg/jour (carence)",
+    "contreIndications": [
+      "Calculs oxaliques (surdosage chronique)"
+    ],
+    "effetsIndesirables": [
+      "Diarrhée (surdosage)"
+    ],
+    "prixPublicBF": 250,
+    "remboursement": "Non",
+    "verifiePar": "Ministère de la Santé BF + Ordre des Pharmaciens",
+    "dateVerification": "2026-01-15",
+    "statut": "Autorisé",
+    "voie": "Comprimé",
+    "conservation": "À conserver à température ambiante (< 30°C)",
+    "grossesse": "Autorisé sous avis médical",
+    "allaitement": "À évaluer selon le cas"
+  }
+]
