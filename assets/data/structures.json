@@ -1,0 +1,1946 @@
+[
+  {
+    "id": "STR-2026-0001",
+    "nom": "CHU Yalgado Ouédraogo",
+    "type": "CHU",
+    "region": "Centre",
+    "province": "Kadiogo",
+    "commune": "Ouagadougou",
+    "adresse": "Avenue de la Nation, Ouagadougou",
+    "telephone": "+226 25 30 72 10",
+    "capaciteLit": 850,
+    "specialites": [
+      "Médecine Interne",
+      "Cardiologie",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Neurologie",
+      "Dermatologie",
+      "Ophtalmologie",
+      "ORL",
+      "Psychiatrie",
+      "Radiologie",
+      "Anesthésie-Réanimation",
+      "Néphrologie",
+      "Oncologie",
+      "Endocrinologie",
+      "Rhumatologie"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0002",
+      "BFA-MED-2026-0004",
+      "BFA-MED-2026-0005",
+      "BFA-MED-2026-0006",
+      "BFA-MED-2026-0008",
+      "BFA-MED-2026-0010",
+      "BFA-MED-2026-0011",
+      "BFA-MED-2026-0013",
+      "BFA-MED-2026-0015"
+    ],
+    "statut": "actif",
+    "nbPatients": 6201,
+    "dateCreation": "2026-01-15",
+    "niveauCertification": "OR",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0002",
+    "nom": "CHU Tengandogo",
+    "type": "CHU",
+    "region": "Centre",
+    "province": "Kadiogo",
+    "commune": "Ouagadougou",
+    "adresse": "Zone du Palais, Ouagadougou",
+    "telephone": "+226 25 31 21 09",
+    "capaciteLit": 650,
+    "specialites": [
+      "Médecine Interne",
+      "Cardiologie",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Neurologie",
+      "Dermatologie",
+      "Ophtalmologie",
+      "ORL",
+      "Psychiatrie",
+      "Radiologie",
+      "Anesthésie-Réanimation",
+      "Néphrologie",
+      "Oncologie",
+      "Endocrinologie",
+      "Rhumatologie"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0003",
+      "BFA-MED-2026-0007",
+      "BFA-MED-2026-0009",
+      "BFA-MED-2026-0012",
+      "BFA-MED-2026-0014"
+    ],
+    "statut": "actif",
+    "nbPatients": 7442,
+    "dateCreation": "2026-01-25",
+    "niveauCertification": "OR",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0003",
+    "nom": "CHU Pédiatrique Charles de Gaulle",
+    "type": "CHU",
+    "region": "Centre",
+    "province": "Kadiogo",
+    "commune": "Ouagadougou",
+    "adresse": "Avenue de l'Indépendance, Ouagadougou",
+    "telephone": "+226 25 30 64 32",
+    "capaciteLit": 320,
+    "specialites": [
+      "Médecine Interne",
+      "Cardiologie",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Neurologie",
+      "Dermatologie",
+      "Ophtalmologie",
+      "ORL",
+      "Psychiatrie",
+      "Radiologie",
+      "Anesthésie-Réanimation",
+      "Néphrologie",
+      "Oncologie",
+      "Endocrinologie",
+      "Rhumatologie"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0001",
+      "BFA-MED-2026-0016"
+    ],
+    "statut": "actif",
+    "nbPatients": 2514,
+    "dateCreation": "2026-01-24",
+    "niveauCertification": "OR",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0004",
+    "nom": "CHR Sourou Sanou",
+    "type": "CHR",
+    "region": "Hauts-Bassins",
+    "province": "Houet",
+    "commune": "Bobo-Dioulasso",
+    "adresse": "Quartier Consulat, Bobo-Dioulasso",
+    "telephone": "+226 20 97 12 34",
+    "capaciteLit": 420,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Médecine Interne",
+      "Cardiologie"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 5545,
+    "dateCreation": "2026-01-23",
+    "niveauCertification": "OR",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0005",
+    "nom": "CHR de Banfora",
+    "type": "CHR",
+    "region": "Cascades",
+    "province": "Comoé",
+    "commune": "Banfora",
+    "adresse": "Route nationale 7, Banfora",
+    "telephone": "+226 20 87 11 22",
+    "capaciteLit": 180,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Médecine Interne",
+      "Cardiologie"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0018"
+    ],
+    "statut": "actif",
+    "nbPatients": 2625,
+    "dateCreation": "2026-01-20",
+    "niveauCertification": "OR",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0006",
+    "nom": "CHR de Dédougou",
+    "type": "CHR",
+    "region": "Boucle du Mouhoun",
+    "province": "Mouhoun",
+    "commune": "Dédougou",
+    "adresse": "Quartier administratif, Dédougou",
+    "telephone": "+226 20 56 33 44",
+    "capaciteLit": 200,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Médecine Interne",
+      "Cardiologie"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 1903,
+    "dateCreation": "2026-01-12",
+    "niveauCertification": "OR",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0007",
+    "nom": "CHR de Ouahigouya",
+    "type": "CHR",
+    "region": "Nord",
+    "province": "Yatenga",
+    "commune": "Ouahigouya",
+    "adresse": "Avenue de la Révolution, Ouahigouya",
+    "telephone": "+226 20 55 67 89",
+    "capaciteLit": 220,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Médecine Interne",
+      "Cardiologie"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 1430,
+    "dateCreation": "2026-01-08",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0008",
+    "nom": "CHR de Koudougou",
+    "type": "CHR",
+    "region": "Centre-Ouest",
+    "province": "Boulkiemdé",
+    "commune": "Koudougou",
+    "adresse": "Route de Ouagadougou, Koudougou",
+    "telephone": "+226 20 45 11 33",
+    "capaciteLit": 195,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Médecine Interne",
+      "Cardiologie"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 2647,
+    "dateCreation": "2026-01-08",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0009",
+    "nom": "CHR de Kaya",
+    "type": "CHR",
+    "region": "Centre-Nord",
+    "province": "Sanmatenga",
+    "commune": "Kaya",
+    "adresse": "Quartier Tougouri, Kaya",
+    "telephone": "+226 20 46 22 44",
+    "capaciteLit": 180,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Médecine Interne",
+      "Cardiologie"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0035"
+    ],
+    "statut": "actif",
+    "nbPatients": 923,
+    "dateCreation": "2026-01-20",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0010",
+    "nom": "CHR de Tenkodogo",
+    "type": "CHR",
+    "region": "Centre-Est",
+    "province": "Boulgou",
+    "commune": "Tenkodogo",
+    "adresse": "Route de Fada, Tenkodogo",
+    "telephone": "+226 20 47 33 55",
+    "capaciteLit": 165,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Médecine Interne",
+      "Cardiologie"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 1255,
+    "dateCreation": "2026-01-17",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0011",
+    "nom": "CHR de Fada N'Gourma",
+    "type": "CHR",
+    "region": "Est",
+    "province": "Gourma",
+    "commune": "Fada N'Gourma",
+    "adresse": "Quartier Yargatenga, Fada N'Gourma",
+    "telephone": "+226 20 48 44 66",
+    "capaciteLit": 175,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Médecine Interne",
+      "Cardiologie"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 1587,
+    "dateCreation": "2026-01-16",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0012",
+    "nom": "CHR de Dori",
+    "type": "CHR",
+    "region": "Sahel",
+    "province": "Séno",
+    "commune": "Dori",
+    "adresse": "Quartier Amidou, Dori",
+    "telephone": "+226 20 49 55 77",
+    "capaciteLit": 120,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Médecine Interne",
+      "Cardiologie"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0019",
+      "BFA-MED-2026-0032"
+    ],
+    "statut": "actif",
+    "nbPatients": 1651,
+    "dateCreation": "2026-01-25",
+    "niveauCertification": "OR",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0013",
+    "nom": "CHR de Gaoua",
+    "type": "CHR",
+    "region": "Sud-Ouest",
+    "province": "Poni",
+    "commune": "Gaoua",
+    "adresse": "Route de Banfora, Gaoua",
+    "telephone": "+226 20 50 66 88",
+    "capaciteLit": 140,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Médecine Interne",
+      "Cardiologie"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0027"
+    ],
+    "statut": "actif",
+    "nbPatients": 1397,
+    "dateCreation": "2026-01-07",
+    "niveauCertification": "OR",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0014",
+    "nom": "CHR de Manga",
+    "type": "CHR",
+    "region": "Centre-Sud",
+    "province": "Zoundwéogo",
+    "commune": "Manga",
+    "adresse": "Quartier Basziga, Manga",
+    "telephone": "+226 20 51 77 99",
+    "capaciteLit": 130,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Médecine Interne",
+      "Cardiologie"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0023"
+    ],
+    "statut": "actif",
+    "nbPatients": 1751,
+    "dateCreation": "2026-01-14",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0015",
+    "nom": "CHR de Ziniaré",
+    "type": "CHR",
+    "region": "Plateau-Central",
+    "province": "Oubritenga",
+    "commune": "Ziniaré",
+    "adresse": "Route de Ouagadougou, Ziniaré",
+    "telephone": "+226 20 52 88 00",
+    "capaciteLit": 110,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie Générale",
+      "Médecine Interne",
+      "Cardiologie"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 1486,
+    "dateCreation": "2026-01-09",
+    "niveauCertification": "OR",
+    "servicesUrgence": true,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0016",
+    "nom": "CMA Paul VI",
+    "type": "CMA",
+    "region": "Centre",
+    "province": "Kadiogo",
+    "commune": "Ouagadougou",
+    "adresse": "Pissy, Ouagadougou",
+    "telephone": "+226 25 36 12 34",
+    "capaciteLit": 130,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0017"
+    ],
+    "statut": "actif",
+    "nbPatients": 1282,
+    "dateCreation": "2026-01-05",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0017",
+    "nom": "CMA Schiphra",
+    "type": "CMA",
+    "region": "Centre",
+    "province": "Kadiogo",
+    "commune": "Ouagadougou",
+    "adresse": "Gounghin, Ouagadougou",
+    "telephone": "+226 25 36 56 78",
+    "capaciteLit": 110,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 1294,
+    "dateCreation": "2026-01-19",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0018",
+    "nom": "CMA de Bobo-Dioulasso",
+    "type": "CMA",
+    "region": "Hauts-Bassins",
+    "province": "Houet",
+    "commune": "Bobo-Dioulasso",
+    "adresse": "Dafra, Bobo-Dioulasso",
+    "telephone": "+226 20 97 23 45",
+    "capaciteLit": 95,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 567,
+    "dateCreation": "2026-01-17",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0019",
+    "nom": "CMA de Banfora",
+    "type": "CMA",
+    "region": "Cascades",
+    "province": "Comoé",
+    "commune": "Banfora",
+    "adresse": "Sector 3, Banfora",
+    "telephone": "+226 20 87 34 56",
+    "capaciteLit": 70,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0039"
+    ],
+    "statut": "actif",
+    "nbPatients": 917,
+    "dateCreation": "2026-01-20",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0020",
+    "nom": "CMA de Dédougou",
+    "type": "CMA",
+    "region": "Boucle du Mouhoun",
+    "province": "Mouhoun",
+    "commune": "Dédougou",
+    "adresse": "Sector 2, Dédougou",
+    "telephone": "+226 20 56 45 67",
+    "capaciteLit": 65,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 760,
+    "dateCreation": "2026-01-21",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0021",
+    "nom": "CMA de Tougan",
+    "type": "CMA",
+    "region": "Boucle du Mouhoun",
+    "province": "Sourou",
+    "commune": "Tougan",
+    "adresse": "Route de Dédougou, Tougan",
+    "telephone": "+226 20 57 56 78",
+    "capaciteLit": 50,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 698,
+    "dateCreation": "2026-01-20",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0022",
+    "nom": "CMA de Ouahigouya",
+    "type": "CMA",
+    "region": "Nord",
+    "province": "Yatenga",
+    "commune": "Ouahigouya",
+    "adresse": "Sector 5, Ouahigouya",
+    "telephone": "+226 20 55 78 90",
+    "capaciteLit": 80,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 937,
+    "dateCreation": "2026-01-13",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0023",
+    "nom": "CMA de Gourcy",
+    "type": "CMA",
+    "region": "Nord",
+    "province": "Zondoma",
+    "commune": "Gourcy",
+    "adresse": "Route de Ouahigouya, Gourcy",
+    "telephone": "+226 20 54 89 01",
+    "capaciteLit": 55,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0020",
+      "BFA-MED-2026-0029"
+    ],
+    "statut": "actif",
+    "nbPatients": 765,
+    "dateCreation": "2026-01-21",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0024",
+    "nom": "CMA de Koudougou",
+    "type": "CMA",
+    "region": "Centre-Ouest",
+    "province": "Boulkiemdé",
+    "commune": "Koudougou",
+    "adresse": "Sector 4, Koudougou",
+    "telephone": "+226 20 45 34 12",
+    "capaciteLit": 75,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 400,
+    "dateCreation": "2026-01-23",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0025",
+    "nom": "CMA de Réo",
+    "type": "CMA",
+    "region": "Centre-Ouest",
+    "province": "Sanguié",
+    "commune": "Réo",
+    "adresse": "Route de Koudougou, Réo",
+    "telephone": "+226 20 44 45 23",
+    "capaciteLit": 50,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 642,
+    "dateCreation": "2026-01-09",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0026",
+    "nom": "CMA de Kaya",
+    "type": "CMA",
+    "region": "Centre-Nord",
+    "province": "Sanmatenga",
+    "commune": "Kaya",
+    "adresse": "Sector 1, Kaya",
+    "telephone": "+226 20 46 56 34",
+    "capaciteLit": 65,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 860,
+    "dateCreation": "2026-01-08",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0027",
+    "nom": "CMA de Tenkodogo",
+    "type": "CMA",
+    "region": "Centre-Est",
+    "province": "Boulgou",
+    "commune": "Tenkodogo",
+    "adresse": "Sector 2, Tenkodogo",
+    "telephone": "+226 20 47 67 45",
+    "capaciteLit": 60,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 739,
+    "dateCreation": "2026-01-20",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0028",
+    "nom": "CMA de Fada N'Gourma",
+    "type": "CMA",
+    "region": "Est",
+    "province": "Gourma",
+    "commune": "Fada N'Gourma",
+    "adresse": "Sector 3, Fada N'Gourma",
+    "telephone": "+226 20 48 78 56",
+    "capaciteLit": 65,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0022"
+    ],
+    "statut": "actif",
+    "nbPatients": 818,
+    "dateCreation": "2026-01-12",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0029",
+    "nom": "CMA de Diapaga",
+    "type": "CMA",
+    "region": "Est",
+    "province": "Tapoa",
+    "commune": "Diapaga",
+    "adresse": "Route de Pama, Diapaga",
+    "telephone": "+226 20 48 89 67",
+    "capaciteLit": 45,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0025",
+      "BFA-MED-2026-0036"
+    ],
+    "statut": "actif",
+    "nbPatients": 545,
+    "dateCreation": "2026-01-19",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0030",
+    "nom": "CMA de Dori",
+    "type": "CMA",
+    "region": "Sahel",
+    "province": "Séno",
+    "commune": "Dori",
+    "adresse": "Sector 1, Dori",
+    "telephone": "+226 20 49 90 78",
+    "capaciteLit": 50,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 615,
+    "dateCreation": "2026-01-22",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0031",
+    "nom": "CMA de Djibo",
+    "type": "CMA",
+    "region": "Sahel",
+    "province": "Soum",
+    "commune": "Djibo",
+    "adresse": "Route de Dori, Djibo",
+    "telephone": "+226 20 49 01 89",
+    "capaciteLit": 45,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0034"
+    ],
+    "statut": "actif",
+    "nbPatients": 511,
+    "dateCreation": "2026-01-17",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0032",
+    "nom": "CMA de Gaoua",
+    "type": "CMA",
+    "region": "Sud-Ouest",
+    "province": "Poni",
+    "commune": "Gaoua",
+    "adresse": "Sector 2, Gaoua",
+    "telephone": "+226 20 50 12 90",
+    "capaciteLit": 55,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 788,
+    "dateCreation": "2026-01-20",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0033",
+    "nom": "CMA de Manga",
+    "type": "CMA",
+    "region": "Centre-Sud",
+    "province": "Zoundwéogo",
+    "commune": "Manga",
+    "adresse": "Sector 1, Manga",
+    "telephone": "+226 20 51 23 01",
+    "capaciteLit": 50,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 471,
+    "dateCreation": "2026-01-11",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0034",
+    "nom": "CMA de Ziniaré",
+    "type": "CMA",
+    "region": "Plateau-Central",
+    "province": "Oubritenga",
+    "commune": "Ziniaré",
+    "adresse": "Sector 2, Ziniaré",
+    "telephone": "+226 20 52 34 12",
+    "capaciteLit": 45,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 650,
+    "dateCreation": "2026-01-13",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0035",
+    "nom": "CMA de Zorgho",
+    "type": "CMA",
+    "region": "Plateau-Central",
+    "province": "Ganzourgou",
+    "commune": "Zorgho",
+    "adresse": "Route de Ouagadougou, Zorgho",
+    "telephone": "+226 20 53 45 23",
+    "capaciteLit": 40,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie-Obstétrique",
+      "Chirurgie mineure",
+      "Sage-femme"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 216,
+    "dateCreation": "2026-01-09",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": true,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0036",
+    "nom": "Clinique Notre Dame de la Paix",
+    "type": "Clinique",
+    "region": "Centre",
+    "province": "Kadiogo",
+    "commune": "Ouagadougou",
+    "adresse": "Wemtengna, Ouagadougou",
+    "telephone": "+226 25 30 11 22",
+    "capaciteLit": 65,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie",
+      "Cardiologie",
+      "Chirurgie esthétique",
+      "Dentisterie",
+      "Ophtalmologie"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 794,
+    "dateCreation": "2026-01-21",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": true,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0037",
+    "nom": "Clinique les Genêts",
+    "type": "Clinique",
+    "region": "Centre",
+    "province": "Kadiogo",
+    "commune": "Ouagadougou",
+    "adresse": "Gounghin, Ouagadougou",
+    "telephone": "+226 25 31 22 33",
+    "capaciteLit": 50,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie",
+      "Cardiologie",
+      "Chirurgie esthétique",
+      "Dentisterie",
+      "Ophtalmologie"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 434,
+    "dateCreation": "2026-01-11",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": true,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0038",
+    "nom": "Clinique Sukaap-Office Santé",
+    "type": "Clinique",
+    "region": "Hauts-Bassins",
+    "province": "Houet",
+    "commune": "Bobo-Dioulasso",
+    "adresse": "Secteur 4, Bobo-Dioulasso",
+    "telephone": "+226 20 97 34 45",
+    "capaciteLit": 55,
+    "specialites": [
+      "Médecine Générale",
+      "Pédiatrie",
+      "Gynécologie",
+      "Cardiologie",
+      "Chirurgie esthétique",
+      "Dentisterie",
+      "Ophtalmologie"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0021"
+    ],
+    "statut": "actif",
+    "nbPatients": 772,
+    "dateCreation": "2026-01-19",
+    "niveauCertification": "OR",
+    "servicesUrgence": true,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0039",
+    "nom": "CSPS de Tanghin",
+    "type": "CSPS",
+    "region": "Centre",
+    "province": "Kadiogo",
+    "commune": "Ouagadougou",
+    "adresse": "Tanghin, Ouagadougou",
+    "telephone": "+226 25 32 33 44",
+    "capaciteLit": 12,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 659,
+    "dateCreation": "2026-01-18",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0040",
+    "nom": "CSPS de Saaba",
+    "type": "CSPS",
+    "region": "Centre",
+    "province": "Kadiogo",
+    "commune": "Saaba",
+    "adresse": "Saaba, Saaba",
+    "telephone": "+226 25 33 44 55",
+    "capaciteLit": 8,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 184,
+    "dateCreation": "2026-01-14",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0041",
+    "nom": "CSPS de Pissy",
+    "type": "CSPS",
+    "region": "Centre",
+    "province": "Kadiogo",
+    "commune": "Ouagadougou",
+    "adresse": "Pissy, Ouagadougou",
+    "telephone": "+226 25 34 55 66",
+    "capaciteLit": 15,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 618,
+    "dateCreation": "2026-01-08",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0042",
+    "nom": "CSPS de Dafra",
+    "type": "CSPS",
+    "region": "Hauts-Bassins",
+    "province": "Houet",
+    "commune": "Bobo-Dioulasso",
+    "adresse": "Dafra, Bobo-Dioulasso",
+    "telephone": "+226 20 97 45 56",
+    "capaciteLit": 10,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 677,
+    "dateCreation": "2026-01-13",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0043",
+    "nom": "CSPS de Sarfalao",
+    "type": "CSPS",
+    "region": "Hauts-Bassins",
+    "province": "Houet",
+    "commune": "Bobo-Dioulasso",
+    "adresse": "Sarfalao, Bobo-Dioulasso",
+    "telephone": "+226 20 97 56 67",
+    "capaciteLit": 12,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0038"
+    ],
+    "statut": "actif",
+    "nbPatients": 337,
+    "dateCreation": "2026-01-18",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0044",
+    "nom": "CSPS de Secteur 25",
+    "type": "CSPS",
+    "region": "Hauts-Bassins",
+    "province": "Houet",
+    "commune": "Bobo-Dioulasso",
+    "adresse": "Secteur 25, Bobo-Dioulasso",
+    "telephone": "+226 20 97 67 78",
+    "capaciteLit": 10,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 215,
+    "dateCreation": "2026-01-25",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0045",
+    "nom": "CSPS de Tounouma",
+    "type": "CSPS",
+    "region": "Cascades",
+    "province": "Comoé",
+    "commune": "Banfora",
+    "adresse": "Tounouma, Banfora",
+    "telephone": "+226 20 87 45 56",
+    "capaciteLit": 8,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 660,
+    "dateCreation": "2026-01-16",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0046",
+    "nom": "CSPS de Secteur 4 Banfora",
+    "type": "CSPS",
+    "region": "Cascades",
+    "province": "Comoé",
+    "commune": "Banfora",
+    "adresse": "Secteur 4, Banfora",
+    "telephone": "+226 20 87 56 67",
+    "capaciteLit": 10,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 349,
+    "dateCreation": "2026-01-18",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0047",
+    "nom": "CSPS de Boromo",
+    "type": "CSPS",
+    "region": "Boucle du Mouhoun",
+    "province": "Balé",
+    "commune": "Boromo",
+    "adresse": "Boromo, Boromo",
+    "telephone": "+226 20 56 56 67",
+    "capaciteLit": 12,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0033"
+    ],
+    "statut": "actif",
+    "nbPatients": 610,
+    "dateCreation": "2026-01-05",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0048",
+    "nom": "CSPS de Nouna",
+    "type": "CSPS",
+    "region": "Boucle du Mouhoun",
+    "province": "Kossi",
+    "commune": "Nouna",
+    "adresse": "Nouna, Nouna",
+    "telephone": "+226 20 57 67 78",
+    "capaciteLit": 10,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 150,
+    "dateCreation": "2026-01-19",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0049",
+    "nom": "CSPS de Ramongo",
+    "type": "CSPS",
+    "region": "Centre-Ouest",
+    "province": "Boulkiemdé",
+    "commune": "Ramongo",
+    "adresse": "Ramongo, Ramongo",
+    "telephone": "+226 20 45 45 56",
+    "capaciteLit": 8,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 709,
+    "dateCreation": "2026-01-07",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0050",
+    "nom": "CSPS de Léo",
+    "type": "CSPS",
+    "region": "Centre-Ouest",
+    "province": "Sissili",
+    "commune": "Léo",
+    "adresse": "Léo, Léo",
+    "telephone": "+226 20 44 56 67",
+    "capaciteLit": 12,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 353,
+    "dateCreation": "2026-01-12",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0051",
+    "nom": "CSPS de Boulsa",
+    "type": "CSPS",
+    "region": "Centre-Nord",
+    "province": "Namentenga",
+    "commune": "Boulsa",
+    "adresse": "Boulsa, Boulsa",
+    "telephone": "+226 20 46 67 78",
+    "capaciteLit": 10,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0024"
+    ],
+    "statut": "actif",
+    "nbPatients": 785,
+    "dateCreation": "2026-01-06",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0052",
+    "nom": "CSPS de Kongoussi",
+    "type": "CSPS",
+    "region": "Centre-Nord",
+    "province": "Bam",
+    "commune": "Kongoussi",
+    "adresse": "Kongoussi, Kongoussi",
+    "telephone": "+226 20 46 78 89",
+    "capaciteLit": 12,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0030"
+    ],
+    "statut": "actif",
+    "nbPatients": 424,
+    "dateCreation": "2026-01-25",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0053",
+    "nom": "CSPS de Garango",
+    "type": "CSPS",
+    "region": "Centre-Est",
+    "province": "Boulgou",
+    "commune": "Garango",
+    "adresse": "Garango, Garango",
+    "telephone": "+226 20 47 78 90",
+    "capaciteLit": 10,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0031"
+    ],
+    "statut": "actif",
+    "nbPatients": 308,
+    "dateCreation": "2026-01-05",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0054",
+    "nom": "CSPS de Pouytenga",
+    "type": "CSPS",
+    "region": "Centre-Est",
+    "province": "Kouritenga",
+    "commune": "Pouytenga",
+    "adresse": "Pouytenga, Pouytenga",
+    "telephone": "+226 20 47 89 01",
+    "capaciteLit": 12,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 747,
+    "dateCreation": "2026-01-23",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0055",
+    "nom": "CSPS de Bogandé",
+    "type": "CSPS",
+    "region": "Est",
+    "province": "Gnagna",
+    "commune": "Bogandé",
+    "adresse": "Bogandé, Bogandé",
+    "telephone": "+226 20 48 90 12",
+    "capaciteLit": 8,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 288,
+    "dateCreation": "2026-01-22",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0056",
+    "nom": "CSPS de Pama",
+    "type": "CSPS",
+    "region": "Est",
+    "province": "Kompienga",
+    "commune": "Pama",
+    "adresse": "Pama, Pama",
+    "telephone": "+226 20 48 01 23",
+    "capaciteLit": 6,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 634,
+    "dateCreation": "2026-01-23",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0057",
+    "nom": "CSPS de Gorom-Gorom",
+    "type": "CSPS",
+    "region": "Sahel",
+    "province": "Oudalan",
+    "commune": "Gorom-Gorom",
+    "adresse": "Gorom-Gorom, Gorom-Gorom",
+    "telephone": "+226 20 49 12 34",
+    "capaciteLit": 6,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0026"
+    ],
+    "statut": "actif",
+    "nbPatients": 762,
+    "dateCreation": "2026-01-21",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0058",
+    "nom": "CSPS de Sebba",
+    "type": "CSPS",
+    "region": "Sahel",
+    "province": "Yagha",
+    "commune": "Sebba",
+    "adresse": "Sebba, Sebba",
+    "telephone": "+226 20 49 23 45",
+    "capaciteLit": 5,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 236,
+    "dateCreation": "2026-01-18",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0059",
+    "nom": "CSPS de Diébougou",
+    "type": "CSPS",
+    "region": "Sud-Ouest",
+    "province": "Bougouriba",
+    "commune": "Diébougou",
+    "adresse": "Diébougou, Diébougou",
+    "telephone": "+226 20 50 34 56",
+    "capaciteLit": 8,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 288,
+    "dateCreation": "2026-01-23",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0060",
+    "nom": "CSPS de Batié",
+    "type": "CSPS",
+    "region": "Sud-Ouest",
+    "province": "Noumbiel",
+    "commune": "Batié",
+    "adresse": "Batié, Batié",
+    "telephone": "+226 20 50 45 67",
+    "capaciteLit": 8,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 669,
+    "dateCreation": "2026-01-18",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0061",
+    "nom": "CSPS de Kombissiri",
+    "type": "CSPS",
+    "region": "Centre-Sud",
+    "province": "Bazèga",
+    "commune": "Kombissiri",
+    "adresse": "Kombissiri, Kombissiri",
+    "telephone": "+226 20 51 56 78",
+    "capaciteLit": 10,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 302,
+    "dateCreation": "2026-01-21",
+    "niveauCertification": "ARGENT",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0062",
+    "nom": "CSPS de Pô",
+    "type": "CSPS",
+    "region": "Centre-Sud",
+    "province": "Nahouri",
+    "commune": "Pô",
+    "adresse": "Pô, Pô",
+    "telephone": "+226 20 51 67 89",
+    "capaciteLit": 10,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [],
+    "statut": "actif",
+    "nbPatients": 535,
+    "dateCreation": "2026-01-05",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Dioula"
+    ]
+  },
+  {
+    "id": "STR-2026-0063",
+    "nom": "CSPS de Boussé",
+    "type": "CSPS",
+    "region": "Plateau-Central",
+    "province": "Kourwéogo",
+    "commune": "Boussé",
+    "adresse": "Boussé, Boussé",
+    "telephone": "+226 20 52 56 78",
+    "capaciteLit": 8,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0037"
+    ],
+    "statut": "actif",
+    "nbPatients": 548,
+    "dateCreation": "2026-01-07",
+    "niveauCertification": "OR",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  },
+  {
+    "id": "STR-2026-0064",
+    "nom": "CSPS de Méguet",
+    "type": "CSPS",
+    "region": "Plateau-Central",
+    "province": "Ganzourgou",
+    "commune": "Méguet",
+    "adresse": "Méguet, Méguet",
+    "telephone": "+226 20 53 67 89",
+    "capaciteLit": 6,
+    "specialites": [
+      "Médecine Générale",
+      "Soins infirmiers",
+      "Sage-femme",
+      "Vaccination"
+    ],
+    "medecins": [
+      "BFA-MED-2026-0028",
+      "BFA-MED-2026-0040"
+    ],
+    "statut": "actif",
+    "nbPatients": 505,
+    "dateCreation": "2026-01-25",
+    "niveauCertification": "BRONZE",
+    "servicesUrgence": false,
+    "telemedecine": false,
+    "languesParlees": [
+      "Français",
+      "Mooré"
+    ]
+  }
+]
