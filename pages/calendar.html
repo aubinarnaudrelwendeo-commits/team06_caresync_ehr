@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agenda et rendez-vous — CareSync EHR">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Agenda — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body>
+  <a href="#cs-content" class="cs-sr-only">Aller au contenu</a>
+  <div id="cs-sim-elements"></div>
+  <div id="cs-sidebar-wrapper"></div>
+  <main class="cs-main-content">
+    <div id="cs-topbar-wrapper"></div>
+    <div class="cs-content-area" id="cs-content">
+      <div class="cs-card p-10 text-center">
+        <div class="inline-block cs-spinner cs-spinner-dark" style="width: 28px; height: 28px;"></div>
+        <p class="mt-3 text-sm text-neutral-500">Chargement de l'agenda...</p>
+      </div>
+    </div>
+  </main>
+  <div id="cs-modal-root"></div>
+  <script>
+    var user = requireAuth();
+    var currentView = 'mois';
+    var cursor = new Date();
+    cursor.setDate(1);
+    var selectedEvent = null;
+    var EVENTS = [];
+
+    if (user) {
+      try { initPage(); } catch (err) {
+        document.getElementById('cs-content').innerHTML =
+          '<div class="cs-card p-8 text-center text-danger-700">Erreur: ' + echapperHTML(err.message) + '</div>';
+      }
+    }
+
+    function initPage() {
+      document.getElementById('cs-sidebar-wrapper').innerHTML = renderSidebar(user.role, 'calendar');
+      document.getElementById('cs-topbar-wrapper').innerHTML = renderTopbar('Agenda', 'Rendez-vous et rappels vaccinaux');
+      document.getElementById('cs-sim-elements').innerHTML = renderSimElements();
+      initApp();
+      loadEvents();
+      renderPage();
+    }
+
+    function loadEvents() {
+      EVENTS = [];
+      var cons = Storage.getAll('consultations');
+      cons.forEach(function (c) {
+        if (!c.date) return;
+        EVENTS.push({
+          id: c.id, date: c.date, heure: c.heure || '09:00',
+          type: c.motif && /vaccin|vaccination/i.test(c.motif) ? 'vaccination' :
+                c.motif && /contrôle|controle|suivi/i.test(c.motif) ? 'controle' :
+                c.priorite === 'urgente' ? 'urgence' : 'consultation',
+          titre: c.motif || 'Consultation',
+          patientId: c.patientId, medecinId: c.medecinId, structure: c.etablissement
+        });
+      });
+      // Événements futurs fictifs pour la démo
+      var today = new Date();
+      for (var i = 1; i <= 10; i++) {
+        var d = new Date(today.getTime() + i * 86400000 * 3);
+        var ds = d.toISOString().substring(0, 10);
+        var types = ['consultation', 'vaccination', 'controle', 'rappel'];
+        EVENTS.push({
+          id: 'SIM-' + i, date: ds, heure: '10:0' + (i % 9),
+          type: types[i % types.length],
+          titre: 'Rendez-vous démo #' + i,
+          patientId: user.id, medecinId: null, structure: null
+        });
+      }
+    }
+
+    function renderPage() {
+      var html = '<div class="grid grid-cols-1 lg:grid-cols-[260px_1fr] xl:grid-cols-[260px_1fr_300px] gap-4">' +
+        renderMiniCal() +
+        '<div>' + renderToolbar() + '<div id="cs-cal-main">' + renderMain() + '</div></div>' +
+        renderDetailPanel() +
+      '</div>' + renderRappelsVaccinaux();
+      document.getElementById('cs-content').innerHTML = html;
+    }
+
+    function renderMiniCal() {
+      var year = cursor.getFullYear();
+      var month = cursor.getMonth();
+      var monthName = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'][month];
+      var firstDay = new Date(year, month, 1);
+      var dow = (firstDay.getDay() + 6) % 7;
+      var daysInMonth = new Date(year, month + 1, 0).getDate();
+      var cells = '';
+      var labels = ['L','M','M','J','V','S','D'];
+      labels.forEach(function (l) { cells += '<div class="text-[10px] text-center text-neutral-400 font-semibold">' + l + '</div>'; });
+      for (var i = 0; i < dow; i++) cells += '<div></div>';
+      for (var dd = 1; dd <= daysInMonth; dd++) {
+        var ds = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(dd).padStart(2, '0');
+        var hasEv = EVENTS.some(function (e) { return e.date === ds; });
+        cells += '<button onclick="jumpToDate(\'' + ds + '\')" class="text-xs text-center py-1 rounded hover:bg-primary-50 ' + (hasEv ? 'bg-primary-100 text-primary-700 font-semibold' : 'text-neutral-700') + '">' + dd + '</button>';
+      }
+      return '<div class="cs-card p-3 hidden lg:block">' +
+        '<div class="flex items-center justify-between mb-2">' +
+          '<button onclick="changeMonth(-1)" class="cs-btn cs-btn-icon cs-btn-sm" aria-label="Mois précédent">' + icon('chevron-left', 14) + '</button>' +
+          '<div class="text-xs font-semibold text-neutral-800">' + monthName + ' ' + year + '</div>' +
+          '<button onclick="changeMonth(1)" class="cs-btn cs-btn-icon cs-btn-sm" aria-label="Mois suivant">' + icon('chevron-right', 14) + '</button>' +
+        '</div><div class="grid grid-cols-7 gap-1">' + cells + '</div></div>';
+    }
+
+    function renderToolbar() {
+      var views = [
+        { id: 'mois', label: 'Mois' },
+        { id: 'semaine', label: 'Semaine' },
+        { id: 'liste', label: 'Liste' }
+      ];
+      var html = '<div class="cs-card p-3 mb-4 flex flex-wrap items-center gap-2">' +
+        '<button onclick="changeMonth(-1)" class="cs-btn cs-btn-icon" aria-label="Période précédente">' + icon('chevron-left', 18) + '</button>' +
+        '<button onclick="goToday()" class="cs-btn cs-btn-secondary cs-btn-sm">Aujourd\'hui</button>' +
+        '<button onclick="changeMonth(1)" class="cs-btn cs-btn-icon" aria-label="Période suivante">' + icon('chevron-right', 18) + '</button>' +
+        '<div class="text-sm font-semibold text-neutral-800 ml-2" id="cs-cal-period"></div>' +
+        '<div class="ml-auto flex gap-1 bg-neutral-100 rounded-cs-md p-1">';
+      views.forEach(function (v) {
+        var active = currentView === v.id ? 'bg-white shadow text-primary-700' : 'text-neutral-600';
+        html += '<button onclick="setView(\'' + v.id + '\')" class="cs-btn cs-btn-ghost cs-btn-sm ' + active + '">' + v.label + '</button>';
+      });
+      html += '</div>' +
+        '<button onclick="openNewRDV()" class="cs-btn cs-btn-primary cs-btn-sm">' + icon('plus', 16) + ' Prendre RDV</button>' +
+      '</div>';
+      return html;
+    }
+
+    function renderMain() {
+      if (currentView === 'mois') return renderMonthView();
+      if (currentView === 'semaine') return renderWeekView();
+      return renderListView();
+    }
+
+    function renderMonthView() {
+      var year = cursor.getFullYear();
+      var month = cursor.getMonth();
+      var monthName = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'][month];
+      var firstDay = new Date(year, month, 1);
+      var dow = (firstDay.getDay() + 6) % 7;
+      var daysInMonth = new Date(year, month + 1, 0).getDate();
+      var labels = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+      var html = '<div class="cs-card overflow-hidden"><div class="grid grid-cols-7 bg-neutral-50 border-b border-neutral-100">';
+      labels.forEach(function (l) { html += '<div class="px-2 py-2 text-xs font-semibold text-neutral-600 text-center">' + l + '</div>'; });
+      html += '</div><div class="grid grid-cols-7">';
+      for (var i = 0; i < dow; i++) html += '<div class="min-h-[80px] border border-neutral-50 bg-neutral-50/50"></div>';
+      for (var dd = 1; dd <= daysInMonth; dd++) {
+        var ds = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(dd).padStart(2, '0');
+        var dayEvents = EVENTS.filter(function (e) { return e.date === ds; });
+        var todayMarker = (new Date().toISOString().substring(0, 10) === ds) ? ' ring-2 ring-primary-500 ring-inset' : '';
+        html += '<div class="min-h-[80px] border border-neutral-100 p-1' + todayMarker + '">' +
+          '<div class="text-xs text-neutral-500 mb-1">' + dd + '</div>';
+        dayEvents.slice(0, 3).forEach(function (e) {
+          html += '<button onclick="selectEvent(\'' + e.id + '\')" class="block w-full text-left text-[10px] px-1 py-0.5 rounded mb-0.5 ' + eventStyle(e.type) + '">' + echapperHTML(e.heure || '') + ' ' + echapperHTML(truncate(e.titre, 18)) + '</button>';
+        });
+        if (dayEvents.length > 3) html += '<div class="text-[10px] text-neutral-400 pl-1">+' + (dayEvents.length - 3) + ' autres</div>';
+        html += '</div>';
+      }
+      html += '</div></div>';
+      var periodEl = document.getElementById('cs-cal-period');
+      if (periodEl) periodEl.textContent = monthName + ' ' + year;
+      return html;
+    }
+
+    function renderWeekView() {
+      var start = new Date(cursor);
+      var dow = (start.getDay() + 6) % 7;
+      start.setDate(start.getDate() - dow);
+      var hours = [];
+      for (var h = 8; h <= 18; h++) hours.push(h);
+      var labels = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+      var html = '<div class="cs-card overflow-x-auto"><table class="cs-table w-full"><thead><tr><th class="w-16"></th>';
+      for (var i = 0; i < 7; i++) {
+        var d = new Date(start); d.setDate(start.getDate() + i);
+        html += '<th class="text-center">' + labels[i] + ' ' + d.getDate() + '</th>';
+      }
+      html += '</tr></thead><tbody>';
+      hours.forEach(function (h) {
+        html += '<tr><td class="text-xs text-neutral-500 text-right pr-2">' + String(h).padStart(2, '0') + ':00</td>';
+        for (var i = 0; i < 7; i++) {
+          var d = new Date(start); d.setDate(start.getDate() + i);
+          var ds = d.toISOString().substring(0, 10);
+          var cellEvents = EVENTS.filter(function (e) {
+            return e.date === ds && parseInt((e.heure || '0').substring(0, 2), 10) === h;
+          });
+          html += '<td class="h-12 align-top p-1">';
+          cellEvents.forEach(function (e) {
+            html += '<button onclick="selectEvent(\'' + e.id + '\')" class="block w-full text-left text-[10px] px-1 py-0.5 rounded ' + eventStyle(e.type) + '">' + echapperHTML(truncate(e.titre, 16)) + '</button>';
+          });
+          html += '</td>';
+        }
+        html += '</tr>';
+      });
+      html += '</tbody></table></div>';
+      var periodEl = document.getElementById('cs-cal-period');
+      if (periodEl) periodEl.textContent = 'Semaine du ' + formatDate(start.toISOString());
+      return html;
+    }
+
+    function renderListView() {
+      var sorted = EVENTS.slice().sort(function (a, b) {
+        return (a.date + ' ' + (a.heure || '')).localeCompare(b.date + ' ' + (b.heure || ''));
+      });
+      var html = '<div class="cs-card p-4"><div class="text-sm font-semibold text-neutral-800 mb-3">Tous les événements (' + sorted.length + ')</div><div class="space-y-2">';
+      sorted.forEach(function (e) {
+        html += '<button onclick="selectEvent(\'' + e.id + '\')" class="w-full text-left flex items-center gap-3 p-2 hover:bg-neutral-50 rounded-cs-sm">' +
+          '<span class="cs-dot ' + eventDot(e.type) + '"></span>' +
+          '<div class="text-xs text-neutral-500 w-32">' + formatDate(e.date, { avecHeure: true }) + '</div>' +
+          '<div class="flex-1 text-sm text-neutral-800">' + echapperHTML(e.titre) + '</div>' +
+          '<span class="cs-badge ' + eventBadge(e.type) + '">' + echapperHTML(e.type) + '</span></button>';
+      });
+      html += '</div></div>';
+      var periodEl = document.getElementById('cs-cal-period');
+      if (periodEl) periodEl.textContent = 'Vue liste';
+      return html;
+    }
+
+    function renderDetailPanel() {
+      var html = '<div class="cs-card p-4 sticky top-4 hidden xl:block"><h3 class="font-semibold text-neutral-800 mb-3 flex items-center gap-2">' + icon('info', 18) + ' Détails</h3>';
+      if (!selectedEvent) {
+        html += '<div class="text-center text-sm text-neutral-400 py-6">' + icon('calendar-days', 32) + '<p class="mt-2">Sélectionnez un événement pour afficher les détails.</p></div>';
+      } else {
+        var e = selectedEvent;
+        var p = e.patientId ? Storage.getById('patients', e.patientId) : null;
+        var m = e.medecinId ? Storage.getById('medecins', e.medecinId) : null;
+        var s = e.structure ? Storage.getById('structures', e.structure) : null;
+        html += '<div class="space-y-3 text-sm">' +
+          '<div><div class="text-xs text-neutral-500">Titre</div><div class="font-semibold text-neutral-800">' + echapperHTML(e.titre) + '</div></div>' +
+          '<div class="flex gap-2"><span class="cs-badge ' + eventBadge(e.type) + '">' + echapperHTML(e.type) + '</span></div>' +
+          '<div><div class="text-xs text-neutral-500">Date & heure</div><div class="font-medium">' + formatDate(e.date, { long: true }) + ' à ' + echapperHTML(e.heure || '—') + '</div></div>' +
+          (p ? '<div><div class="text-xs text-neutral-500">Patient</div><div class="font-medium">' + echapperHTML(p.prenom + ' ' + p.nom) + '</div></div>' : '') +
+          (m ? '<div><div class="text-xs text-neutral-500">Médecin</div><div class="font-medium">Dr. ' + echapperHTML(m.prenom + ' ' + m.nom) + '</div></div>' : '') +
+          (s ? '<div><div class="text-xs text-neutral-500">Structure</div><div class="font-medium">' + icon('building', 12) + ' ' + echapperHTML(s.nom) + '</div></div>' : '') +
+          '<div class="pt-2 border-t border-neutral-100 flex gap-2"><button onclick="window.print()" class="cs-btn cs-btn-ghost cs-btn-sm">' + icon('printer', 14) + '</button>' +
+            '<button onclick="showToast(\'Événement\', \'Rappel envoyé\', \'success\')" class="cs-btn cs-btn-ghost cs-btn-sm">' + icon('bell', 14) + ' Rappel</button></div>' +
+        '</div>';
+      }
+      html += '</div>';
+      return html;
+    }
+
+    function renderRappelsVaccinaux() {
+      var rappels = [
+        { v: 'ROR (Rougeole-Oreillons-Rubéole)', date: '2026-04-15', statut: 'à venir', patient: 'Wendpanga Ouédraogo' },
+        { v: 'DTC Polio (Rappel)', date: '2026-03-20', statut: 'à venir', patient: 'Awa Traoré' },
+        { v: 'Fièvre jaune (Rappel)', date: '2026-02-28', statut: 'en retard', patient: 'Adama Ouédraogo' },
+        { v: 'BCG', date: '2026-01-30', statut: 'terminée', patient: 'Moussa Kaboré' }
+      ];
+      var html = '<details class="cs-card mt-4"><summary class="cursor-pointer p-4 flex items-center gap-2 font-semibold text-neutral-800">' +
+        icon('syringe', 18) + ' Rappels vaccinaux' +
+        '<span class="ml-auto cs-badge cs-badge-warning">' + rappels.filter(function (r) { return r.statut !== 'terminée'; }).length + ' à venir</span></summary>' +
+        '<div class="p-4 pt-0 border-t border-neutral-100"><table class="cs-table"><thead><tr><th>Vaccin</th><th>Patient</th><th>Date prévue</th><th>Statut</th></tr></thead><tbody>';
+      rappels.forEach(function (r) {
+        html += '<tr><td class="font-medium">' + echapperHTML(r.v) + '</td><td>' + echapperHTML(r.patient) + '</td><td>' + formatDate(r.date) + '</td>' +
+          '<td><span class="cs-badge ' + badgeForStatut(r.statut) + '">' + echapperHTML(r.statut) + '</span></td></tr>';
+      });
+      html += '</tbody></table></div></details>';
+      return html;
+    }
+
+    function eventStyle(type) {
+      return { consultation: 'bg-primary-100 text-primary-700', vaccination: 'bg-gold-100 text-gold-700', controle: 'bg-info-100 text-info-700', urgence: 'bg-danger-100 text-danger-700', rappel: 'bg-admin-100 text-admin-700' }[type] || 'bg-neutral-100 text-neutral-700';
+    }
+    function eventDot(type) {
+      return { consultation: 'cs-dot-success', vaccination: 'cs-dot-warning', controle: 'cs-dot-info', urgence: 'cs-dot-danger', rappel: 'cs-dot-info' }[type] || 'cs-dot-info';
+    }
+    function eventBadge(type) {
+      return { consultation: 'cs-badge-success', vaccination: 'cs-badge-warning', controle: 'cs-badge-info', urgence: 'cs-badge-danger', rappel: 'cs-badge-admin' }[type] || 'cs-badge-neutral';
+    }
+
+    function setView(v) { currentView = v; document.getElementById('cs-cal-main').innerHTML = renderMain(); }
+    function changeMonth(d) {
+      if (currentView === 'semaine') cursor.setDate(cursor.getDate() + d * 7);
+      else cursor.setMonth(cursor.getMonth() + d);
+      renderPage();
+    }
+    function goToday() { cursor = new Date(); cursor.setDate(1); renderPage(); }
+    function jumpToDate(ds) {
+      var d = new Date(ds);
+      cursor = new Date(d.getFullYear(), d.getMonth(), 1);
+      renderPage();
+      selectEventByDate(ds);
+    }
+    function selectEventByDate(ds) {
+      var ev = EVENTS.find(function (e) { return e.date === ds; });
+      if (ev) selectEvent(ev.id);
+    }
+    function selectEvent(id) {
+      selectedEvent = EVENTS.find(function (e) { return e.id === id; });
+      // re-render detail panel
+      var panel = document.querySelector('.cs-card.sticky');
+      if (panel) panel.outerHTML = renderDetailPanel();
+    }
+
+    function openNewRDV() {
+      var structures = Storage.getAll('structures');
+      var sOpts = structures.map(function (s) { return '<option value="' + s.id + '">' + echapperHTML(s.nom) + '</option>'; }).join('');
+      var creneaux = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00'];
+      var cOpts = creneaux.map(function (c) { return '<option value="' + c + '">' + c + '</option>'; }).join('');
+      var types = [{ v: 'consultation', l: 'Consultation' }, { v: 'vaccination', l: 'Vaccination' }, { v: 'controle', l: 'Contrôle' }, { v: 'urgence', l: 'Urgence' }];
+      var tOpts = types.map(function (t) { return '<option value="' + t.v + '">' + t.l + '</option>'; }).join('');
+      var html = '<div class="cs-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="cs-rdv-title">' +
+        '<div class="cs-modal cs-modal-lg" onclick="event.stopPropagation()">' +
+          '<div class="cs-modal-header"><h3 class="cs-modal-title" id="cs-rdv-title">Prendre un rendez-vous</h3>' +
+            '<button onclick="closeModal()" class="cs-btn cs-btn-icon" aria-label="Fermer">' + icon('x', 18) + '</button></div>' +
+          '<div class="cs-modal-body"><form id="cs-rdv-form" onsubmit="event.preventDefault(); submitRDV();"><div class="space-y-3">' +
+            '<div><label class="cs-label">Structure</label><select name="structureId" onchange="loadMedecinsSelect(this.value)" id="cs-rdv-str" required class="cs-select w-full"><option value="">Sélectionner...</option>' + sOpts + '</select></div>' +
+            '<div><label class="cs-label">Médecin</label><select name="medecinId" id="cs-rdv-med" required class="cs-select w-full"><option value="">Sélectionner une structure...</option></select></div>' +
+            '<div class="grid grid-cols-2 gap-3"><div><label class="cs-label">Type</label><select name="type" class="cs-select w-full">' + tOpts + '</select></div>' +
+              '<div><label class="cs-label">Créneau</label><select name="heure" class="cs-select w-full">' + cOpts + '</select></div></div>' +
+            '<div><label class="cs-label">Date</label><input type="date" name="date" required class="cs-input w-full"></div>' +
+            '<div><label class="cs-label">Motif</label><input name="motif" class="cs-input w-full" placeholder="Ex : Contrôle tension"></div>' +
+          '</div></form></div>' +
+          '<div class="cs-modal-footer"><button onclick="closeModal()" class="cs-btn cs-btn-secondary">Annuler</button>' +
+            '<button onclick="submitRDV()" class="cs-btn cs-btn-primary">' + icon('check', 16) + ' Confirmer</button></div>' +
+        '</div>' +
+      '</div>';
+      document.getElementById('cs-modal-root').innerHTML = html;
+    }
+
+    function loadMedecinsSelect(strId) {
+      var sel = document.getElementById('cs-rdv-med');
+      if (!sel) return;
+      var str = Storage.getById('structures', strId);
+      if (!str || !str.medecins) { sel.innerHTML = '<option value="">Aucun médecin</option>'; return; }
+      var opts = '<option value="">Sélectionner...</option>';
+      str.medecins.forEach(function (mid) {
+        var m = Storage.getById('medecins', mid);
+        if (m) opts += '<option value="' + m.id + '">Dr. ' + echapperHTML(m.prenom + ' ' + m.nom) + ' — ' + echapperHTML(m.specialite) + '</option>';
+      });
+      sel.innerHTML = opts;
+    }
+
+    function submitRDV() {
+      var form = document.getElementById('cs-rdv-form');
+      if (!form) return;
+      var fd = new FormData(form);
+      var item = {
+        patientId: user.id,
+        medecinId: fd.get('medecinId'),
+        date: fd.get('date'),
+        heure: fd.get('heure'),
+        motif: fd.get('motif') || fd.get('type'),
+        type: fd.get('type'),
+        statut: 'à venir',
+        etablissement: fd.get('structureId')
+      };
+      var created = Storage.create('rdv', item);
+      Storage.addNotification(user.id, 'success', 'Rendez-vous confirmé', 'RDV ' + formatDate(item.date) + ' à ' + item.heure, { id: created.id });
+      closeModal();
+      showToast('RDV confirmé', formatDate(item.date) + ' à ' + item.heure, 'success');
+      loadEvents();
+      renderPage();
+    }
+
+    function closeModal() { document.getElementById('cs-modal-root').innerHTML = ''; }
+  </script>
+</body>
+</html>
