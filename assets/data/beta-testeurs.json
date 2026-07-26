@@ -1,0 +1,78 @@
+[
+  {
+    "id": "BFA-BETA-0001",
+    "type": "patient",
+    "identifiant": "beta-patient-2026",
+    "motDePasse": "beta2026",
+    "nom": "Béta",
+    "prenom": "Patrice",
+    "description": "Beta-testeur patient — accès complet au dossier patient",
+    "dateCreation": "2026-06-01",
+    "actif": true,
+    "patientLie": {
+      "nom": "BETA-TESTEUR",
+      "prenom": "Patrice",
+      "dateNaissance": "1990-05-12",
+      "sexe": "M",
+      "telephone": "+226 70 00 00 01",
+      "email": "beta.patient@caresync.bf",
+      "groupeSanguin": "O+",
+      "electrophorese": "AA",
+      "allergies": [],
+      "antecedents": [
+        "Aucun"
+      ],
+      "adresse": "Secteur 1, Ouagadougou",
+      "region": "Centre",
+      "province": "Kadiogo",
+      "personneConfiance": {
+        "nom": "BETA",
+        "prenom": "Marie",
+        "relation": "Conjointe",
+        "telephone": "+226 70 00 00 02",
+        "autorisationAcces": true
+      }
+    }
+  },
+  {
+    "id": "BFA-BETA-0002",
+    "type": "medecin",
+    "identifiant": "beta-medecin-2026",
+    "motDePasse": "beta2026",
+    "nom": "Dr. Béta",
+    "prenom": "Marie",
+    "description": "Beta-testeur médecin — accès dossier médical patient",
+    "dateCreation": "2026-06-01",
+    "actif": true,
+    "medecinLie": {
+      "nom": "Dr. BETA",
+      "prenom": "Marie",
+      "specialite": "Médecine Générale",
+      "etablissement": "CHU Yalgado Ouédraogo",
+      "etablissementId": "STR-2026-0001",
+      "telephone": "+226 70 00 00 03",
+      "email": "beta.medecin@caresync.bf",
+      "numeroAgrement": "AGRE-2025-BETA"
+    }
+  },
+  {
+    "id": "BFA-BETA-0003",
+    "type": "admin",
+    "identifiant": "beta-admin-2026",
+    "motDePasse": "beta2026",
+    "nom": "Béta",
+    "prenom": "Adèle",
+    "description": "Beta-testeur admin — accès complet au tableau de bord ministériel",
+    "dateCreation": "2026-06-01",
+    "actif": true,
+    "adminLie": {
+      "nom": "BETA",
+      "prenom": "Adèle",
+      "fonction": "Administrateur Beta-test",
+      "structure": "Ministère de la Santé BF",
+      "telephone": "+226 70 00 00 04",
+      "email": "beta.admin@caresync.bf",
+      "niveauPermission": "Administrateur complet"
+    }
+  }
+]
