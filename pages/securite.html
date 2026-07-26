@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sécurité du compte — CareSync EHR">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Sécurité — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body>
+  <a href="#cs-content" class="cs-sr-only">Aller au contenu</a>
+  <div id="cs-sim-elements"></div>
+  <div id="cs-sidebar-wrapper"></div>
+  <main class="cs-main-content">
+    <div id="cs-topbar-wrapper"></div>
+    <div class="cs-content-area" id="cs-content">
+      <div class="cs-card p-10 text-center">
+        <div class="inline-block cs-spinner cs-spinner-dark" style="width: 28px; height: 28px;"></div>
+        <p class="mt-3 text-sm text-neutral-500">Chargement de la sécurité...</p>
+      </div>
+    </div>
+  </main>
+  <script>
+    var user = requireAuth();
+    var twoFAEnabled = false;
+
+    if (user) {
+      try { initPage(); } catch (err) {
+        document.getElementById('cs-content').innerHTML =
+          '<div class="cs-card p-8 text-center text-danger-700">Erreur: ' + echapperHTML(err.message) + '</div>';
+      }
+    }
+
+    function initPage() {
+      document.getElementById('cs-sidebar-wrapper').innerHTML = renderSidebar(user.role, 'securite');
+      document.getElementById('cs-topbar-wrapper').innerHTML = renderTopbar('Sécurité', 'Protection du compte et traçabilité');
+      document.getElementById('cs-sim-elements').innerHTML = renderSimElements();
+      initApp();
+      renderPage();
+      initPasswordEval();
+      init2FAInputs();
+    }
+
+    function computeScore() {
+      var s = 60;
+      if (user && user.statutValidation === 'validé') s += 10;
+      if (twoFAEnabled) s += 15;
+      if (Storage.getJournal().length > 0) s += 5;
+      if (user && user.dateValidation) s += 5;
+      if (user && user.niveauCertification === 'OR') s += 5;
+      return Math.min(100, s);
+    }
+
+    function renderPage() {
+      var score = computeScore();
+      var html = renderScoreSection(score);
+
+      // Sections repliables avec chevrons
+      html += '<div data-cs-collapsible="password" data-cs-title="Mot de passe" data-cs-icon="key">';
+      html += renderPasswordSection();
+      html += '</div>';
+
+      html += '<div data-cs-collapsible="2fa" data-cs-title="Authentification à deux facteurs (2FA)" data-cs-icon="smartphone">';
+      html += render2FASection();
+      html += '</div>';
+
+      html += '<div data-cs-collapsible="sessions" data-cs-title="Sessions actives et traçabilité" data-cs-icon="monitor">';
+      html += renderSessionsSection();
+      html += '</div>';
+
+      html += '<div data-cs-collapsible="journal" data-cs-title="Journal d\'audit" data-cs-icon="clipboard-list" data-cs-default="collapsed">';
+      html += renderJournalSection();
+      html += '</div>';
+
+      html += '<div data-cs-collapsible="protocoles" data-cs-title="Protocoles de sécurité appliqués" data-cs-icon="shield-check" data-cs-default="collapsed">';
+      html += renderProtocolesSection();
+      html += '</div>';
+
+      html += '<div data-cs-collapsible="certification" data-cs-title="Certification et niveaux" data-cs-icon="badge-check">';
+      html += renderCertificationSection();
+      html += '</div>';
+
+      html += '<div data-cs-collapsible="danger" data-cs-title="Zone sensible" data-cs-icon="alert-triangle" data-cs-default="collapsed">';
+      html += renderDangerSection();
+      html += '</div>';
+
+      document.getElementById('cs-content').innerHTML = html;
+      setTimeout(function () { CollapsibleMenus.autoInit(); initPasswordEval(); init2FAInputs(); }, 50);
+    }
+
+    function renderScoreSection(score) {
+      var color = score >= 80 ? '#198754' : (score >= 60 ? '#D4A017' : '#9B2C38');
+      var label = score >= 80 ? 'Excellent' : (score >= 60 ? 'Moyen' : 'Faible');
+      var dash = 2 * Math.PI * 45;
+      var offset = dash * (1 - score / 100);
+      return '<div class="cs-card p-6 mb-4"><h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('shield', 20) + ' Score de sécurité</h2>' +
+        '<div class="flex flex-col md:flex-row items-center gap-6">' +
+          '<div class="relative" style="width:120px;height:120px;">' +
+            '<svg width="120" height="120" viewBox="0 0 120 120">' +
+              '<circle cx="60" cy="60" r="45" fill="none" stroke="#E9ECEF" stroke-width="10"/>' +
+              '<circle cx="60" cy="60" r="45" fill="none" stroke="' + color + '" stroke-width="10" stroke-linecap="round" stroke-dasharray="' + dash + '" stroke-dashoffset="' + offset + '" transform="rotate(-90 60 60)"/>' +
+            '</svg>' +
+            '<div class="absolute inset-0 flex flex-col items-center justify-center"><div class="text-2xl font-bold text-neutral-800">' + score + '/100</div><div class="text-xs text-neutral-500">' + label + '</div></div>' +
+          '</div>' +
+          '<div class="flex-1 text-sm text-neutral-600">' +
+            '<p class="mb-2">Votre score reflète le niveau de protection de votre compte CareSync EHR.</p>' +
+            '<ul class="space-y-1">' +
+              (user && user.statutValidation === 'validé' ? '<li class="flex items-center gap-2 text-success-700">' + icon('check-circle', 14) + ' Compte validé par le ministère</li>' : '<li class="flex items-center gap-2 text-warning-700">' + icon('alert-circle', 14) + ' Compte non validé</li>') +
+              (twoFAEnabled ? '<li class="flex items-center gap-2 text-success-700">' + icon('check-circle', 14) + ' 2FA activée</li>' : '<li class="flex items-center gap-2 text-warning-700">' + icon('alert-circle', 14) + ' 2FA non activée</li>') +
+              '<li class="flex items-center gap-2 text-success-700">' + icon('check-circle', 14) + ' Traçabilité active</li>' +
+              '<li class="flex items-center gap-2 text-success-700">' + icon('check-circle', 14) + ' Journalisation des actions</li>' +
+            '</ul>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }
+
+    function renderPasswordSection() {
+      return '<div class="cs-card p-6 mb-4"><h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('key', 20) + ' Changer le mot de passe</h2>' +
+        '<div class="grid grid-cols-1 md:grid-cols-2 gap-6">' +
+          '<div class="space-y-3">' +
+            '<div><label class="cs-label">Mot de passe actuel</label><input type="password" id="pwd-actuel" class="cs-input w-full"></div>' +
+            '<div><label class="cs-label">Nouveau mot de passe</label><input type="password" id="pwd-nouveau" oninput="evalPwd()" class="cs-input w-full"></div>' +
+            '<div><label class="cs-label">Confirmer</label><input type="password" id="pwd-conf" class="cs-input w-full"></div>' +
+            '<button onclick="changePassword()" class="cs-btn cs-btn-primary">' + icon('check', 16) + ' Mettre à jour</button>' +
+          '</div>' +
+          '<div>' +
+            '<div class="text-xs text-neutral-600 mb-2">Force du mot de passe :</div>' +
+            '<div class="h-2 bg-neutral-100 rounded-full overflow-hidden mb-2"><div id="pwd-bar" class="h-full transition-all" style="width:0%;background:#9B2C38"></div></div>' +
+            '<div id="pwd-label" class="text-xs font-semibold mb-3 text-danger-700">Aucun</div>' +
+            '<ul class="space-y-1 text-xs text-neutral-600">' +
+              '<li id="chk-longueur" class="flex items-center gap-2">' + icon('circle', 12) + ' Au moins 8 caractères</li>' +
+              '<li id="chk-majuscule" class="flex items-center gap-2">' + icon('circle', 12) + ' Une majuscule</li>' +
+              '<li id="chk-minuscule" class="flex items-center gap-2">' + icon('circle', 12) + ' Une minuscule</li>' +
+              '<li id="chk-chiffre" class="flex items-center gap-2">' + icon('circle', 12) + ' Un chiffre</li>' +
+              '<li id="chk-special" class="flex items-center gap-2">' + icon('circle', 12) + ' Un caractère spécial</li>' +
+            '</ul>' +
+          '</div>' +
+        '</div></div>';
+    }
+
+    function initPasswordEval() {
+      var inp = document.getElementById('pwd-nouveau');
+      if (inp) evalPwd();
+    }
+
+    function evalPwd() {
+      var inp = document.getElementById('pwd-nouveau');
+      if (!inp) return;
+      var ev = Auth.evaluerMotDePasse(inp.value);
+      var bar = document.getElementById('pwd-bar');
+      var lbl = document.getElementById('pwd-label');
+      var colors = { danger: '#9B2C38', warning: '#D4A017', info: '#4A6FA5', success: '#198754' };
+      if (bar) { bar.style.width = (ev.score / 5 * 100) + '%'; bar.style.background = colors[ev.color] || '#9B2C38'; }
+      if (lbl) { lbl.textContent = ev.label; lbl.className = 'text-xs font-semibold mb-3 text-' + ev.color + '-700'; }
+      var checks = { longueur: 'chk-longueur', majuscule: 'chk-majuscule', minuscule: 'chk-minuscule', chiffre: 'chk-chiffre', special: 'chk-special' };
+      Object.keys(checks).forEach(function (k) {
+        var el = document.getElementById(checks[k]);
+        if (!el) return;
+        var ok = ev.checks[k];
+        el.innerHTML = icon(ok ? 'check-circle' : 'circle', 12);
+        el.className = 'flex items-center gap-2 ' + (ok ? 'text-success-700' : 'text-neutral-400');
+      });
+    }
+
+    function changePassword() {
+      var a = document.getElementById('pwd-actuel').value;
+      var n = document.getElementById('pwd-nouveau').value;
+      var c = document.getElementById('pwd-conf').value;
+      if (!a || !n || !c) { showToast('Erreur', 'Veuillez remplir tous les champs', 'error'); return; }
+      if (n !== c) { showToast('Erreur', 'Les mots de passe ne correspondent pas', 'error'); return; }
+      var ev = Auth.evaluerMotDePasse(n);
+      if (ev.score < 3) { showToast('Mot de passe trop faible', 'Score : ' + ev.label, 'warning'); return; }
+      Storage.logAction('changement_mot_de_passe', user.id, user.role, 'Mot de passe modifié');
+      showToast('Mot de passe modifié', 'Votre mot de passe a été mis à jour.', 'success');
+      document.getElementById('pwd-actuel').value = '';
+      document.getElementById('pwd-nouveau').value = '';
+      document.getElementById('pwd-conf').value = '';
+      evalPwd();
+    }
+
+    function render2FASection() {
+      var codes = ['ABCD-1234', 'EFGH-5678', 'IJKL-9012', 'MNOP-3456', 'QRST-7890', 'UVWX-2345', 'YZAB-6789', 'CDEF-0123'];
+      var html = '<div class="cs-card p-6 mb-4"><h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('smartphone', 20) + ' Authentification à deux facteurs (2FA)</h2>' +
+        '<div class="flex items-center justify-between mb-4">' +
+          '<div><div class="text-sm font-medium text-neutral-800">Statut : ' + (twoFAEnabled ? '<span class="cs-badge cs-badge-success">Activée</span>' : '<span class="cs-badge cs-badge-neutral">Désactivée</span>') + '</div>' +
+          '<div class="text-xs text-neutral-500 mt-1">Protection supplémentaire par code SMS ou application</div></div>' +
+          '<button onclick="toggle2FA()" class="cs-btn ' + (twoFAEnabled ? 'cs-btn-danger' : 'cs-btn-primary') + '">' + (twoFAEnabled ? 'Désactiver' : 'Activer') + '</button>' +
+        '</div>';
+      if (twoFAEnabled) {
+        html += '<div class="border-t border-neutral-100 pt-4">' +
+          '<div class="text-sm font-medium text-neutral-800 mb-2">Code de vérification</div>' +
+          '<div class="flex gap-2 mb-4" id="cs-2fa-inputs">';
+        for (var i = 0; i < 6; i++) {
+          html += '<input type="text" maxlength="1" class="cs-input w-10 h-12 text-center text-lg font-bold" oninput="on2FAInput(this, ' + i + ')" aria-label="Chiffre ' + (i + 1) + '">';
+        }
+        html += '</div>' +
+          '<button onclick="verify2FA()" class="cs-btn cs-btn-primary cs-btn-sm">Vérifier</button>' +
+          '<div class="mt-4 p-3 bg-warning-50 rounded-cs-md"><div class="text-xs font-semibold text-gold-800 mb-2">' + icon('alert-triangle', 14) + ' Codes de secours (à conserver)</div>' +
+            '<div class="grid grid-cols-2 sm:grid-cols-4 gap-1 text-xs font-mono text-gold-700">' + codes.map(function (c) { return '<span>' + c + '</span>'; }).join('') + '</div>' +
+          '</div>' +
+        '</div>';
+      }
+      html += '</div>';
+      return html;
+    }
+
+    function init2FAInputs() {
+      // rien à faire tant que 2FA désactivée
+    }
+
+    function toggle2FA() {
+      twoFAEnabled = !twoFAEnabled;
+      Storage.logAction('toggle_2fa', user.id, user.role, '2FA ' + (twoFAEnabled ? 'activée' : 'désactivée'));
+      showToast('2FA', twoFAEnabled ? 'Activée — codes de secours générés.' : 'Désactivée.', twoFAEnabled ? 'success' : 'info');
+      renderPage();
+    }
+
+    function on2FAInput(el, idx) {
+      el.value = el.value.replace(/[^0-9]/g, '');
+      if (el.value && idx < 5) {
+        var next = document.querySelectorAll('#cs-2fa-inputs input')[idx + 1];
+        if (next) next.focus();
+      }
+    }
+
+    function verify2FA() {
+      var inputs = document.querySelectorAll('#cs-2fa-inputs input');
+      var code = '';
+      inputs.forEach(function (i) { code += i.value; });
+      if (code.length === 6) {
+        showToast('2FA vérifiée', 'Code accepté.', 'success');
+        inputs.forEach(function (i) { i.value = ''; });
+      } else {
+        showToast('Code incomplet', 'Veuillez saisir 6 chiffres.', 'warning');
+      }
+    }
+
+    function renderSessionsSection() {
+      var sessions = [
+        { device: 'Chrome — Windows 10', loc: 'Ouagadougou, BF', ip: '196.200.0.1', current: true, last: new Date().toISOString() },
+        { device: 'Safari — iPhone', loc: 'Bobo-Dioulasso, BF', ip: '196.200.0.2', current: false, last: '2026-02-18T10:00:00' },
+        { device: 'Firefox — Ubuntu', loc: 'Koudougou, BF', ip: '196.200.0.3', current: false, last: '2026-02-15T08:00:00' }
+      ];
+      var html = '<div class="cs-card p-6 mb-4"><h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('monitor', 20) + ' Sessions actives</h2>' +
+        '<div class="space-y-2">';
+      sessions.forEach(function (s) {
+        var ic = /iphone|android|mobile/i.test(s.device) ? 'smartphone' : 'monitor';
+        html += '<div class="flex items-center gap-3 p-3 bg-neutral-50 rounded-cs-md">' +
+          '<div class="text-neutral-500">' + icon(ic, 20) + '</div>' +
+          '<div class="flex-1 min-w-0"><div class="text-sm font-medium text-neutral-800">' + echapperHTML(s.device) + (s.current ? ' <span class="cs-badge cs-badge-success ml-1">Cette session</span>' : '') + '</div>' +
+            '<div class="text-xs text-neutral-500">' + icon('map-pin', 12) + ' ' + echapperHTML(s.loc) + ' • ' + echapperHTML(s.ip) + ' • ' + formatRelative(s.last) + '</div></div>' +
+          (s.current ? '' : '<button onclick="revokeSession(this)" class="cs-btn cs-btn-ghost cs-btn-sm text-danger-600" aria-label="Révoquer session">Révoquer</button>') +
+        '</div>';
+      });
+      html += '</div></div>';
+      return html;
+    }
+
+    function revokeSession(btn) {
+      if (!confirm('Révoquer cette session ?')) return;
+      var el = btn.closest('.flex.items-center');
+      if (el) el.style.opacity = '0.4';
+      btn.disabled = true;
+      btn.textContent = 'Révoquée';
+      Storage.logAction('revocation_session', user.id, user.role, 'Session distante révoquée');
+      showToast('Session révoquée', 'L\'appareil a été déconnecté.', 'success');
+    }
+
+    function renderJournalSection() {
+      var logs = Storage.getJournal(10);
+      if (!logs.length) {
+        logs = [
+          { date: new Date().toISOString(), action: 'connexion', details: 'Connexion réussie', userId: user.id, role: user.role, ip: '196.200.0.1' },
+          { date: '2026-02-18T10:00:00', action: 'connexion', details: 'Connexion depuis Chrome / Windows', userId: user.id, role: user.role, ip: '196.200.0.1' },
+          { date: '2026-02-17T08:00:00', action: 'echec_connexion', details: 'Mot de passe incorrect', userId: user.id, role: user.role, ip: '196.200.0.5' },
+          { date: '2026-02-15T14:30:00', action: 'connexion', details: 'Connexion depuis Safari / iPhone', userId: user.id, role: user.role, ip: '196.200.0.2' }
+        ];
+      }
+      var html = '<div class="cs-card p-6 mb-4"><h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('history', 20) + ' Journal de connexion</h2>' +
+        '<table class="cs-table"><thead><tr><th>Date</th><th>Appareil / Action</th><th>Localisation</th><th>Statut</th></tr></thead><tbody>';
+      logs.forEach(function (l) {
+        var ok = l.action !== 'echec_connexion';
+        html += '<tr><td class="text-xs text-neutral-500">' + formatDate(l.date, { avecHeure: true }) + '</td>' +
+          '<td><div class="text-sm text-neutral-800">' + echapperHTML(l.action) + '</div><div class="text-xs text-neutral-500">' + echapperHTML(l.details || '') + '</div></td>' +
+          '<td class="text-xs">' + echapperHTML(l.ip || '—') + '</td>' +
+          '<td><span class="cs-badge ' + (ok ? 'cs-badge-success' : 'cs-badge-danger') + '">' + (ok ? 'Succès' : 'Échec') + '</span></td></tr>';
+      });
+      html += '</tbody></table></div>';
+      return html;
+    }
+
+    function renderDangerSection() {
+      return '<div class="cs-card p-6 mb-4 border-2 border-danger-200"><h2 class="text-lg font-semibold text-danger-700 mb-4 flex items-center gap-2">' + icon('alert-octagon', 20) + ' Zone de danger</h2>' +
+        '<div class="space-y-3">' +
+          '<div class="flex items-center justify-between p-3 bg-neutral-50 rounded-cs-md">' +
+            '<div><div class="text-sm font-medium text-neutral-800">Exporter mes données</div><div class="text-xs text-neutral-500">Télécharger une archive JSON de vos données.</div></div>' +
+            '<button onclick="exportData()" class="cs-btn cs-btn-secondary">' + icon('download', 16) + ' Exporter</button>' +
+          '</div>' +
+          '<div class="flex items-center justify-between p-3 bg-danger-50 rounded-cs-md">' +
+            '<div><div class="text-sm font-medium text-danger-700">Supprimer mon compte</div><div class="text-xs text-danger-600">Cette action est irréversible.</div></div>' +
+            '<button onclick="deleteAccount()" class="cs-btn cs-btn-danger">' + icon('trash-2', 16) + ' Supprimer</button>' +
+          '</div>' +
+        '</div></div>';
+    }
+
+    function exportData() {
+      try {
+        Storage.downloadExport();
+        Storage.logAction('export_donnees', user.id, user.role, 'Export JSON des données utilisateur');
+        showToast('Export', 'Archive JSON téléchargée.', 'success');
+      } catch (e) { showToast('Erreur', e.message, 'error'); }
+    }
+
+    function deleteAccount() {
+      if (!confirm('Supprimer définitivement votre compte et toutes vos données ?')) return;
+      if (!confirm('Cette action est IRRÉVERSIBLE. Confirmez une seconde fois.')) return;
+      Storage.logAction('suppression_compte', user.id, user.role, 'Suppression du compte');
+      var entity = user.role === 'patient' ? 'patients' : (user.role === 'medecin' ? 'medecins' : 'admins');
+      Storage.removeById(entity, user.id);
+      Storage.remove('user');
+      showToast('Compte supprimé', 'Redirection...', 'info');
+      setTimeout(function () { window.location.href = '../index.html'; }, 1500);
+    }
+
+    function renderProtocolesSection() {
+      var protos = [
+        { t: 'Chiffrement localStorage pédagogique', d: 'Données stockées localement (prototype). En production : chiffrement serveur AES-256.', icon: 'lock' },
+        { t: 'Traçabilité des actions', d: 'Toute action sensible est journalisée (200 dernières entrées) avec IP, date, utilisateur.', icon: 'history' },
+        { t: 'Validation ministère', d: 'Inscriptions patients/médecins/admins validées par un administrateur ministériel.', icon: 'shield-check' },
+        { t: 'Codes à usage unique', d: 'Codes MIN-PAT/MIN-MED/MIN-ADM générés par le ministère, validité 72h, à usage unique.', icon: 'key' },
+        { t: 'Certification OR/ARGENT/BRONZE', d: 'Trois niveaux de certification selon le score de sécurité atteint.', icon: 'award' },
+        { t: 'Expiration 72h', d: 'Codes d\'inscription expirent automatiquement après 72 heures.', icon: 'clock' },
+        { t: '2FA optionnelle', d: 'Authentification à deux facteurs renforcée par codes de secours.', icon: 'smartphone' },
+        { t: 'Échappement HTML', d: 'Prévention XSS systématique sur les contenus dynamiques.', icon: 'code' }
+      ];
+      var html = '<div class="cs-card p-6 mb-4"><h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('shield-check', 20) + ' Protocoles de sécurité appliqués</h2>' +
+        '<div class="grid grid-cols-1 md:grid-cols-2 gap-3">';
+      protos.forEach(function (p) {
+        html += '<div class="flex items-start gap-3 p-3 bg-neutral-50 rounded-cs-md">' +
+          '<div class="text-primary-700 flex-shrink-0 mt-0.5">' + icon(p.icon, 18) + '</div>' +
+          '<div><div class="text-sm font-medium text-neutral-800">' + echapperHTML(p.t) + '</div>' +
+            '<div class="text-xs text-neutral-600 mt-0.5">' + echapperHTML(p.d) + '</div></div>' +
+        '</div>';
+      });
+      html += '</div></div>';
+      return html;
+    }
+
+    function renderCertificationSection() {
+      var current = (user && user.niveauCertification) || 'BRONZE';
+      var levels = [
+        { id: 'BRONZE', label: 'Bronze', color: '#B8860B', bg: 'bg-gold-100', text: 'text-gold-700', desc: 'Niveau de base — Validation ministère obtenue.' },
+        { id: 'ARGENT', label: 'Argent', color: '#6C757D', bg: 'bg-neutral-100', text: 'text-neutral-700', desc: 'Niveau intermédiaire — 2FA activée + mot de passe fort.' },
+        { id: 'OR', label: 'Or', color: '#D4A017', bg: 'bg-gold-100', text: 'text-gold-800', desc: 'Niveau supérieur — Toutes les mesures de sécurité activées.' }
+      ];
+      var html = '<div class="cs-card p-6 mb-4"><h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('award', 20) + ' Niveaux de certification</h2>' +
+        '<div class="grid grid-cols-1 md:grid-cols-3 gap-4">';
+      levels.forEach(function (l) {
+        var isCurrent = current === l.id;
+        html += '<div class="border-2 ' + (isCurrent ? 'border-primary-500' : 'border-neutral-200') + ' rounded-cs-md p-4 text-center relative">' +
+          (isCurrent ? '<span class="absolute top-2 right-2 cs-badge cs-badge-success">Votre niveau</span>' : '') +
+          '<div class="flex justify-center mb-2">' + icon('shield', 36, l.text) + '</div>' +
+          '<div class="font-bold text-lg ' + l.text + '">' + l.label + '</div>' +
+          '<div class="text-xs text-neutral-600 mt-1">' + echapperHTML(l.desc) + '</div>' +
+        '</div>';
+      });
+      html += '</div></div>';
+      return html;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inscription administrateur sur CareSync EHR — réservée au personnel habilité du Ministère de la Santé.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Inscription Administrateur — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body class="bg-neutral-50">
+  <a href="#main" class="cs-skip-link">Aller au contenu</a>
+  <div id="cs-header"></div>
+
+  <main id="main" class="max-w-3xl mx-auto px-4 py-8 sm:py-12">
+    <!-- Titre -->
+    <div class="text-center mb-8 cs-anim-slide-up">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-admin-50 text-admin-700 mb-3">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+      </div>
+      <h1 class="text-3xl font-bold text-neutral-800">Inscription Administrateur</h1>
+      <p class="text-neutral-500 mt-2 text-sm">Création de compte habilité — Ministère de la Santé du Burkina Faso.</p>
+    </div>
+
+    <!-- Barre de progression -->
+    <div class="flex items-center justify-center gap-0 mb-10 max-w-xl mx-auto" id="cs-stepper">
+      <div class="flex flex-col items-center">
+        <div class="cs-step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-admin-700 text-white" data-dot="1">1</div>
+        <span class="text-xs mt-2 text-admin-700 font-medium text-center" data-label="1">Identité & Code</span>
+      </div>
+      <div class="flex-1 h-0.5 bg-neutral-200 mx-2 -mt-6 cs-step-line" data-line="1"></div>
+      <div class="flex flex-col items-center">
+        <div class="cs-step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-neutral-200 text-neutral-400" data-dot="2">2</div>
+        <span class="text-xs mt-2 text-neutral-400 text-center" data-label="2">Coordonnées</span>
+      </div>
+      <div class="flex-1 h-0.5 bg-neutral-200 mx-2 -mt-6 cs-step-line" data-line="2"></div>
+      <div class="flex flex-col items-center">
+        <div class="cs-step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-neutral-200 text-neutral-400" data-dot="3">3</div>
+        <span class="text-xs mt-2 text-neutral-400 text-center" data-label="3">Confirmation</span>
+      </div>
+    </div>
+
+    <!-- Alerte sécurité -->
+    <div class="bg-danger-50 border border-danger-200 rounded-cs-md p-4 mb-6 flex items-start gap-3" role="alert">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-danger-700 flex-shrink-0 mt-0.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4M12 17h.01"/></svg>
+      <div>
+        <p class="font-semibold text-danger-800 text-sm">Zone sensible — Accès réservé</p>
+        <p class="text-danger-700 text-sm mt-1">La création d'un compte administrateur est strictement encadrée. Tout abus sera tracé et sanctionné conformément à la réglementation en vigueur. Un code ministère <code class="bg-danger-100 px-1 py-0.5 rounded font-mono text-xs">MIN-ADM-2026-XXXX</code> valide est obligatoire.</p>
+      </div>
+    </div>
+
+    <!-- Formulaire -->
+    <form id="cs-form-admin" class="cs-card cs-card-elevated cs-card-accent-admin p-6 sm:p-8" novalidate>
+      <!-- ÉTAPE 1 : Identité + Code -->
+      <section class="cs-step-panel" data-panel="1">
+        <h2 class="text-xl font-semibold text-neutral-800 mb-1">Identité et habilitation</h2>
+        <p class="text-sm text-neutral-500 mb-6">Vos informations administratives et code ministère.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="nom" class="cs-label cs-label-required">Nom</label>
+            <input type="text" id="nom" name="nom" class="cs-input" required aria-required="true" autocomplete="family-name" placeholder="KABORE">
+            <div class="cs-field-error hidden" data-error="nom"></div>
+          </div>
+          <div>
+            <label for="prenom" class="cs-label cs-label-required">Prénom</label>
+            <input type="text" id="prenom" name="prenom" class="cs-input" required aria-required="true" autocomplete="given-name" placeholder="Adama">
+            <div class="cs-field-error hidden" data-error="prenom"></div>
+          </div>
+          <div>
+            <label for="fonction" class="cs-label cs-label-required">Fonction administrative</label>
+            <select id="fonction" name="fonction" class="cs-select" required aria-required="true">
+              <option value="">— Sélectionnez —</option>
+              <option value="Administrateur général">Administrateur général</option>
+              <option value="Directeur de la santé">Directeur de la santé</option>
+              <option value="Responsable SI santé">Responsable SI santé</option>
+              <option value="Superviseur régional">Superviseur régional</option>
+              <option value="Agent de saisie">Agent de saisie</option>
+              <option value="Régulateur EPS">Régulateur EPS</option>
+              <option value="Chargé de la traçabilité">Chargé de la traçabilité</option>
+            </select>
+            <div class="cs-field-error hidden" data-error="fonction"></div>
+          </div>
+          <div>
+            <label for="niveauPermission" class="cs-label cs-label-required">Niveau de permission</label>
+            <select id="niveauPermission" name="niveauPermission" class="cs-select" required aria-required="true">
+              <option value="">— Sélectionnez —</option>
+              <option value="Lecture seule">Lecture seule</option>
+              <option value="Édition limitée">Édition limitée</option>
+              <option value="Édition complète">Édition complète</option>
+              <option value="Supervision">Supervision</option>
+              <option value="Super administrateur">Super administrateur</option>
+            </select>
+            <div class="cs-field-error hidden" data-error="niveauPermission"></div>
+          </div>
+          <div>
+            <label for="etablissementId" class="cs-label cs-label-required">Structure de rattachement</label>
+            <select id="etablissementId" name="etablissementId" class="cs-select" required aria-required="true">
+              <option value="">— Sélectionnez —</option>
+            </select>
+            <div class="cs-field-error hidden" data-error="etablissementId"></div>
+          </div>
+          <div>
+            <label for="service" class="cs-label">Service / Direction</label>
+            <input type="text" id="service" name="service" class="cs-input" placeholder="DGS, DSI, EPS Centre...">
+          </div>
+          <div class="sm:col-span-2">
+            <label for="codeMinistere" class="cs-label cs-label-required">Code ministère</label>
+            <input type="text" id="codeMinistere" name="codeMinistere" class="cs-input font-mono uppercase" required aria-required="true" placeholder="MIN-ADM-2026-AB12" maxlength="20">
+            <div class="cs-field-error hidden" data-error="codeMinistere"></div>
+            <p class="text-xs text-danger-700 mt-1">Code obligatoire délivré par le Ministère. Format : MIN-ADM-2026-XXXX.</p>
+            <p id="cs-code-status" class="text-xs mt-1 hidden"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ÉTAPE 2 : Coordonnées -->
+      <section class="cs-step-panel hidden" data-panel="2">
+        <h2 class="text-xl font-semibold text-neutral-800 mb-1">Coordonnées</h2>
+        <p class="text-sm text-neutral-500 mb-6">Vos moyens de contact professionnels.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="telephone" class="cs-label cs-label-required">Téléphone professionnel</label>
+            <input type="tel" id="telephone" name="telephone" class="cs-input" required aria-required="true" placeholder="+226 50 00 00 00" inputmode="tel">
+            <div class="cs-field-error hidden" data-error="telephone"></div>
+          </div>
+          <div>
+            <label for="email" class="cs-label cs-label-required">Email professionnel</label>
+            <input type="email" id="email" name="email" class="cs-input" required aria-required="true" autocomplete="email" placeholder="a.kabore@sante.gov.bf">
+            <div class="cs-field-error hidden" data-error="email"></div>
+          </div>
+          <div>
+            <label for="province" class="cs-label cs-label-required">Province</label>
+            <select id="province" name="province" class="cs-select" required aria-required="true">
+              <option value="">— Sélectionnez —</option>
+            </select>
+            <div class="cs-field-error hidden" data-error="province"></div>
+          </div>
+          <div>
+            <label for="ville" class="cs-label cs-label-required">Ville</label>
+            <input type="text" id="ville" name="ville" class="cs-input" required aria-required="true" placeholder="Ouagadougou">
+            <div class="cs-field-error hidden" data-error="ville"></div>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="superieur" class="cs-label">Supérieur hiérarchique</label>
+            <input type="text" id="superieur" name="superieur" class="cs-input" placeholder="Nom et fonction du supérieur hiérarchique direct">
+            <p class="text-xs text-neutral-400 mt-1">Personne à contacter en cas d'incident.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ÉTAPE 3 : Confirmation -->
+      <section class="cs-step-panel hidden" data-panel="3">
+        <h2 class="text-xl font-semibold text-neutral-800 mb-1">Confirmation et engagements</h2>
+        <p class="text-sm text-neutral-500 mb-6">Vérifiez vos informations et acceptez les engagements.</p>
+
+        <div id="cs-recap" class="bg-neutral-50 border border-neutral-200 rounded-cs-md p-4 space-y-3 text-sm"></div>
+
+        <div class="mt-6 space-y-3">
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="confidentialite" id="confidentialite" class="w-5 h-5 mt-0.5 accent-admin-700" required aria-required="true">
+            <span class="text-sm text-neutral-700">Je m'engage à respecter la <strong>confidentialité</strong> absolue des données médicales consultées, conformément à la loi sur la protection des données personnelles du Burkina Faso.</span>
+          </label>
+          <div class="cs-field-error hidden" data-error="confidentialite"></div>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="tracabilite" id="tracabilite" class="w-5 h-5 mt-0.5 accent-admin-700" required aria-required="true">
+            <span class="text-sm text-neutral-700">J'accepte que toutes mes actions (consultation, modification, suppression) soient <strong>tracées</strong> et journalisées dans le système.</span>
+          </label>
+          <div class="cs-field-error hidden" data-error="tracabilite"></div>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="conditions" id="conditions" class="w-5 h-5 mt-0.5 accent-admin-700" required aria-required="true">
+            <span class="text-sm text-neutral-700">J'accepte les <a href="#" class="text-admin-700 underline">conditions d'utilisation</a> de la plateforme CareSync EHR et reconnais ma responsabilité pénale en cas d'usage frauduleux.</span>
+          </label>
+          <div class="cs-field-error hidden" data-error="conditions"></div>
+        </div>
+      </section>
+
+      <!-- Boutons navigation -->
+      <div class="flex items-center justify-between gap-3 mt-8 pt-6 border-t border-neutral-100">
+        <button type="button" id="cs-btn-prev" class="cs-btn cs-btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          <span>Précédent</span>
+        </button>
+        <button type="button" id="cs-btn-next" class="cs-btn cs-btn-primary">
+          <span>Suivant</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button type="submit" id="cs-btn-submit" class="cs-btn hidden text-white" style="background: #1A1A2E;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          <span>Créer le compte administrateur</span>
+        </button>
+      </div>
+    </form>
+
+    <p class="text-center text-sm text-neutral-500 mt-6">
+      Vous avez déjà un compte ?
+      <a href="auth.html" class="text-admin-700 font-medium hover:underline">Connectez-vous</a>
+    </p>
+  </main>
+
+  <footer class="bg-neutral-900 text-neutral-400 mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-center text-xs">
+      CareSync EHR · Prototype pédagogique · Ministère de la Santé du Burkina Faso
+    </div>
+  </footer>
+
+  <script>
+    // ===== Header =====
+    document.getElementById('cs-header').innerHTML = renderPublicHeader('auth');
+
+    var etapeActuelle = 1;
+    var etapeMax = 3;
+    var regionsData = [];
+    var structuresData = [];
+
+    // ===== Chargement des données JSON =====
+    loadJSON('../assets/data/regions.json').then(function (data) {
+      if (!data) return;
+      regionsData = data;
+      var provSel = document.getElementById('province');
+      data.forEach(function (r) {
+        r.provinces.forEach(function (p) {
+          var opt = document.createElement('option');
+          opt.value = p.province;
+          opt.textContent = p.province + ' (' + r.region + ')';
+          provSel.appendChild(opt);
+        });
+      });
+    });
+
+    loadJSON('../assets/data/structures.json').then(function (data) {
+      if (!data) return;
+      structuresData = data;
+      var sel = document.getElementById('etablissementId');
+      data.forEach(function (s) {
+        var opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = s.nom + ' (' + s.type + ', ' + (s.commune || s.region || '') + ')';
+        sel.appendChild(opt);
+      });
+    });
+
+    // ===== Validation code ministère en temps réel =====
+    document.getElementById('codeMinistere').addEventListener('input', function () {
+      var code = this.value.trim().toUpperCase();
+      var status = document.getElementById('cs-code-status');
+      if (!code) { status.classList.add('hidden'); return; }
+      status.classList.remove('hidden');
+      if (!Auth.REGEX_CODE_MINISTERE.test(code)) {
+        status.className = 'text-xs mt-1 text-danger-700';
+        status.textContent = 'Format invalide. Attendu : MIN-ADM-2026-XXXX';
+      } else {
+        var verif = Storage.verifierCodeMinistere(code);
+        if (verif) {
+          if (verif.role === 'admin') {
+            status.className = 'text-xs mt-1 text-primary-700 font-medium';
+            status.textContent = 'Code valide et disponible — certification OR activée.';
+          } else {
+            status.className = 'text-xs mt-1 text-danger-700';
+            status.textContent = 'Ce code existe mais n\'est pas attribué à un administrateur.';
+          }
+        } else {
+          status.className = 'text-xs mt-1 text-danger-700';
+          status.textContent = 'Code invalide, déjà utilisé ou expiré.';
+        }
+      }
+    });
+
+    // ===== Validation =====
+    function effacerErreurs() {
+      document.querySelectorAll('.cs-field-error').forEach(function (el) { el.classList.add('hidden'); el.textContent = ''; });
+      document.querySelectorAll('.cs-input-error').forEach(function (el) { el.classList.remove('cs-input-error'); });
+    }
+    function afficherErreur(champ, message) {
+      var errEl = document.querySelector('[data-error="' + champ + '"]');
+      if (errEl) { errEl.textContent = message; errEl.classList.remove('hidden'); }
+      var input = document.getElementById(champ) || document.querySelector('[name="' + champ + '"]');
+      if (input && input.classList) input.classList.add('cs-input-error');
+    }
+    function validerEtape(n) {
+      effacerErreurs();
+      var ok = true;
+      if (n === 1) {
+        var nom = document.getElementById('nom').value.trim();
+        var prenom = document.getElementById('prenom').value.trim();
+        var fonction = document.getElementById('fonction').value;
+        var niveauPermission = document.getElementById('niveauPermission').value;
+        var etablissementId = document.getElementById('etablissementId').value;
+        var code = document.getElementById('codeMinistere').value.trim().toUpperCase();
+        if (nom.length < 2) { afficherErreur('nom', 'Le nom doit comporter au moins 2 caractères.'); ok = false; }
+        if (prenom.length < 2) { afficherErreur('prenom', 'Le prénom doit comporter au moins 2 caractères.'); ok = false; }
+        if (!fonction) { afficherErreur('fonction', 'La fonction administrative est requise.'); ok = false; }
+        if (!niveauPermission) { afficherErreur('niveauPermission', 'Le niveau de permission est requis.'); ok = false; }
+        if (!etablissementId) { afficherErreur('etablissementId', 'La structure de rattachement est requise.'); ok = false; }
+        if (!code) { afficherErreur('codeMinistere', 'Le code ministère est obligatoire pour les administrateurs.'); ok = false; }
+        else if (!Auth.REGEX_CODE_MINISTERE.test(code)) { afficherErreur('codeMinistere', 'Format attendu : MIN-ADM-2026-XXXX'); ok = false; }
+        else {
+          var verif = Storage.verifierCodeMinistere(code);
+          if (!verif) { afficherErreur('codeMinistere', 'Code invalide, déjà utilisé ou expiré.'); ok = false; }
+          else if (verif.role !== 'admin') { afficherErreur('codeMinistere', 'Ce code n\'est pas attribué à un administrateur.'); ok = false; }
+        }
+      } else if (n === 2) {
+        var tel = document.getElementById('telephone').value.trim();
+        var email = document.getElementById('email').value.trim();
+        if (!Auth.REGEX_PHONE.test(tel)) { afficherErreur('telephone', 'Format requis : +226 XX XX XX XX'); ok = false; }
+        if (!email || !Auth.REGEX_EMAIL.test(email)) { afficherErreur('email', 'Email professionnel invalide.'); ok = false; }
+        if (!document.getElementById('province').value) { afficherErreur('province', 'Province requise.'); ok = false; }
+        if (!document.getElementById('ville').value) { afficherErreur('ville', 'Ville requise.'); ok = false; }
+      } else if (n === 3) {
+        if (!document.getElementById('confidentialite').checked) { afficherErreur('confidentialite', 'Vous devez accepter l\'engagement de confidentialité.'); ok = false; }
+        if (!document.getElementById('tracabilite').checked) { afficherErreur('tracabilite', 'Vous devez accepter la traçabilité.'); ok = false; }
+        if (!document.getElementById('conditions').checked) { afficherErreur('conditions', 'Vous devez accepter les conditions d\'utilisation.'); ok = false; }
+      }
+      return ok;
+    }
+
+    function goToStep(n) {
+      if (n < 1 || n > etapeMax) return;
+      if (n > etapeActuelle && !validerEtape(etapeActuelle)) return;
+      document.querySelectorAll('.cs-step-panel').forEach(function (p) { p.classList.add('hidden'); });
+      var panel = document.querySelector('[data-panel="' + n + '"]');
+      if (panel) { panel.classList.remove('hidden'); panel.classList.add('cs-anim-fade-in'); }
+      etapeActuelle = n;
+      updateStepper();
+      updateButtons();
+      if (n === etapeMax) genererRecap();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateStepper() {
+      for (var i = 1; i <= etapeMax; i++) {
+        var dot = document.querySelector('[data-dot="' + i + '"]');
+        var label = document.querySelector('[data-label="' + i + '"]');
+        var line = document.querySelector('[data-line="' + i + '"]');
+        if (!dot) continue;
+        if (i <= etapeActuelle) {
+          dot.classList.remove('bg-neutral-200', 'text-neutral-400');
+          dot.classList.add('bg-admin-700', 'text-white');
+          if (label) { label.classList.remove('text-neutral-400'); label.classList.add('text-admin-700', 'font-medium'); }
+          if (line && i < etapeActuelle) { line.classList.remove('bg-neutral-200'); line.classList.add('bg-admin-700'); }
+        } else {
+          dot.classList.add('bg-neutral-200', 'text-neutral-400');
+          dot.classList.remove('bg-admin-700', 'text-white');
+          if (label) { label.classList.add('text-neutral-400'); label.classList.remove('text-admin-700', 'font-medium'); }
+          if (line) { line.classList.add('bg-neutral-200'); line.classList.remove('bg-admin-700'); }
+        }
+      }
+    }
+
+    function updateButtons() {
+      var btnPrev = document.getElementById('cs-btn-prev');
+      var btnNext = document.getElementById('cs-btn-next');
+      var btnSubmit = document.getElementById('cs-btn-submit');
+      btnPrev.classList.toggle('hidden', etapeActuelle === 1);
+      if (etapeActuelle === etapeMax) {
+        btnNext.classList.add('hidden');
+        btnSubmit.classList.remove('hidden');
+      } else {
+        btnNext.classList.remove('hidden');
+        btnSubmit.classList.add('hidden');
+      }
+    }
+
+    document.getElementById('cs-btn-next').addEventListener('click', function () { goToStep(etapeActuelle + 1); });
+    document.getElementById('cs-btn-prev').addEventListener('click', function () { goToStep(etapeActuelle - 1); });
+
+    // ===== Récapitulatif =====
+    function genererRecap() {
+      var etab = structuresData.find(function (s) { return s.id === document.getElementById('etablissementId').value; });
+      var recap = document.getElementById('cs-recap');
+      var lignes = [
+        ['Nom complet', (document.getElementById('prenom').value + ' ' + document.getElementById('nom').value).trim()],
+        ['Fonction', document.getElementById('fonction').value || '—'],
+        ['Niveau de permission', document.getElementById('niveauPermission').value || '—'],
+        ['Structure', etab ? etab.nom : '—'],
+        ['Service', document.getElementById('service').value || '—'],
+        ['Code ministère', document.getElementById('codeMinistere').value || '—'],
+        ['Téléphone pro', document.getElementById('telephone').value || '—'],
+        ['Email pro', document.getElementById('email').value || '—'],
+        ['Province', document.getElementById('province').value || '—'],
+        ['Ville', document.getElementById('ville').value || '—'],
+        ['Supérieur hiérarchique', document.getElementById('superieur').value || '—']
+      ];
+      recap.innerHTML = lignes.map(function (l) {
+        return '<div class="flex justify-between gap-4"><span class="text-neutral-500">' + l[0] + '</span><span class="text-neutral-800 font-medium text-right">' + echapperHTML(l[1]) + '</span></div>';
+      }).join('');
+    }
+
+    // ===== Soumission =====
+    document.getElementById('cs-form-admin').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!validerEtape(etapeMax)) return;
+
+      var code = document.getElementById('codeMinistere').value.trim().toUpperCase();
+      var etab = structuresData.find(function (s) { return s.id === document.getElementById('etablissementId').value; });
+
+      var data = {
+        nom: document.getElementById('nom').value,
+        prenom: document.getElementById('prenom').value,
+        fonction: document.getElementById('fonction').value,
+        niveauPermission: document.getElementById('niveauPermission').value,
+        structure: etab ? etab.nom : '',
+        etablissementId: document.getElementById('etablissementId').value,
+        service: document.getElementById('service').value || '',
+        codeMinistere: code,
+        telephone: document.getElementById('telephone').value,
+        email: document.getElementById('email').value,
+        province: document.getElementById('province').value,
+        ville: document.getElementById('ville').value,
+        superieur: document.getElementById('superieur').value || '',
+        consentement: true
+      };
+
+      var result = Auth.inscriptionAdmin(data);
+      if (result.success) {
+        showToast('Compte administrateur créé', 'Votre identifiant BFA : ' + result.id, 'success', 8000);
+        if (result.certifie) {
+          showToast('Certification OR', 'Compte certifié par le Ministère de la Santé.', 'success', 6000);
+        }
+        var btn = document.getElementById('cs-btn-submit');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="cs-spinner cs-spinner-dark"></span><span>Connexion en cours...</span>';
+        // Auth.inscriptionAdmin a déjà auto-connecté ; redirection après 3s
+        setTimeout(function () {
+          window.location.href = 'dashboard-admin.html';
+        }, 3000);
+      } else {
+        showToast('Erreur d\'inscription', result.errors.join(' · '), 'error', 6000);
+      }
+    });
+
+    // ===== Code ministère depuis l'URL =====
+    window.addEventListener('DOMContentLoaded', function () {
+      var code = getURLParam('code');
+      if (code) {
+        var codeField = document.getElementById('codeMinistere');
+        if (codeField) {
+          codeField.value = code.toUpperCase();
+          // Déclencher la vérification visuelle
+          var event = new Event('input');
+          codeField.dispatchEvent(event);
+        }
+      }
+      updateButtons();
+    });
+  </script>
+</body>
+</html>

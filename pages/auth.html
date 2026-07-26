@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Connexion ou inscription à CareSync EHR. Identifiants au format BFA-PAT/MED/ADM-2026-XXXX pour patients, médecins et administrateurs.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Connexion et inscription — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body class="bg-neutral-50">
+  <a href="#main" class="cs-skip-link">Aller au contenu</a>
+  <div id="cs-header"></div>
+
+  <main id="main" class="py-12 sm:py-16">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- En-tête de page -->
+      <div class="text-center mb-10">
+        <span class="cs-badge cs-badge-success mb-3">Accès à la plateforme</span>
+        <h1 class="text-3xl sm:text-4xl font-bold text-neutral-800 mb-3">Connexion ou inscription</h1>
+        <p class="text-neutral-600 max-w-2xl mx-auto">Accédez à votre espace CareSync EHR avec votre identifiant BFA. Nouvel utilisateur ? Choisissez le type de compte à créer ci-dessous.</p>
+      </div>
+
+      <!-- Onglets Connexion / Inscription -->
+      <div class="flex justify-center mb-8">
+        <div class="inline-flex p-1 bg-neutral-100 rounded-cs-md" role="tablist" aria-label="Mode d'accès">
+          <button onclick="switchAuthTab('connexion')" id="auth-tab-connexion" class="cs-auth-tab active" role="tab" aria-selected="true">Connexion</button>
+          <button onclick="switchAuthTab('inscription')" id="auth-tab-inscription" class="cs-auth-tab" role="tab" aria-selected="false">Inscription</button>
+        </div>
+      </div>
+
+      <!-- PANNEL CONNEXION -->
+      <div id="auth-panel-connexion" class="cs-auth-panel">
+        <div class="grid lg:grid-cols-5 gap-8">
+          <div class="lg:col-span-3">
+            <div class="cs-card p-6 sm:p-8">
+              <h2 class="text-xl font-bold text-neutral-800 mb-1">Connexion à votre compte</h2>
+              <p class="text-sm text-neutral-500 mb-6">Saisissez votre identifiant BFA et votre mot de passe.</p>
+
+              <form id="form-connexion" novalidate>
+                <div class="space-y-4">
+                  <div>
+                    <label for="identifiant" class="block text-sm font-medium text-neutral-700 mb-1.5">Identifiant BFA</label>
+                    <div class="cs-input-group">
+                      <span class="cs-input-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="M15.5 7.5l3 3L22 7l-3-3"/></svg></span>
+                      <input type="text" id="identifiant" name="identifiant" class="cs-input pl-9 font-mono uppercase" placeholder="BFA-PAT-2026-0001" autocomplete="username" required aria-describedby="identifiant-help">
+                    </div>
+                    <p id="identifiant-help" class="text-xs text-neutral-500 mt-1">Format : BFA-PAT/MED/ADM-2026-XXXX</p>
+                  </div>
+
+                  <div>
+                    <label for="motDePasse" class="block text-sm font-medium text-neutral-700 mb-1.5">Mot de passe</label>
+                    <div class="cs-input-group">
+                      <span class="cs-input-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                      <input type="password" id="motDePasse" name="motDePasse" class="cs-input pl-9 pr-9" placeholder="Votre mot de passe" autocomplete="current-password" required>
+                      <button type="button" onclick="togglePassword('motDePasse', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700" aria-label="Afficher le mot de passe">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 text-sm text-neutral-700 cursor-pointer">
+                      <input type="checkbox" id="souvenir" name="souvenir" class="rounded border-neutral-300 text-primary-600 focus:ring-primary-500">
+                      <span>Se souvenir de moi</span>
+                    </label>
+                    <a href="#" onclick="afficherAideMotDePasse(event)" class="text-sm text-primary-700 hover:text-primary-800 font-medium">Mot de passe oublié ?</a>
+                  </div>
+
+                  <div id="erreur-connexion" class="hidden p-3 rounded-cs-sm bg-danger-50 border border-danger-200 text-sm text-danger-700" role="alert"></div>
+
+                  <button type="submit" class="cs-btn cs-btn-primary cs-btn-lg w-full">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    Se connecter
+                  </button>
+                </div>
+              </form>
+
+              <div class="mt-6 pt-6 border-t border-neutral-100">
+                <p class="text-xs text-neutral-500 mb-3">Compte administrateur système (prototype) :</p>
+                <div class="p-3 rounded-cs-sm bg-neutral-50 font-mono text-xs text-neutral-700">
+                  <div><span class="text-neutral-500">Identifiant :</span> BFA-ADM-2026-0001</div>
+                  <div><span class="text-neutral-500">Mot de passe :</span> admin2026</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-2 space-y-4">
+            <div class="cs-card p-6 bg-gradient-to-br from-gold-50 to-gold-100">
+              <div class="w-10 h-10 rounded-cs-sm bg-gold-500 text-white flex items-center justify-center mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+              </div>
+              <h3 class="font-bold text-neutral-800 mb-1">Mode démonstration</h3>
+              <p class="text-sm text-neutral-600 mb-4">Explorez la plateforme sans inscription avec des comptes préremplis. Idéal pour découvrir les interfaces.</p>
+              <button onclick="Simulation.ouvrirModaleChoix()" class="cs-btn cs-btn-warning cs-btn-sm w-full">Lancer la démonstration</button>
+            </div>
+
+            <div class="cs-card p-6">
+              <div class="w-10 h-10 rounded-cs-sm bg-primary-100 text-primary-700 flex items-center justify-center mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.503A5 5 0 0 0 8.5 12.06a5 5 0 0 0-3.443-1.437A5 5 0 0 0 8.5 9.19a5 5 0 0 0 1.437-3.443 5 5 0 0 0 1.437 3.443 5 5 0 0 0 3.443 1.437 5 5 0 0 0-3.443 1.437 5 5 0 0 0-1.437 3.443zM20 16v6M23 19h-6"/></svg>
+              </div>
+              <h3 class="font-bold text-neutral-800 mb-1">Générer un compte</h3>
+              <p class="text-sm text-neutral-600 mb-4">Créez un compte aléatoire pour tester la plateforme, ou demandez un code ministère.</p>
+              <button onclick="Simulation.ouvrirGenerateur()" class="cs-btn cs-btn-secondary cs-btn-sm w-full">Générer un compte test</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANNEL INSCRIPTION -->
+      <div id="auth-panel-inscription" class="cs-auth-panel hidden">
+        <div class="text-center mb-8">
+          <h2 class="text-2xl font-bold text-neutral-800 mb-2">Choisissez votre type de compte</h2>
+          <p class="text-neutral-600 max-w-2xl mx-auto">Sélectionnez le profil correspondant à votre rôle. Chaque type d'inscription requiert un code ministère au format MIN-PAT/MED/ADM-2026-XXXX.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 cs-stagger">
+          <article class="cs-card cs-card-clickable p-6">
+            <div class="w-12 h-12 bg-primary-100 text-primary-700 rounded-cs-md flex items-center justify-center mb-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </div>
+            <span class="cs-badge cs-badge-success mb-2">Patient</span>
+            <h3 class="text-lg font-bold mb-2">Compte patient</h3>
+            <p class="text-sm text-neutral-600 mb-4">Accédez à votre dossier médical, gérez vos rendez-vous et suivez votre santé en continu.</p>
+            <div class="text-xs font-mono text-neutral-500 mb-4 p-2 bg-neutral-50 rounded">Identifiant : BFA-PAT-2026-XXXX</div>
+            <a href="inscription-patient.html" class="cs-btn cs-btn-primary cs-btn-sm w-full">Créer un compte patient</a>
+          </article>
+
+          <article class="cs-card cs-card-clickable p-6">
+            <div class="w-12 h-12 bg-info-100 text-info-700 rounded-cs-md flex items-center justify-center mb-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 2v2"/><path d="M5 2v2"/><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/></svg>
+            </div>
+            <span class="cs-badge cs-badge-info mb-2">Médecin</span>
+            <h3 class="text-lg font-bold mb-2">Compte médecin</h3>
+            <p class="text-sm text-neutral-600 mb-4">Consultez les dossiers patients, prescrivez des ordonnances certifiées et gérez votre agenda.</p>
+            <div class="text-xs font-mono text-neutral-500 mb-4 p-2 bg-neutral-50 rounded">Identifiant : BFA-MED-2026-XXXX</div>
+            <a href="inscription-medecin.html" class="cs-btn cs-btn-sm w-full bg-info-600 hover:bg-info-700 text-white">Créer un compte médecin</a>
+          </article>
+
+          <article class="cs-card cs-card-clickable p-6">
+            <div class="w-12 h-12 bg-admin-100 text-admin-700 rounded-cs-md flex items-center justify-center mb-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+            </div>
+            <span class="cs-badge cs-badge-admin mb-2">Administrateur</span>
+            <h3 class="text-lg font-bold mb-2">Compte administrateur</h3>
+            <p class="text-sm text-neutral-600 mb-4">Gérez les inscriptions, validez les comptes médecins et supervisez la sécurité nationale.</p>
+            <div class="text-xs font-mono text-neutral-500 mb-4 p-2 bg-neutral-50 rounded">Identifiant : BFA-ADM-2026-XXXX</div>
+            <a href="inscription-admin.html" class="cs-btn cs-btn-sm w-full bg-admin-700 hover:bg-admin-800 text-white">Créer un compte admin</a>
+          </article>
+        </div>
+
+        <div class="mt-8 p-6 rounded-cs-lg bg-info-50 border border-info-200">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-cs-sm bg-info-600 text-white flex items-center justify-center flex-shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-info-800 mb-1">Besoin d'un code ministère ?</h3>
+              <p class="text-sm text-info-700 mb-3">Pour finaliser votre inscription, vous devez obtenir un code d'inscription délivré par le ministère de la Santé.</p>
+              <button onclick="Simulation.demanderCodeMinistere()" class="cs-btn cs-btn-sm bg-info-600 hover:bg-info-700 text-white">Demander un code ministère</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lien retour -->
+      <div class="text-center mt-10">
+        <a href="../index.html" class="inline-flex items-center gap-2 text-sm text-neutral-600 hover:text-primary-700 font-medium">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Retour à l'accueil
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <div id="cs-footer"></div>
+
+  <script>
+    document.getElementById('cs-header').innerHTML = renderPublicHeader('auth');
+    document.getElementById('cs-footer').innerHTML = renderPublicFooter(false);
+
+    // Pré-remplir l'identifiant si mémorisé
+    (function () {
+      var saved = Storage.get('remember');
+      if (saved && document.getElementById('identifiant')) {
+        document.getElementById('identifiant').value = saved;
+        document.getElementById('souvenir').checked = true;
+      }
+    })();
+
+    function switchAuthTab(tab) {
+      var tabs = ['connexion', 'inscription'];
+      tabs.forEach(function (t) {
+        var panel = document.getElementById('auth-panel-' + t);
+        var btn = document.getElementById('auth-tab-' + t);
+        if (t === tab) {
+          if (panel) panel.classList.remove('hidden');
+          if (btn) { btn.classList.add('active'); btn.setAttribute('aria-selected', 'true'); }
+        } else {
+          if (panel) panel.classList.add('hidden');
+          if (btn) { btn.classList.remove('active'); btn.setAttribute('aria-selected', 'false'); }
+        }
+      });
+    }
+
+    function togglePassword(inputId, btn) {
+      var input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.setAttribute('aria-label', 'Masquer le mot de passe');
+      } else {
+        input.type = 'password';
+        btn.setAttribute('aria-label', 'Afficher le mot de passe');
+      }
+    }
+
+    function afficherAideMotDePasse(e) {
+      if (e) e.preventDefault();
+      showToast('Aide mot de passe', 'Pour réinitialiser votre mot de passe, contactez le ministère de la Santé via la page Contact. En mode démo, utilisez le générateur de comptes.', 'info', 6000);
+    }
+
+    document.getElementById('form-connexion').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var identifiant = document.getElementById('identifiant').value.trim();
+      var motDePasse = document.getElementById('motDePasse').value;
+      var souvenir = document.getElementById('souvenir').checked;
+      var errBox = document.getElementById('erreur-connexion');
+      errBox.classList.add('hidden');
+      errBox.textContent = '';
+
+      if (!identifiant || !motDePasse) {
+        errBox.textContent = 'Veuillez saisir votre identifiant et votre mot de passe.';
+        errBox.classList.remove('hidden');
+        return;
+      }
+
+      var resultat = Auth.connexion(identifiant, motDePasse, souvenir);
+      if (resultat.success) {
+        showToast('Connexion réussie', 'Bienvenue ' + (resultat.user.prenom || '') + ' ' + (resultat.user.nom || '') + '. Redirection en cours...', 'success', 4000);
+        Auth.redirigerApresConnexion(resultat.user.role);
+      } else {
+        errBox.textContent = resultat.error || 'Connexion impossible. Vérifiez vos identifiants.';
+        errBox.classList.remove('hidden');
+      }
+    });
+  </script>
+
+  <style>
+    .cs-auth-tab {
+      padding: 0.5rem 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #495057;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .cs-auth-tab:hover { color: #146C43; }
+    .cs-auth-tab.active {
+      background: white;
+      color: #0F5132;
+      box-shadow: 0 1px 3px 0 rgba(26,26,46,0.10);
+    }
+  </style>
+</body>
+</html>
