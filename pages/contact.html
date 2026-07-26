@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contactez CareSync EHR. Coordonnées du Ministère de la Santé du Burkina Faso, formulaire de contact, horaires et questions fréquentes.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Contact — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body class="bg-neutral-50">
+  <a href="#main" class="cs-skip-link">Aller au contenu</a>
+  <div id="cs-header"></div>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="bg-gradient-to-br from-primary-800 to-primary-900 text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <div class="max-w-3xl cs-anim-slide-up">
+          <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur text-xs font-semibold mb-5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Nous sommes à votre écoute
+          </span>
+          <h1 class="text-4xl sm:text-5xl font-bold leading-tight mb-5">Contactez l'équipe CareSync EHR</h1>
+          <p class="text-lg text-primary-100 leading-relaxed">Une question sur la plateforme, une demande de partenariat, un support technique ? Notre équipe vous répond sous 48 heures ouvrées.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENU PRINCIPAL -->
+    <section class="py-16 -mt-8 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- Formulaire -->
+          <div class="lg:col-span-2">
+            <div class="cs-card p-6 sm:p-8">
+              <h2 class="text-2xl font-bold text-neutral-800 mb-2">Envoyez-nous un message</h2>
+              <p class="text-sm text-neutral-500 mb-6">Tous les champs marqués d'un astérisque (*) sont obligatoires.</p>
+
+              <form id="form-contact" novalidate>
+                <div class="grid sm:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label for="contact-nom" class="block text-sm font-medium text-neutral-700 mb-1.5">Nom complet *</label>
+                    <input type="text" id="contact-nom" name="nom" class="cs-input" required autocomplete="name" aria-describedby="err-nom">
+                    <p id="err-nom" class="hidden text-xs text-danger-600 mt-1"></p>
+                  </div>
+                  <div>
+                    <label for="contact-email" class="block text-sm font-medium text-neutral-700 mb-1.5">Adresse e-mail *</label>
+                    <input type="email" id="contact-email" name="email" class="cs-input" placeholder="vous@exemple.bf" required autocomplete="email" aria-describedby="err-email">
+                    <p id="err-email" class="hidden text-xs text-danger-600 mt-1"></p>
+                  </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label for="contact-telephone" class="block text-sm font-medium text-neutral-700 mb-1.5">Téléphone (optionnel)</label>
+                    <input type="tel" id="contact-telephone" name="telephone" class="cs-input" placeholder="+226 XX XX XX XX" autocomplete="tel">
+                  </div>
+                  <div>
+                    <label for="contact-sujet" class="block text-sm font-medium text-neutral-700 mb-1.5">Sujet *</label>
+                    <select id="contact-sujet" name="sujet" class="cs-select" required aria-describedby="err-sujet">
+                      <option value="">-- Sélectionnez --</option>
+                      <option value="support">Support technique</option>
+                      <option value="inscription">Question sur l'inscription</option>
+                      <option value="partenariat">Demande de partenariat</option>
+                      <option value="formation">Demande de formation</option>
+                      <option value="autre">Autre demande</option>
+                    </select>
+                    <p id="err-sujet" class="hidden text-xs text-danger-600 mt-1"></p>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label for="contact-message" class="block text-sm font-medium text-neutral-700 mb-1.5">Message *</label>
+                  <textarea id="contact-message" name="message" rows="5" class="cs-textarea" placeholder="Décrivez votre demande en quelques lignes..." required aria-describedby="err-message"></textarea>
+                  <p id="err-message" class="hidden text-xs text-danger-600 mt-1"></p>
+                </div>
+
+                <div class="flex items-start gap-3 mb-6">
+                  <input type="checkbox" id="contact-rgpd" name="rgpd" class="mt-1 rounded border-neutral-300 text-primary-600 focus:ring-primary-500" required>
+                  <label for="contact-rgpd" class="text-sm text-neutral-600">J'accepte que mes données soient traitées dans le cadre de ma demande, conformément à la politique de confidentialité de CareSync EHR (prototype pédagogique, données fictives).</label>
+                </div>
+
+                <button type="submit" class="cs-btn cs-btn-primary cs-btn-lg w-full sm:w-auto">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+                  Envoyer le message
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Coordonnées -->
+          <div class="space-y-4">
+            <div class="cs-card p-6">
+              <div class="w-10 h-10 rounded-cs-md bg-primary-100 text-primary-700 flex items-center justify-center mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <h3 class="font-bold text-neutral-800 mb-2">Adresse</h3>
+              <p class="text-sm text-neutral-600 leading-relaxed">Ministère de la Santé<br>Direction des Systèmes d'Information Sanitaires<br>09 BP 9999 Ouagadougou 09<br>Burkina Faso</p>
+            </div>
+
+            <div class="cs-card p-6">
+              <div class="w-10 h-10 rounded-cs-md bg-info-100 text-info-700 flex items-center justify-center mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <h3 class="font-bold text-neutral-800 mb-2">Téléphone</h3>
+              <p class="text-sm text-neutral-600 leading-relaxed">
+                Standard : +226 25 30 00 00<br>
+                Support technique : +226 25 30 11 22<br>
+                <span class="text-xs text-neutral-500">Lun. au ven., 07h30 — 16h30</span>
+              </p>
+            </div>
+
+            <div class="cs-card p-6">
+              <div class="w-10 h-10 rounded-cs-md bg-gold-100 text-gold-700 flex items-center justify-center mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              </div>
+              <h3 class="font-bold text-neutral-800 mb-2">E-mail</h3>
+              <p class="text-sm text-neutral-600 leading-relaxed">
+                <a href="mailto:contact@caresync.bf" class="text-primary-700 hover:text-primary-800">contact@caresync.bf</a><br>
+                <a href="mailto:support@caresync.bf" class="text-primary-700 hover:text-primary-800">support@caresync.bf</a><br>
+                <a href="mailto:partenariat@caresync.bf" class="text-primary-700 hover:text-primary-800">partenariat@caresync.bf</a>
+              </p>
+            </div>
+
+            <div class="cs-card p-6">
+              <div class="w-10 h-10 rounded-cs-md bg-danger-100 text-danger-700 flex items-center justify-center mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <h3 class="font-bold text-neutral-800 mb-2">Horaires</h3>
+              <ul class="text-sm text-neutral-600 space-y-1">
+                <li class="flex justify-between"><span>Lundi — Vendredi</span><span class="font-medium">07h30 — 16h30</span></li>
+                <li class="flex justify-between"><span>Samedi</span><span class="font-medium">08h00 — 12h00</span></li>
+                <li class="flex justify-between"><span>Dimanche & fériés</span><span class="font-medium text-danger-700">Fermé</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ RAPIDE -->
+    <section class="py-16 bg-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+          <span class="cs-badge cs-badge-info mb-3">Questions fréquentes</span>
+          <h2 class="text-3xl font-bold text-neutral-800 mb-3">Réponses rapides</h2>
+          <p class="text-neutral-600">Les questions les plus posées par les utilisateurs de la plateforme.</p>
+        </div>
+
+        <div class="space-y-3">
+          <details class="cs-card p-4 group">
+            <summary class="font-semibold text-neutral-800 cursor-pointer flex items-center justify-between">
+              <span>Comment obtenir un identifiant BFA ?</span>
+              <svg class="transition-transform group-open:rotate-180" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <p class="mt-3 text-sm text-neutral-600 leading-relaxed">Pour obtenir un identifiant BFA-PAT, BFA-MED ou BFA-ADM, vous devez d'abord demander un code ministère au format MIN-PAT/MED/ADM-2026-XXXX via le formulaire d'inscription ou en contactant le ministère de la Santé.</p>
+          </details>
+          <details class="cs-card p-4 group">
+            <summary class="font-semibold text-neutral-800 cursor-pointer flex items-center justify-between">
+              <span>Que faire si j'ai oublié mon mot de passe ?</span>
+              <svg class="transition-transform group-open:rotate-180" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <p class="mt-3 text-sm text-neutral-600 leading-relaxed">Pour des raisons de sécurité, la réinitialisation des mots de passe se fait uniquement via le ministère de la Santé. Contactez-nous avec une pièce d'identité pour initier la procédure.</p>
+          </details>
+          <details class="cs-card p-4 group">
+            <summary class="font-semibold text-neutral-800 cursor-pointer flex items-center justify-between">
+              <span>Les données sont-elles réellement sécurisées ?</span>
+              <svg class="transition-transform group-open:rotate-180" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <p class="mt-3 text-sm text-neutral-600 leading-relaxed">CareSync EHR applique un chiffrement des données et un journal d'audit complet. Ce prototype pédagogique utilise localStorage à des fins de démonstration : en production, les données seraient stockées sur des serveurs sécurisés conformes aux standards de la SNDSN.</p>
+          </details>
+          <details class="cs-card p-4 group">
+            <summary class="font-semibold text-neutral-800 cursor-pointer flex items-center justify-between">
+              <span>Puis-je utiliser la plateforme sans inscription ?</span>
+              <svg class="transition-transform group-open:rotate-180" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <p class="mt-3 text-sm text-neutral-600 leading-relaxed">Oui, grâce au mode démonstration accessible depuis le bouton « Démo » dans l'en-tête ou directement depuis la page de connexion. Vous pourrez explorer les interfaces avec des comptes préremplis.</p>
+          </details>
+        </div>
+
+        <div class="text-center mt-8">
+          <a href="faq.html" class="cs-btn cs-btn-secondary cs-btn-sm">
+            Voir toutes les questions
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARTE INFO / LOCALISATION -->
+    <section class="py-16 bg-neutral-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <span class="cs-badge cs-badge-warning mb-3">Localisation</span>
+            <h2 class="text-3xl font-bold text-neutral-800 mb-4">Notre siège à Ouagadougou</h2>
+            <p class="text-neutral-600 mb-6 leading-relaxed">L'équipe CareSync EHR est hébergée par la Direction des Systèmes d'Information Sanitaires (DSIS) du Ministère de la Santé, dans l'enceinte du siège à Ouagadougou. Accès par l'avenue de la Révolution, à proximité de la Place de la Nation.</p>
+            <ul class="space-y-3 text-sm">
+              <li class="flex items-center gap-3"><span class="w-8 h-8 rounded-cs-sm bg-primary-100 text-primary-700 flex items-center justify-center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4M10 6h4M10 10h4M10 14h4"/></svg></span> Bâtiment DSIS, 2e étage, bureau 204</li>
+              <li class="flex items-center gap-3"><span class="w-8 h-8 rounded-cs-sm bg-info-100 text-info-700 flex items-center justify-center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></span> Avenue de la Révolution, Ouagadougou</li>
+              <li class="flex items-center gap-3"><span class="w-8 h-8 rounded-cs-sm bg-gold-100 text-gold-700 flex items-center justify-center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span> Accessible aux personnes à mobilité réduite</li>
+            </ul>
+          </div>
+          <div class="bg-white rounded-2xl shadow-cs-medium p-2 border border-neutral-100">
+            <div class="aspect-video rounded-cs-md bg-gradient-to-br from-primary-50 to-info-50 flex items-center justify-center relative overflow-hidden">
+              <div class="absolute inset-0 opacity-20" aria-hidden="true">
+                <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <pattern id="cs-map-pattern" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+                      <path d="M0 15h30M15 0v30" stroke="#0F5132" stroke-width="0.5"/>
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#cs-map-pattern)"/>
+                </svg>
+              </div>
+              <div class="relative text-center">
+                <div class="w-14 h-14 mx-auto rounded-full bg-danger-500 text-white flex items-center justify-center mb-3 shadow-cs-medium">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div class="font-bold text-neutral-800">Ministère de la Santé</div>
+                <div class="text-sm text-neutral-600">Ouagadougou, Burkina Faso</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="cs-footer"></div>
+
+  <script>
+    document.getElementById('cs-header').innerHTML = renderPublicHeader('contact');
+    document.getElementById('cs-footer').innerHTML = renderPublicFooter(false);
+
+    function afficherErreur(idInput, message) {
+      var errEl = document.getElementById('err-' + idInput);
+      var input = document.getElementById('contact-' + idInput);
+      if (errEl) {
+        errEl.textContent = message;
+        errEl.classList.remove('hidden');
+      }
+      if (input) input.classList.add('cs-input-error');
+    }
+
+    function effacerErreur(idInput) {
+      var errEl = document.getElementById('err-' + idInput);
+      var input = document.getElementById('contact-' + idInput);
+      if (errEl) { errEl.textContent = ''; errEl.classList.add('hidden'); }
+      if (input) input.classList.remove('cs-input-error');
+    }
+
+    ['nom', 'email', 'sujet', 'message'].forEach(function (id) {
+      var el = document.getElementById('contact-' + id);
+      if (el) el.addEventListener('input', function () { effacerErreur(id); });
+    });
+
+    document.getElementById('form-contact').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nom = document.getElementById('contact-nom').value.trim();
+      var email = document.getElementById('contact-email').value.trim();
+      var sujet = document.getElementById('contact-sujet').value;
+      var message = document.getElementById('contact-message').value.trim();
+      var rgpd = document.getElementById('contact-rgpd').checked;
+      var valide = true;
+
+      ['nom', 'email', 'sujet', 'message'].forEach(function (id) { effacerErreur(id); });
+
+      if (!nom || nom.length < 3) { afficherErreur('nom', 'Veuillez saisir votre nom complet (3 caractères minimum).'); valide = false; }
+      var regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email || !regexEmail.test(email)) { afficherErreur('email', 'Veuillez saisir une adresse e-mail valide.'); valide = false; }
+      if (!sujet) { afficherErreur('sujet', 'Veuillez sélectionner un sujet.'); valide = false; }
+      if (!message || message.length < 10) { afficherErreur('message', 'Votre message doit contenir au moins 10 caractères.'); valide = false; }
+      if (!rgpd) {
+        showToast('Consentement requis', 'Veuillez accepter le traitement de vos données pour envoyer le message.', 'warning', 5000);
+        valide = false;
+      }
+
+      if (!valide) return;
+
+      // Simulation d'envoi (prototype pédagogique)
+      var btn = e.target.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Envoi en cours...';
+      }
+
+      setTimeout(function () {
+        showToast('Message envoyé', 'Merci ' + nom + '. Notre équipe vous répondra sous 48 heures ouvrées.', 'success', 6000);
+        document.getElementById('form-contact').reset();
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg> Envoyer le message';
+        }
+      }, 900);
+    });
+  </script>
+</body>
+</html>
