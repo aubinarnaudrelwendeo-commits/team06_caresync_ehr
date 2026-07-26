@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Paramètres du compte — CareSync EHR">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Paramètres — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body>
+  <a href="#cs-content" class="cs-sr-only">Aller au contenu</a>
+  <div id="cs-sim-elements"></div>
+  <div id="cs-sidebar-wrapper"></div>
+  <main class="cs-main-content">
+    <div id="cs-topbar-wrapper"></div>
+    <div class="cs-content-area" id="cs-content">
+      <div class="cs-card p-10 text-center">
+        <div class="inline-block cs-spinner cs-spinner-dark" style="width: 28px; height: 28px;"></div>
+        <p class="mt-3 text-sm text-neutral-500">Chargement des paramètres...</p>
+      </div>
+    </div>
+  </main>
+  <script>
+    var user = requireAuth();
+    var currentTab = 'profil';
+    var prefs = Storage.get('preferences') || { langue: 'fr', theme: 'clair', fuseau: 'Africa/Ouagadougou', formatDate: 'dd/mm/yyyy' };
+    var notifs = Storage.get('notif_prefs') || { push: true, email: true, sms: false, rdv: true, vaccins: true, ordonnances: true, messages: true, alertesSecurite: true, annonces: false };
+
+    if (user) {
+      try { initPage(); } catch (err) {
+        document.getElementById('cs-content').innerHTML =
+          '<div class="cs-card p-8 text-center text-danger-700">Erreur: ' + echapperHTML(err.message) + '</div>';
+      }
+    }
+
+    function initPage() {
+      document.getElementById('cs-sidebar-wrapper').innerHTML = renderSidebar(user.role, 'parametres');
+      document.getElementById('cs-topbar-wrapper').innerHTML = renderTopbar('Paramètres', 'Profil, préférences et notifications');
+      document.getElementById('cs-sim-elements').innerHTML = renderSimElements();
+      initApp();
+      renderPage();
+    }
+
+    function renderPage() {
+      var html = renderTabs() + '<div id="cs-tab-content"></div>';
+      document.getElementById('cs-content').innerHTML = html;
+      renderTab();
+    }
+
+    function renderTabs() {
+      var tabs = [
+        { id: 'profil', label: 'Profil', icon: 'user' },
+        { id: 'preferences', label: 'Préférences', icon: 'sliders' },
+        { id: 'notifications', label: 'Notifications', icon: 'bell' }
+      ];
+      var html = '<div class="cs-card mb-4 p-1 flex gap-1 overflow-x-auto">';
+      tabs.forEach(function (t) {
+        var active = currentTab === t.id ? ' bg-primary-50 text-primary-700' : ' text-neutral-600 hover:bg-neutral-50';
+        html += '<button onclick="switchTab(\'' + t.id + '\')" class="cs-btn cs-btn-ghost cs-btn-sm whitespace-nowrap' + active + '">' + icon(t.icon, 16) + ' ' + t.label + '</button>';
+      });
+      html += '</div>';
+      return html;
+    }
+
+    function switchTab(t) { currentTab = t; renderTab(); }
+
+    function renderTab() {
+      var el = document.getElementById('cs-tab-content');
+      if (currentTab === 'profil') el.innerHTML = renderProfil();
+      else if (currentTab === 'preferences') el.innerHTML = renderPreferences();
+      else el.innerHTML = renderNotifications();
+    }
+
+    function renderProfil() {
+      var isMedecin = user.role === 'medecin';
+      var init = initiales(user.prenom, user.nom);
+      var html = '<form id="cs-profil-form" onsubmit="event.preventDefault(); saveProfil();">' +
+        '<div class="cs-card p-6 mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('user', 18) + ' Photo de profil</h3>' +
+          '<div class="flex items-center gap-4">' +
+            '<div class="cs-avatar cs-avatar-xl ' + avatarColor(user.id) + '">' + echapperHTML(init) + '</div>' +
+            '<div><button type="button" onclick="showToast(\'Upload\', \'Téléversement de photo simulé\', \'info\')" class="cs-btn cs-btn-secondary">' + icon('upload', 16) + ' Changer la photo</button>' +
+              '<p class="text-xs text-neutral-500 mt-1">JPG ou PNG, max 2 Mo</p></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="cs-card p-6 mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('id-card', 18) + ' Informations personnelles</h3>' +
+          '<div class="grid grid-cols-1 md:grid-cols-2 gap-3">' +
+            '<div><label class="cs-label">Prénom</label><input name="prenom" class="cs-input w-full" value="' + echapperHTML(user.prenom || '') + '"></div>' +
+            '<div><label class="cs-label">Nom</label><input name="nom" class="cs-input w-full" value="' + echapperHTML(user.nom || '') + '"></div>' +
+            '<div><label class="cs-label">Email</label><input type="email" name="email" class="cs-input w-full" value="' + echapperHTML(user.email || '') + '"></div>' +
+            '<div><label class="cs-label">Téléphone</label><input name="telephone" class="cs-input w-full" value="' + echapperHTML(user.telephone || '') + '"></div>' +
+            '<div><label class="cs-label">Date de naissance</label><input type="date" name="dateNaissance" class="cs-input w-full" value="' + echapperHTML(user.dateNaissance || '') + '"></div>' +
+            '<div><label class="cs-label">Sexe</label><select name="sexe" class="cs-select w-full"><option value="M"' + (user.sexe === 'M' ? ' selected' : '') + '>Masculin</option><option value="F"' + (user.sexe === 'F' ? ' selected' : '') + '>Féminin</option></select></div>' +
+          '</div>' +
+        '</div>';
+      if (isMedecin) {
+        var structures = Storage.getAll('structures');
+        var sOpts = structures.map(function (s) { return '<option value="' + s.id + '"' + (user.etablissementId === s.id ? ' selected' : '') + '>' + echapperHTML(s.nom) + '</option>'; }).join('');
+        html += '<div class="cs-card p-6 mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('briefcase', 18) + ' Informations professionnelles</h3>' +
+          '<div class="grid grid-cols-1 md:grid-cols-2 gap-3">' +
+            '<div><label class="cs-label">Spécialité</label><input name="specialite" class="cs-input w-full" value="' + echapperHTML(user.specialite || '') + '"></div>' +
+            '<div><label class="cs-label">N° agrément</label><input name="numeroAgrement" class="cs-input w-full" value="' + echapperHTML(user.numeroAgrement || '') + '"></div>' +
+            '<div><label class="cs-label">Établissement</label><select name="etablissementId" class="cs-select w-full">' + sOpts + '</select></div>' +
+            '<div><label class="cs-label">Diplôme</label><input name="diplome" class="cs-input w-full" value="' + echapperHTML(user.diplome || '') + '"></div>' +
+          '</div>' +
+        '</div>';
+      }
+      html += '<div class="flex justify-end gap-2"><button type="button" onclick="renderPage()" class="cs-btn cs-btn-secondary">Annuler</button>' +
+        '<button type="submit" class="cs-btn cs-btn-primary">' + icon('save', 16) + ' Enregistrer</button></div>' +
+      '</form>';
+      return html;
+    }
+
+    function renderPreferences() {
+      var langues = [
+        { v: 'fr', l: 'Français', d: 'Langue officielle' },
+        { v: 'more', l: 'Mooré', d: 'Langue nationale (Centre-Nord)' },
+        { v: 'dioula', l: 'Dioula', d: 'Langue nationale (Ouest)' }
+      ];
+      var themes = [
+        { v: 'clair', l: 'Clair', icon: 'sun' },
+        { v: 'sombre', l: 'Sombre', icon: 'moon' },
+        { v: 'systeme', l: 'Système', icon: 'monitor' }
+      ];
+      var formats = ['dd/mm/yyyy', 'yyyy-mm-dd', 'dd Month yyyy'];
+      var html = '<form id="cs-prefs-form" onsubmit="event.preventDefault(); savePrefs();">' +
+        '<div class="cs-card p-6 mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('globe', 18) + ' Langue</h3>' +
+          '<div class="space-y-2">';
+      langues.forEach(function (lg) {
+        var checked = prefs.langue === lg.v;
+        html += '<label class="flex items-center gap-3 p-3 border rounded-cs-md cursor-pointer ' + (checked ? 'border-primary-500 bg-primary-50' : 'border-neutral-200 hover:bg-neutral-50') + '">' +
+          '<input type="radio" name="langue" value="' + lg.v + '"' + (checked ? ' checked' : '') + '>' +
+          '<div class="flex-1"><div class="text-sm font-medium text-neutral-800">' + echapperHTML(lg.l) + '</div><div class="text-xs text-neutral-500">' + echapperHTML(lg.d) + '</div></div>' +
+        '</label>';
+      });
+      html += '</div></div>' +
+        '<div class="cs-card p-6 mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('palette', 18) + ' Thème</h3>' +
+          '<div class="grid grid-cols-3 gap-3">';
+      themes.forEach(function (t) {
+        var checked = prefs.theme === t.v;
+        html += '<label class="flex flex-col items-center p-4 border rounded-cs-md cursor-pointer ' + (checked ? 'border-primary-500 bg-primary-50 text-primary-700' : 'border-neutral-200 hover:bg-neutral-50 text-neutral-700') + '">' +
+          '<input type="radio" name="theme" value="' + t.v + '" class="sr-only"' + (checked ? ' checked' : '') + '>' +
+          icon(t.icon, 24) + '<span class="text-sm mt-2">' + echapperHTML(t.l) + '</span>' +
+        '</label>';
+      });
+      html += '</div></div>' +
+        '<div class="cs-card p-6 mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('clock', 18) + ' Fuseau & format</h3>' +
+          '<div class="grid grid-cols-1 md:grid-cols-2 gap-3">' +
+            '<div><label class="cs-label">Fuseau horaire</label><select name="fuseau" class="cs-select w-full"><option value="Africa/Ouagadougou"' + (prefs.fuseau === 'Africa/Ouagadougou' ? ' selected' : '') + '>Africa/Ouagadougou (GMT+0)</option></select></div>' +
+            '<div><label class="cs-label">Format de date</label><select name="formatDate" class="cs-select w-full">' + formats.map(function (f) { return '<option value="' + f + '"' + (prefs.formatDate === f ? ' selected' : '') + '>' + f + '</option>'; }).join('') + '</select></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="flex justify-end gap-2"><button type="button" onclick="renderPage()" class="cs-btn cs-btn-secondary">Annuler</button>' +
+          '<button type="submit" class="cs-btn cs-btn-primary">' + icon('save', 16) + ' Enregistrer</button></div>' +
+      '</form>';
+      return html;
+    }
+
+    function renderNotifications() {
+      var canaux = [
+        { id: 'push', label: 'Notifications push', desc: 'Alertes sur l\'appareil', icon: 'bell' },
+        { id: 'email', label: 'Email', desc: 'Notifications par courriel', icon: 'mail' },
+        { id: 'sms', label: 'SMS', desc: 'Notifications par SMS (opérateur)', icon: 'message-square' }
+      ];
+      var types = [
+        { id: 'rdv', label: 'Rendez-vous', desc: 'Rappels de RDV à venir', icon: 'calendar-days' },
+        { id: 'vaccins', label: 'Vaccins', desc: 'Rappels vaccinaux', icon: 'syringe' },
+        { id: 'ordonnances', label: 'Ordonnances', desc: 'Nouvelles ordonnances et renouvellements', icon: 'file-text' },
+        { id: 'messages', label: 'Messages', desc: 'Messages de votre médecin', icon: 'message-circle' },
+        { id: 'alertesSecurite', label: 'Alertes de sécurité', desc: 'Connexions suspectes, changements importants', icon: 'shield-alert', locked: true },
+        { id: 'annonces', label: 'Annonces', desc: 'Nouveautés de la plateforme CareSync', icon: 'megaphone' }
+      ];
+      var html = '<form id="cs-notif-form" onsubmit="event.preventDefault(); saveNotifs();">' +
+        '<div class="cs-card p-6 mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('radio', 18) + ' Canaux de réception</h3>' +
+          '<div class="space-y-2">';
+      canaux.forEach(function (c) {
+        var on = notifs[c.id];
+        html += '<div class="flex items-center justify-between p-3 bg-neutral-50 rounded-cs-md">' +
+          '<div class="flex items-center gap-3"><div class="text-neutral-500">' + icon(c.icon, 18) + '</div>' +
+            '<div><div class="text-sm font-medium text-neutral-800">' + echapperHTML(c.label) + '</div>' +
+            '<div class="text-xs text-neutral-500">' + echapperHTML(c.desc) + '</div></div></div>' +
+          toggleHtml('notifs.' + c.id, on) +
+        '</div>';
+      });
+      html += '</div></div>' +
+        '<div class="cs-card p-6 mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 mb-4 flex items-center gap-2">' + icon('list', 18) + ' Types de notifications</h3>' +
+          '<div class="space-y-2">';
+      types.forEach(function (t) {
+        var on = notifs[t.id];
+        html += '<div class="flex items-center justify-between p-3 bg-neutral-50 rounded-cs-md">' +
+          '<div class="flex items-center gap-3"><div class="text-neutral-500">' + icon(t.icon, 18) + '</div>' +
+            '<div><div class="text-sm font-medium text-neutral-800">' + echapperHTML(t.label) + (t.locked ? ' <span class="cs-badge cs-badge-warning text-[10px]">Non désactivable</span>' : '') + '</div>' +
+            '<div class="text-xs text-neutral-500">' + echapperHTML(t.desc) + '</div></div></div>' +
+          (t.locked ? '<span class="text-xs text-neutral-400">Activée (verrouillée)</span>' : toggleHtml('notifs.' + t.id, on)) +
+        '</div>';
+      });
+      html += '</div></div>' +
+        '<div class="flex justify-end gap-2"><button type="button" onclick="renderPage()" class="cs-btn cs-btn-secondary">Annuler</button>' +
+          '<button type="submit" class="cs-btn cs-btn-primary">' + icon('save', 16) + ' Enregistrer</button></div>' +
+      '</form>';
+      return html;
+    }
+
+    function toggleHtml(key, on) {
+      var id = 'tgl-' + key.replace('.', '-');
+      return '<button type="button" id="' + id + '" onclick="toggleNotif(\'' + key + '\', this)" role="switch" aria-checked="' + (on ? 'true' : 'false') + '" class="relative inline-flex h-6 w-11 items-center rounded-full transition ' + (on ? 'bg-primary-600' : 'bg-neutral-300') + '">' +
+        '<span class="inline-block h-4 w-4 transform rounded-full bg-white transition ' + (on ? 'translate-x-6' : 'translate-x-1') + '"></span>' +
+      '</button>';
+    }
+
+    function toggleNotif(key, btn) {
+      var parts = key.split('.');
+      var obj = window[parts[0]];
+      obj[parts[1]] = !obj[parts[1]];
+      var on = obj[parts[1]];
+      btn.setAttribute('aria-checked', on ? 'true' : 'false');
+      btn.className = 'relative inline-flex h-6 w-11 items-center rounded-full transition ' + (on ? 'bg-primary-600' : 'bg-neutral-300');
+      btn.innerHTML = '<span class="inline-block h-4 w-4 transform rounded-full bg-white transition ' + (on ? 'translate-x-6' : 'translate-x-1') + '"></span>';
+    }
+
+    function saveProfil() {
+      var form = document.getElementById('cs-profil-form');
+      var fd = new FormData(form);
+      var updates = {};
+      ['prenom', 'nom', 'email', 'telephone', 'dateNaissance', 'sexe', 'specialite', 'numeroAgrement', 'etablissementId', 'diplome'].forEach(function (k) {
+        var v = fd.get(k);
+        if (v !== null && v !== undefined) updates[k] = v;
+      });
+      var entity = user.role === 'patient' ? 'patients' : (user.role === 'medecin' ? 'medecins' : 'admins');
+      var updated = Storage.update(entity, user.id, updates);
+      // Mise à jour de la session
+      var newSession = Object.assign({}, user, updates);
+      Storage.set('user', newSession);
+      user = newSession;
+      Storage.logAction('maj_profil', user.id, user.role, 'Profil mis à jour');
+      showToast('Profil enregistré', 'Vos informations ont été mises à jour.', 'success');
+      renderSidebar(user.role, 'parametres');
+      document.getElementById('cs-sidebar-wrapper').innerHTML = renderSidebar(user.role, 'parametres');
+    }
+
+    function savePrefs() {
+      var form = document.getElementById('cs-prefs-form');
+      var fd = new FormData(form);
+      prefs = { langue: fd.get('langue'), theme: fd.get('theme'), fuseau: fd.get('fuseau'), formatDate: fd.get('formatDate') };
+      Storage.set('preferences', prefs);
+      Storage.logAction('maj_preferences', user.id, user.role, 'Préférences mises à jour');
+      showToast('Préférences enregistrées', 'Vos préférences ont été sauvegardées.', 'success');
+      renderPage();
+    }
+
+    function saveNotifs() {
+      Storage.set('notif_prefs', notifs);
+      Storage.logAction('maj_notifications', user.id, user.role, 'Préférences de notifications mises à jour');
+      showToast('Notifications enregistrées', 'Vos préférences ont été sauvegardées.', 'success');
+      renderPage();
+    }
+  </script>
+</body>
+</html>
