@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Présentation de CareSync EHR : la plateforme pédagogique de dossier médical électronique pour le Burkina Faso. Découvrez les interfaces patient, médecin et administrateur.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Présentation — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body class="bg-neutral-50">
+  <a href="#main" class="cs-skip-link">Aller au contenu</a>
+  <div id="cs-header"></div>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white">
+      <div class="absolute inset-0 opacity-10" aria-hidden="true">
+        <svg width="100%" height="100%" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="cs-presentation-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+              <circle cx="20" cy="20" r="1.5" fill="white"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#cs-presentation-pattern)"/>
+        </svg>
+      </div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28">
+        <div class="max-w-3xl cs-anim-slide-up">
+          <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur text-xs font-semibold mb-6">
+            <span class="w-2 h-2 rounded-full bg-gold-400"></span>
+            Prototype pédagogique · SNDSN 2023-2027
+          </span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+            Une plateforme <span class="text-gold-400">intelligente</span> au service du parcours de soins
+          </h1>
+          <p class="text-lg sm:text-xl text-primary-100 mb-8 leading-relaxed">
+            CareSync EHR centralise l'historique médical des patients burkinabè, sécurise les prescriptions et coordonne les soins entre structures sanitaires. Découvrez comment trois rôles collaborent autour d'un dossier unique.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="auth.html" class="cs-btn cs-btn-lg bg-gold-500 hover:bg-gold-600 text-white">
+              Accéder à la plateforme
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <button onclick="Simulation.ouvrirModaleChoix()" class="cs-btn cs-btn-lg bg-white/10 border border-white/30 text-white hover:bg-white/20">
+              Lancer la démonstration
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ONGLETS INTERACTIFS -->
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="cs-badge cs-badge-success mb-3">Trois interfaces, un dossier</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-neutral-800 mb-3">Découvrez la plateforme par rôle</h2>
+          <p class="text-neutral-600 max-w-2xl mx-auto">Chaque acteur dispose d'une interface adaptée à ses besoins. Naviguez entre les vues pour explorer les fonctionnalités.</p>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-2 mb-10" role="tablist" aria-label="Vues par rôle">
+          <button onclick="switchView('patient')" id="tab-patient" class="cs-btn cs-btn-sm cs-tab-btn active" role="tab" aria-selected="true">Vue Patient</button>
+          <button onclick="switchView('medecin')" id="tab-medecin" class="cs-btn cs-btn-sm cs-tab-btn" role="tab" aria-selected="false">Vue Médecin</button>
+          <button onclick="switchView('admin')" id="tab-admin" class="cs-btn cs-btn-sm cs-tab-btn" role="tab" aria-selected="false">Vue Administrateur</button>
+        </div>
+
+        <!-- Mockup Patient -->
+        <div id="view-patient" class="cs-tab-panel">
+          <div class="grid lg:grid-cols-5 gap-8 items-start">
+            <div class="lg:col-span-2">
+              <h3 class="text-2xl font-bold text-primary-800 mb-4">Le patient au centre</h3>
+              <p class="text-neutral-600 mb-6 leading-relaxed">Le patient accède à son dossier médical complet : antécédents, ordonnances, rendez-vous, vaccins. Il peut aussi gérer sa famille et contacter ses structures de santé.</p>
+              <ul class="space-y-3 text-sm text-neutral-700">
+                <li class="flex items-start gap-3"><span class="text-primary-600 mt-0.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Consultation de l'historique médical</li>
+                <li class="flex items-start gap-3"><span class="text-primary-600 mt-0.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Ordonnances actives et archivées</li>
+                <li class="flex items-start gap-3"><span class="text-primary-600 mt-0.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Prise de rendez-vous en ligne</li>
+                <li class="flex items-start gap-3"><span class="text-primary-600 mt-0.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Gestion des membres de la famille</li>
+              </ul>
+              <a href="inscription-patient.html" class="cs-btn cs-btn-primary cs-btn-sm mt-6">Créer un compte patient</a>
+            </div>
+            <div class="lg:col-span-3">
+              <div class="bg-white rounded-2xl shadow-cs-strong p-6 border border-neutral-100">
+                <div class="flex items-center justify-between mb-4 pb-4 border-b border-neutral-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold">AO</div>
+                    <div>
+                      <div class="font-bold text-neutral-800">Aminata Ouédraogo</div>
+                      <div class="text-xs text-neutral-500 font-mono">BFA-PAT-2026-0001</div>
+                    </div>
+                  </div>
+                  <span class="cs-badge cs-badge-success">Actif</span>
+                </div>
+                <div class="grid grid-cols-3 gap-3 mb-4">
+                  <div class="p-3 rounded-lg bg-neutral-50">
+                    <div class="text-xs text-neutral-500">Groupe</div>
+                    <div class="text-lg font-bold text-danger-700">A+</div>
+                  </div>
+                  <div class="p-3 rounded-lg bg-neutral-50">
+                    <div class="text-xs text-neutral-500">Âge</div>
+                    <div class="text-lg font-bold text-neutral-800">41 ans</div>
+                  </div>
+                  <div class="p-3 rounded-lg bg-neutral-50">
+                    <div class="text-xs text-neutral-500">Visites</div>
+                    <div class="text-lg font-bold text-neutral-800">12</div>
+                  </div>
+                </div>
+                <div class="space-y-2 text-sm">
+                  <div class="flex items-center justify-between p-3 rounded-md bg-primary-50">
+                    <span class="text-neutral-700">Consultation cardiologie</span>
+                    <span class="text-xs font-medium text-primary-700">15 fév. 2026</span>
+                  </div>
+                  <div class="flex items-center justify-between p-3 rounded-md bg-gold-50">
+                    <span class="text-neutral-700">Ordonnance active (3 médicaments)</span>
+                    <span class="text-xs font-medium text-gold-700">Active</span>
+                  </div>
+                  <div class="flex items-center justify-between p-3 rounded-md bg-info-50">
+                    <span class="text-neutral-700">Prochain rendez-vous</span>
+                    <span class="text-xs font-medium text-info-700">22 fév. 2026</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mockup Médecin -->
+        <div id="view-medecin" class="cs-tab-panel hidden">
+          <div class="grid lg:grid-cols-5 gap-8 items-start">
+            <div class="lg:col-span-2">
+              <h3 class="text-2xl font-bold text-info-700 mb-4">Le médecin certifié</h3>
+              <p class="text-neutral-600 mb-6 leading-relaxed">Le médecin accède aux dossiers de ses patients, rédige des ordonnances certifiées par tampon virtuel et planifie ses consultations. Chaque acte est tracé et horodaté.</p>
+              <ul class="space-y-3 text-sm text-neutral-700">
+                <li class="flex items-start gap-3"><span class="text-info-600 mt-0.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Recherche patient par identifiant BFA</li>
+                <li class="flex items-start gap-3"><span class="text-info-600 mt-0.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Ordonnances avec signature électronique</li>
+                <li class="flex items-start gap-3"><span class="text-info-600 mt-0.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Agenda intelligent avec rappels</li>
+                <li class="flex items-start gap-3"><span class="text-info-600 mt-0.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Historique complet du parcours patient</li>
+              </ul>
+              <a href="inscription-medecin.html" class="cs-btn cs-btn-sm mt-6 bg-info-600 hover:bg-info-700 text-white">Incrire un médecin</a>
+            </div>
+            <div class="lg:col-span-3">
+              <div class="bg-white rounded-2xl shadow-cs-strong p-6 border border-neutral-100">
+                <div class="flex items-center justify-between mb-4 pb-4 border-b border-neutral-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-full bg-info-100 text-info-700 flex items-center justify-center font-bold">SS</div>
+                    <div>
+                      <div class="font-bold text-neutral-800">Dr. Salif Sawadogo</div>
+                      <div class="text-xs text-neutral-500 font-mono">BFA-MED-2026-0012 · Cardiologie</div>
+                    </div>
+                  </div>
+                  <span class="cs-badge cs-badge-info">Certifié OR</span>
+                </div>
+                <div class="mb-4">
+                  <div class="text-xs text-neutral-500 mb-2">Patients du jour</div>
+                  <div class="space-y-2 text-sm">
+                    <div class="flex items-center justify-between p-3 rounded-md bg-neutral-50">
+                      <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs font-bold">AO</div><div><div class="font-medium">Aminata Ouédraogo</div><div class="text-xs text-neutral-500">Hypertension suivie</div></div></div>
+                      <span class="text-xs font-medium text-info-700">09:00</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 rounded-md bg-neutral-50">
+                      <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-gold-100 text-gold-700 flex items-center justify-center text-xs font-bold">BK</div><div><div class="font-medium">Boukary Kaboré</div><div class="text-xs text-neutral-500">Consultation de contrôle</div></div></div>
+                      <span class="text-xs font-medium text-info-700">10:30</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 rounded-md bg-neutral-50">
+                      <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-danger-100 text-danger-700 flex items-center justify-center text-xs font-bold">FT</div><div><div class="font-medium">Fatimata Traoré</div><div class="text-xs text-neutral-500">Première consultation</div></div></div>
+                      <span class="text-xs font-medium text-info-700">11:15</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-3 rounded-md bg-info-50 flex items-center justify-between">
+                  <span class="text-sm text-info-800">Ordonnances émises ce mois</span>
+                  <span class="text-lg font-bold text-info-700">47</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mockup Admin -->
+        <div id="view-admin" class="cs-tab-panel hidden">
+          <div class="grid lg:grid-cols-5 gap-8 items-start">
+            <div class="lg:col-span-2">
+              <h3 class="text-2xl font-bold text-admin-700 mb-4">L'administrateur ministériel</h3>
+              <p class="text-neutral-600 mb-6 leading-relaxed">L'administrateur gère les inscriptions, valide les comptes médecins, attribue les codes ministère et supervise la sécurité de la plateforme.</p>
+              <ul class="space-y-3 text-sm text-neutral-700">
+                <li class="flex items-start gap-3"><span class="text-admin-600 mt-0.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Validation des inscriptions médecins</li>
+                <li class="flex items-start gap-3"><span class="text-admin-600 mt-0.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Génération de codes MIN-PAT/MED/ADM</li>
+                <li class="flex items-start gap-3"><span class="text-admin-600 mt-0.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Journal d'audit complet</li>
+                <li class="flex items-start gap-3"><span class="text-admin-600 mt-0.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Niveaux de certification OR/ARGENT/BRONZE</li>
+              </ul>
+              <a href="inscription-admin.html" class="cs-btn cs-btn-sm mt-6 bg-admin-700 hover:bg-admin-800 text-white">Demander un accès admin</a>
+            </div>
+            <div class="lg:col-span-3">
+              <div class="bg-white rounded-2xl shadow-cs-strong p-6 border border-neutral-100">
+                <div class="flex items-center justify-between mb-4 pb-4 border-b border-neutral-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-full bg-admin-100 text-admin-700 flex items-center justify-center font-bold">MC</div>
+                    <div>
+                      <div class="font-bold text-neutral-800">Mariam Compaoré</div>
+                      <div class="text-xs text-neutral-500 font-mono">BFA-ADM-2026-0002 · Direction SNDSN</div>
+                    </div>
+                  </div>
+                  <span class="cs-badge cs-badge-admin">Super-admin</span>
+                </div>
+                <div class="grid grid-cols-3 gap-3 mb-4">
+                  <div class="p-3 rounded-lg bg-primary-50"><div class="text-xs text-primary-700">Patients</div><div class="text-xl font-bold text-primary-800">17 204</div></div>
+                  <div class="p-3 rounded-lg bg-info-50"><div class="text-xs text-info-700">Médecins</div><div class="text-xl font-bold text-info-800">342</div></div>
+                  <div class="p-3 rounded-lg bg-gold-50"><div class="text-xs text-gold-700">Structures</div><div class="text-xl font-bold text-gold-800">45</div></div>
+                </div>
+                <div class="space-y-2 text-sm">
+                  <div class="flex items-center justify-between p-3 rounded-md bg-gold-50"><span class="text-neutral-700">Demande médecin en attente</span><span class="text-xs font-medium text-gold-700">3 à valider</span></div>
+                  <div class="flex items-center justify-between p-3 rounded-md bg-admin-50"><span class="text-neutral-700">Codes MIN générés aujourd'hui</span><span class="text-xs font-medium text-admin-700">12 codes</span></div>
+                  <div class="flex items-center justify-between p-3 rounded-md bg-neutral-50"><span class="text-neutral-700">Connexions dernières 24h</span><span class="text-xs font-medium text-neutral-700">1 247</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AVANTAGES PAR RÔLE -->
+    <section class="py-20 bg-neutral-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="cs-badge cs-badge-info mb-3">Avantages par rôle</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-neutral-800 mb-3">Une valeur ajoutée pour chaque acteur</h2>
+          <p class="text-neutral-600 max-w-2xl mx-auto">CareSync EHR apporte des bénéfices concrets à chaque utilisateur, du citoyen à l'administrateur ministériel.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8 cs-stagger">
+          <article class="cs-card cs-card-accent p-8">
+            <div class="w-12 h-12 bg-primary-100 text-primary-700 rounded-cs-md flex items-center justify-center mb-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Pour le patient</h3>
+            <p class="text-neutral-600 leading-relaxed mb-4">Suivez votre santé en continu, accédez à votre dossier où que vous soyez, et gardez l'historique de toutes vos consultations.</p>
+            <ul class="space-y-2 text-sm text-neutral-700">
+              <li class="flex items-center gap-2"><span class="text-primary-600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Dossier accessible 24h/24</li>
+              <li class="flex items-center gap-2"><span class="text-primary-600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Rappels vaccins et RDV</li>
+              <li class="flex items-center gap-2"><span class="text-primary-600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Partage avec consentement</li>
+            </ul>
+          </article>
+          <article class="cs-card cs-card-accent-info p-8">
+            <div class="w-12 h-12 bg-info-100 text-info-700 rounded-cs-md flex items-center justify-center mb-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 2v2"/><path d="M5 2v2"/><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Pour le médecin</h3>
+            <p class="text-neutral-600 leading-relaxed mb-4">Centralisez l'information médicale, prescrivez en toute sécurité et gagnez du temps sur la gestion administrative.</p>
+            <ul class="space-y-2 text-sm text-neutral-700">
+              <li class="flex items-center gap-2"><span class="text-info-600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Ordonnances certifiées</li>
+              <li class="flex items-center gap-2"><span class="text-info-600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Antécédents complets en 1 clic</li>
+              <li class="flex items-center gap-2"><span class="text-info-600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Agenda intelligent</li>
+            </ul>
+          </article>
+          <article class="cs-card cs-card-accent-admin p-8">
+            <div class="w-12 h-12 bg-admin-100 text-admin-700 rounded-cs-md flex items-center justify-center mb-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Pour l'administrateur</h3>
+            <p class="text-neutral-600 leading-relaxed mb-4">Pilotez la santé numérique à l'échelle nationale, certifiez les acteurs et garantissez la sécurité des données.</p>
+            <ul class="space-y-2 text-sm text-neutral-700">
+              <li class="flex items-center gap-2"><span class="text-admin-600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Vue d'ensemble nationale</li>
+              <li class="flex items-center gap-2"><span class="text-admin-600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Audit et traçabilité</li>
+              <li class="flex items-center gap-2"><span class="text-admin-600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Certification OR/ARGENT/BRONZE</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARCOURS UTILISATEUR -->
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="cs-badge cs-badge-warning mb-3">Parcours utilisateur</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-neutral-800 mb-3">Six étapes, de l'inscription au suivi</h2>
+          <p class="text-neutral-600 max-w-2xl mx-auto">Un parcours pensé pour être simple, fluide et sécurisé, du premier contact jusqu'au suivi médical long terme.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 cs-stagger">
+          <div class="cs-card p-6">
+            <div class="flex items-center gap-3 mb-3"><div class="w-9 h-9 rounded-full bg-primary-700 text-white flex items-center justify-center font-bold text-sm">1</div><span class="text-xs font-semibold text-primary-700 uppercase tracking-wide">Demande</span></div>
+            <h3 class="font-bold mb-2">Demande de code ministère</h3>
+            <p class="text-sm text-neutral-600">Le patient, médecin ou administrateur demande un code d'inscription via le formulaire dédié.</p>
+          </div>
+          <div class="cs-card p-6">
+            <div class="flex items-center gap-3 mb-3"><div class="w-9 h-9 rounded-full bg-primary-700 text-white flex items-center justify-center font-bold text-sm">2</div><span class="text-xs font-semibold text-primary-700 uppercase tracking-wide">Validation</span></div>
+            <h3 class="font-bold mb-2">Attribution du code MIN</h3>
+            <p class="text-sm text-neutral-600">Le ministère attribue un code unique au format MIN-PAT/MED/ADM-2026-XXXX après vérification.</p>
+          </div>
+          <div class="cs-card p-6">
+            <div class="flex items-center gap-3 mb-3"><div class="w-9 h-9 rounded-full bg-primary-700 text-white flex items-center justify-center font-bold text-sm">3</div><span class="text-xs font-semibold text-primary-700 uppercase tracking-wide">Inscription</span></div>
+            <h3 class="font-bold mb-2">Création du compte</h3>
+            <p class="text-sm text-neutral-600">L'utilisateur complète son inscription avec son code MIN et obtient son identifiant BFA définitif.</p>
+          </div>
+          <div class="cs-card p-6">
+            <div class="flex items-center gap-3 mb-3"><div class="w-9 h-9 rounded-full bg-gold-500 text-white flex items-center justify-center font-bold text-sm">4</div><span class="text-xs font-semibold text-gold-700 uppercase tracking-wide">Connexion</span></div>
+            <h3 class="font-bold mb-2">Première connexion</h3>
+            <p class="text-sm text-neutral-600">L'utilisateur se connecte avec son identifiant BFA et découvre son tableau de bord personnalisé.</p>
+          </div>
+          <div class="cs-card p-6">
+            <div class="flex items-center gap-3 mb-3"><div class="w-9 h-9 rounded-full bg-info-600 text-white flex items-center justify-center font-bold text-sm">5</div><span class="text-xs font-semibold text-info-700 uppercase tracking-wide">Activité</span></div>
+            <h3 class="font-bold mb-2">Consultation et prescription</h3>
+            <p class="text-sm text-neutral-600">Le médecin accède au dossier, réalise la consultation et rédige une ordonnance certifiée.</p>
+          </div>
+          <div class="cs-card p-6">
+            <div class="flex items-center gap-3 mb-3"><div class="w-9 h-9 rounded-full bg-danger-600 text-white flex items-center justify-center font-bold text-sm">6</div><span class="text-xs font-semibold text-danger-700 uppercase tracking-wide">Suivi</span></div>
+            <h3 class="font-bold mb-2">Suivi médical</h3>
+            <p class="text-sm text-neutral-600">Rendez-vous programmés, rappels vaccinaux et coordination entre structures sanitaires.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TABLEAU COMPARATIF -->
+    <section class="py-20 bg-neutral-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="cs-badge cs-badge-danger mb-3">Avant / Après</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-neutral-800 mb-3">Du papier au numérique</h2>
+          <p class="text-neutral-600 max-w-2xl mx-auto">Comparaison entre le dossier médical papier traditionnel et CareSync EHR.</p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="cs-table w-full">
+            <thead>
+              <tr>
+                <th class="text-left">Critère</th>
+                <th class="text-left text-danger-700">Dossier papier</th>
+                <th class="text-left text-primary-700">CareSync EHR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="font-medium">Accessibilité</td>
+                <td>Lors d'un déplacement en structure, horaires d'ouverture uniquement</td>
+                <td>Accessible 24h/24 depuis tout appareil connecté</td>
+              </tr>
+              <tr>
+                <td class="font-medium">Partage entre structures</td>
+                <td>Photocopies, fax, courriers postaux</td>
+                <td>Transfert électronique sécurisé en quelques secondes</td>
+              </tr>
+              <tr>
+                <td class="font-medium">Lisibilité</td>
+                <td>Manuscrit, parfois illisible</td>
+                <td>Saisie standardisée, données structurées</td>
+              </tr>
+              <tr>
+                <td class="font-medium">Sécurité des prescriptions</td>
+                <td>Signature manuscrite, falsification possible</td>
+                <td>Tampon virtuel, traçabilité complète</td>
+              </tr>
+              <tr>
+                <td class="font-medium">Recherche d'information</td>
+                <td>Feuillage manuel de cahiers et classeurs</td>
+                <td>Recherche instantanée par mot-clé ou filtre</td>
+              </tr>
+              <tr>
+                <td class="font-medium">Sauvegarde et archivage</td>
+                <td>Risque de perte, dégradation, incendie</td>
+                <td>Sauvegarde chiffrée, redondance multi-sites</td>
+              </tr>
+              <tr>
+                <td class="font-medium">Statistiques de santé publique</td>
+                <td>Compilation manuelle fastidieuse</td>
+                <td>Tableaux de bord temps réel, exports automatisés</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SÉCURITÉ & CERTIFICATION -->
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <span class="cs-badge cs-badge-success mb-3">Sécurité et certification</span>
+            <h2 class="text-3xl sm:text-4xl font-bold text-neutral-800 mb-4">Une plateforme pensée pour la confiance</h2>
+            <p class="text-neutral-600 mb-6 leading-relaxed">CareSync EHR applique les standards de sécurité reconnus et s'inscrit dans une démarche qualité continue, en cohérence avec la SNDSN 2023-2027 du Burkina Faso.</p>
+            <div class="space-y-4">
+              <div class="flex items-start gap-4 p-4 rounded-cs-md bg-neutral-50">
+                <div class="w-10 h-10 rounded-cs-sm bg-primary-100 text-primary-700 flex items-center justify-center flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
+                <div><h3 class="font-bold mb-1">Chiffrement et traçabilité</h3><p class="text-sm text-neutral-600">Chaque accès est journalisé, chaque action est horodatée. Les données médicales sont chiffrées au repos et en transit.</p></div>
+              </div>
+              <div class="flex items-start gap-4 p-4 rounded-cs-md bg-neutral-50">
+                <div class="w-10 h-10 rounded-cs-sm bg-gold-100 text-gold-700 flex items-center justify-center flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+                <div><h3 class="font-bold mb-1">Niveaux de certification</h3><p class="text-sm text-neutral-600">Trois niveaux garantissent la fiabilité des comptes : OR (vérification complète), ARGENT (vérification partielle) et BRONZE (compte préliminaire).</p></div>
+              </div>
+              <div class="flex items-start gap-4 p-4 rounded-cs-md bg-neutral-50">
+                <div class="w-10 h-10 rounded-cs-sm bg-info-100 text-info-700 flex items-center justify-center flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+                <div><h3 class="font-bold mb-1">Accessibilité WCAG AA</h3><p class="text-sm text-neutral-600">Interface conforme aux règles d'accessibilité WCAG 2.1 niveau AA, navigation au clavier, contrastes vérifiés, textes alternatifs.</p></div>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="cs-card p-6 text-center bg-gradient-to-br from-gold-50 to-gold-100">
+              <div class="w-12 h-12 mx-auto rounded-full bg-gold-500 text-white flex items-center justify-center mb-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+              <div class="font-bold text-gold-800 text-lg">Certification OR</div><div class="text-xs text-gold-700 mt-1">Validation ministérielle complète</div>
+            </div>
+            <div class="cs-card p-6 text-center bg-gradient-to-br from-info-50 to-info-100">
+              <div class="w-12 h-12 mx-auto rounded-full bg-info-600 text-white flex items-center justify-center mb-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></div>
+              <div class="font-bold text-info-800 text-lg">Données chiffrées</div><div class="text-xs text-info-700 mt-1">Repos et transit</div>
+            </div>
+            <div class="cs-card p-6 text-center bg-gradient-to-br from-primary-50 to-primary-100">
+              <div class="w-12 h-12 mx-auto rounded-full bg-primary-700 text-white flex items-center justify-center mb-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg></div>
+              <div class="font-bold text-primary-800 text-lg">Audit complet</div><div class="text-xs text-primary-700 mt-1">Journalisation des actions</div>
+            </div>
+            <div class="cs-card p-6 text-center bg-gradient-to-br from-admin-50 to-admin-100">
+              <div class="w-12 h-12 mx-auto rounded-full bg-admin-700 text-white flex items-center justify-center mb-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+              <div class="font-bold text-admin-800 text-lg">Codes ministère</div><div class="text-xs text-admin-700 mt-1">Usage unique sécurisé</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="py-20 bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 text-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-4">Rejoignez la santé numérique du Burkina Faso</h2>
+        <p class="text-primary-100 mb-8 text-lg">Que vous soyez patient, médecin ou administrateur, CareSync EHR vous accompagne à chaque étape du parcours de soins.</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="auth.html" class="cs-btn cs-btn-lg bg-gold-500 hover:bg-gold-600 text-white">
+            Accéder à la plateforme
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="contact.html" class="cs-btn cs-btn-lg bg-white/10 border border-white/30 text-white hover:bg-white/20">
+            Nous contacter
+          </a>
+        </div>
+        <div class="mt-8 flex flex-wrap justify-center gap-6 text-sm text-primary-100">
+          <a href="inscription-patient.html" class="hover:text-white transition">Inscription patient</a>
+          <a href="inscription-medecin.html" class="hover:text-white transition">Inscription médecin</a>
+          <a href="inscription-admin.html" class="hover:text-white transition">Inscription administrateur</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="cs-footer"></div>
+
+  <script>
+    document.getElementById('cs-header').innerHTML = renderPublicHeader('presentation');
+    document.getElementById('cs-footer').innerHTML = renderPublicFooter(false);
+
+    function switchView(view) {
+      var views = ['patient', 'medecin', 'admin'];
+      views.forEach(function (v) {
+        var panel = document.getElementById('view-' + v);
+        var tab = document.getElementById('tab-' + v);
+        if (v === view) {
+          if (panel) panel.classList.remove('hidden');
+          if (tab) {
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+          }
+        } else {
+          if (panel) panel.classList.add('hidden');
+          if (tab) {
+            tab.classList.remove('active');
+            tab.setAttribute('aria-selected', 'false');
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
