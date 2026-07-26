@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tableau de bord médecin CareSync EHR — file d'attente, consultations et ordonnances du jour.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tableau de bord médecin — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body>
+  <a href="#cs-content" class="cs-sr-only">Aller au contenu</a>
+  <div id="cs-sim-elements"></div>
+  <div id="cs-sidebar-wrapper"></div>
+  <main class="cs-main-content">
+    <div id="cs-topbar-wrapper"></div>
+    <div class="cs-content-area" id="cs-content">
+      <div class="cs-card p-10 text-center">
+        <div class="inline-block cs-spinner cs-spinner-dark" style="width: 28px; height: 28px;"></div>
+        <p class="mt-3 text-sm text-neutral-500">Chargement...</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    var user = requireAuth('medecin');
+    if (user) {
+      try { initDashboard(); } catch (err) {
+        document.getElementById('cs-content').innerHTML =
+          '<div class="cs-card p-8 text-center text-danger-700">Une erreur est survenue : ' + echapperHTML(err.message) + '</div>';
+      }
+    }
+
+    function initDashboard() {
+      document.getElementById('cs-sim-elements').innerHTML = renderSimElements();
+      document.getElementById('cs-sidebar-wrapper').innerHTML = renderSidebar('medecin', 'dashboard-medecin');
+      var nomComplet = (user.nom || '') + ' ' + (user.prenom || '');
+      document.getElementById('cs-topbar-wrapper').innerHTML =
+        renderTopbar('Tableau de bord', 'Bonjour, Dr ' + nomComplet);
+      document.getElementById('cs-content').innerHTML = renderDashboard();
+      bindNotifications();
+    }
+
+    // ===== Données =====
+    function getDonneesMedecin() {
+      var consultations = Storage.getConsultationsByMedecin(user.id);
+      var aujourdhui = new Date().toISOString().slice(0, 10);
+      var moisCourant = aujourdhui.slice(0, 7);
+
+      var fileAttente = consultations.filter(function (c) {
+        return c.date === aujourdhui && c.statut !== 'terminée' && c.statut !== 'annulée';
+      });
+      var consultationsAujourdhui = consultations.filter(function (c) { return c.date === aujourdhui; });
+      var historiqueJour = consultations.filter(function (c) {
+        return c.date === aujourdhui && c.statut === 'terminée';
+      }).slice(0, 3);
+
+      var ordonnances = Storage.getAll('ordonnances').filter(function (o) {
+        return o.medecinId === user.id;
+      }).sort(function (a, b) { return (b.date || '').localeCompare(a.date || ''); });
+      var ordonnancesMois = ordonnances.filter(function (o) {
+        return (o.date || '').slice(0, 7) === moisCourant;
+      });
+      var ordonnancesRecentes = ordonnances.slice(0, 3);
+
+      // patients suivis (uniques)
+      var patientIds = {};
+      consultations.forEach(function (c) { patientIds[c.patientId] = true; });
+      var patientsSuivis = Object.keys(patientIds).length;
+
+      // 4 derniers patients vus
+      var derniersPatientsIds = [];
+      consultations.forEach(function (c) {
+        if (derniersPatientsIds.indexOf(c.patientId) === -1) derniersPatientsIds.push(c.patientId);
+      });
+      var derniersPatients = derniersPatientsIds.slice(0, 4)
+        .map(function (pid) { return Storage.getPatientById(pid); })
+        .filter(function (p) { return p !== null; });
+
+      // médecins en attente
+      var medecinsEnAttente = Storage.getAll('medecins').filter(function (m) {
+        return m.statutValidation === 'en_attente' && m.id !== user.id;
+      });
+
+      var codes = Storage.getCodesMinistere({ utilise: false }).slice(0, 5);
+
+      return {
+        consultations: consultations,
+        fileAttente: fileAttente,
+        consultationsAujourdhui: consultationsAujourdhui,
+        historiqueJour: historiqueJour,
+        ordonnances: ordonnances,
+        ordonnancesMois: ordonnancesMois,
+        ordonnancesRecentes: ordonnancesRecentes,
+        patientsSuivis: patientsSuivis,
+        derniersPatients: derniersPatients,
+        medecinsEnAttente: medecinsEnAttente,
+        codes: codes
+      };
+    }
+
+    // ===== Rendu principal =====
+    function renderDashboard() {
+      var data = getDonneesMedecin();
+      var html = '';
+      html += renderBandeauJour(data);
+
+      // Barre de recherche intelligente de patient (toujours visible)
+      html += renderRecherchePatient();
+
+      html += '<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">' +
+        kpiCard('users', data.patientsSuivis, 'Patients suivis', 'Suivi actif', 'bg-info-100 text-info-700') +
+        kpiCard('stethoscope', data.consultationsAujourdhui.length, 'Consultations aujourd\'hui',
+                data.consultationsAujourdhui.length + ' planifiées', 'bg-primary-100 text-primary-700') +
+        kpiCard('file-text', data.ordonnancesMois.length, 'Ordonnances ce mois',
+                new Date().toLocaleDateString('fr-FR', { month: 'long' }), 'bg-gold-100 text-gold-700') +
+        kpiCard('clock', '22 min', 'Temps moyen consultation', 'Moyenne estimée', 'bg-admin-100 text-admin-700') +
+      '</div>';
+
+      // Sections repliables
+      html += '<div data-cs-collapsible="file" data-cs-title="File d\'attente et historique du jour" data-cs-icon="stethoscope">';
+      html += '<div class="grid grid-cols-1 lg:grid-cols-5 gap-4">' +
+        renderFileAttente(data) +
+        renderHistoriqueJour(data) +
+      '</div>';
+      html += '</div>';
+
+      html += '<div data-cs-collapsible="ordo" data-cs-title="Ordonnances récentes et patients" data-cs-icon="file-text">';
+      html += '<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">' +
+        renderOrdonnancesRecentes(data) +
+        renderPatientsRecents(data) +
+      '</div>';
+      html += '</div>';
+
+      if (user.statutValidation === 'validé' && data.medecinsEnAttente.length) {
+        html += '<div data-cs-collapsible="validations" data-cs-title="Demandes de validation en attente" data-cs-icon="shield-alert">';
+        html += renderDemandesValidation(data);
+        html += '</div>';
+      }
+
+      html += '<div data-cs-collapsible="codes" data-cs-title="Codes ministère générés" data-cs-icon="key" data-cs-default="collapsed">';
+      html += renderCodesMinistere(data);
+      html += '</div>';
+
+      setTimeout(function () {
+        CollapsibleMenus.autoInit();
+        // Attache la recherche intelligente
+        if (typeof IntelligentSearch !== 'undefined') {
+          IntelligentSearch.attach({
+            inputSelector: '#cs-med-patient-search',
+            resultsSelector: '#cs-med-patient-results',
+            entityType: 'patients',
+            onSelect: function (p) {
+              window.location.href = 'dossier-patient.html?id=' + p.id;
+            }
+          });
+        }
+      }, 50);
+      return html;
+    }
+
+    // Barre de recherche intelligente de patient (médecin)
+    function renderRecherchePatient() {
+      return '<div class="cs-card p-4 mb-6">' +
+        '<div class="flex items-center gap-3 mb-2">' +
+          icon('search', 18) +
+          '<h3 class="font-semibold text-neutral-800">Rechercher un patient</h3>' +
+          '<span class="text-xs text-neutral-500">Nom, prénom, ID BFA, CIN ou téléphone</span>' +
+        '</div>' +
+        '<div class="relative">' +
+          '<input type="search" id="cs-med-patient-search" class="cs-input pl-10" placeholder="Ex : Aminata, BFA-PAT-2026-0001, +226 70..." autocomplete="off">' +
+          '<span class="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">' + icon('search', 18) + '</span>' +
+          '<div id="cs-med-patient-results" class="cs-search-results"></div>' +
+        '</div>' +
+      '</div>';
+    }
+
+    // ===== Bandeau du jour =====
+    function renderBandeauJour(data) {
+      var dateStr = new Date().toLocaleDateString('fr-FR', {
+        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+      });
+      var nomComplet = echapperHTML((user.nom || '') + ' ' + (user.prenom || ''));
+      var spec = echapperHTML(user.specialite || '');
+
+      return '<section class="cs-card cs-card-accent-info p-6 mb-6 bg-gradient-to-br from-info-700 to-info-900 text-white border-0">' +
+        '<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">' +
+          '<div>' +
+            '<div class="text-xs uppercase tracking-wide text-info-200 mb-1 flex items-center gap-2">' +
+              icon('calendar-days', 14) + echapperHTML(dateStr) + '</div>' +
+            '<h2 class="text-2xl font-bold text-white mb-1">Bonjour, Dr ' + nomComplet + '</h2>' +
+            (spec ? '<p class="text-sm text-info-200">' + spec + '</p>' : '') +
+          '</div>' +
+          '<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">' +
+            '<div class="flex items-center gap-3 bg-white/10 px-4 py-2 rounded-cs-sm">' +
+              icon('clipboard-list', 18) +
+              '<div>' +
+                '<div class="text-xs text-info-200">File d\'attente</div>' +
+                '<div class="text-sm font-semibold text-white">' + data.fileAttente.length + ' patient(s) en attente</div>' +
+              '</div>' +
+            '</div>' +
+            '<a href="dossier-patient.html" class="cs-btn bg-gold-500 hover:bg-gold-600 text-white whitespace-nowrap">' +
+              icon('plus', 18) + '<span>Nouvelle consultation</span></a>' +
+          '</div>' +
+        '</div>' +
+      '</section>';
+    }
+
+    // ===== KPI card =====
+    function kpiCard(iconName, value, label, trend, color) {
+      return '<div class="cs-card p-5">' +
+        '<div class="flex items-center justify-between mb-3">' +
+          '<div class="w-10 h-10 rounded-cs-sm ' + color + ' flex items-center justify-center">' +
+            icon(iconName, 20) + '</div>' +
+          (trend ? '<span class="text-xs text-neutral-500 text-right max-w-[55%]">' + echapperHTML(trend) + '</span>' : '') +
+        '</div>' +
+        '<div class="text-3xl font-bold text-neutral-800">' + echapperHTML(value) + '</div>' +
+        '<div class="text-sm text-neutral-500 mt-1">' + echapperHTML(label) + '</div>' +
+      '</div>';
+    }
+
+    // ===== File d'attente (3 cols) =====
+    function renderFileAttente(data) {
+      var html = '<section class="cs-card p-5 lg:col-span-3"><div class="flex items-center justify-between mb-4">' +
+        '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+          icon('clipboard-list', 18) + 'File d\'attente du jour</h3>' +
+        '<span class="cs-badge cs-badge-info">' + data.fileAttente.length + ' en attente</span>' +
+      '</div>';
+
+      if (!data.fileAttente.length) {
+        html += '<div class="text-center py-8 text-neutral-400">' + icon('check-circle', 32) +
+          '<p class="mt-2 text-sm">Aucun patient en attente. Bonne journée !</p></div>';
+      } else {
+        html += '<div class="overflow-x-auto"><table class="cs-table" role="table">' +
+          '<thead><tr>' +
+            '<th scope="col">Heure</th>' +
+            '<th scope="col">Patient</th>' +
+            '<th scope="col">Motif</th>' +
+            '<th scope="col">Priorité</th>' +
+            '<th scope="col">Statut</th>' +
+            '<th scope="col"><span class="cs-sr-only">Action</span></th>' +
+          '</tr></thead><tbody>';
+        data.fileAttente.forEach(function (c) {
+          var p = Storage.getPatientById(c.patientId);
+          var prioriteBadge = c.priorite === 'urgent' ? 'cs-badge-danger' : 'cs-badge-neutral';
+          html +=
+            '<tr>' +
+              '<td class="font-mono text-sm">' + echapperHTML(c.heure || '—') + '</td>' +
+              '<td>' +
+                '<div class="flex items-center gap-2">' +
+                  '<div class="cs-avatar cs-avatar-sm ' + avatarColor(c.patientId) + '">' +
+                    echapperHTML(initiales(p ? p.prenom : '', p ? p.nom : '')) + '</div>' +
+                  '<div>' +
+                    '<div class="text-sm font-medium text-neutral-800">' +
+                      echapperHTML(p ? (p.prenom + ' ' + p.nom) : 'Patient inconnu') + '</div>' +
+                    '<div class="text-xs text-neutral-500 font-mono">' + echapperHTML(c.patientId) + '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</td>' +
+              '<td class="text-sm text-neutral-700">' + echapperHTML(c.motif || '—') + '</td>' +
+              '<td><span class="cs-badge ' + prioriteBadge + ' text-xs">' + echapperHTML(c.priorite || 'normale') + '</span></td>' +
+              '<td><span class="cs-badge ' + badgeForStatut(c.statut) + ' text-xs">' + echapperHTML(c.statut || '—') + '</span></td>' +
+              '<td class="text-right"><a href="dossier-patient.html?id=' + encodeURIComponent(c.patientId) + '" ' +
+                'class="cs-btn cs-btn-sm cs-btn-ghost" aria-label="Voir le dossier">Voir ' + icon('chevron-right', 14) + '</a></td>' +
+            '</tr>';
+        });
+        html += '</tbody></table></div>';
+      }
+      html += '</section>';
+      return html;
+    }
+
+    // ===== Historique du jour (2 cols) =====
+    function renderHistoriqueJour(data) {
+      var html = '<section class="cs-card p-5 lg:col-span-2"><div class="flex items-center justify-between mb-4">' +
+        '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+          icon('check-circle', 18) + 'Historique du jour</h3>' +
+        '<span class="cs-badge cs-badge-success">' + data.historiqueJour.length + ' terminée(s)</span>' +
+      '</div>';
+
+      if (!data.historiqueJour.length) {
+        html += '<div class="text-center py-6 text-neutral-400 text-sm">Aucune consultation terminée aujourd\'hui.</div>';
+      } else {
+        html += '<ul class="space-y-3">';
+        data.historiqueJour.forEach(function (c) {
+          var p = Storage.getPatientById(c.patientId);
+          html +=
+            '<li class="flex items-start gap-3 p-3 rounded-cs-sm bg-neutral-50 border border-neutral-100">' +
+              '<div class="cs-avatar cs-avatar-sm ' + avatarColor(c.patientId) + '">' +
+                echapperHTML(initiales(p ? p.prenom : '', p ? p.nom : '')) + '</div>' +
+              '<div class="flex-1 min-w-0">' +
+                '<div class="text-sm font-medium text-neutral-800 truncate">' +
+                  echapperHTML(p ? (p.prenom + ' ' + p.nom) : 'Patient') + '</div>' +
+                '<div class="text-xs text-neutral-500 mt-0.5">' + echapperHTML(c.motif || '') + '</div>' +
+                '<div class="text-xs text-neutral-600 mt-1 line-clamp-2">' + echapperHTML(c.diagnostic || c.notes || '') + '</div>' +
+              '</div>' +
+              '<span class="text-xs text-neutral-400 font-mono whitespace-nowrap">' + echapperHTML(c.heure || '') + '</span>' +
+            '</li>';
+        });
+        html += '</ul>';
+      }
+      html += '</section>';
+      return html;
+    }
+
+    // ===== Ordonnances récentes =====
+    function renderOrdonnancesRecentes(data) {
+      var html = '<section class="cs-card p-5"><div class="flex items-center justify-between mb-4">' +
+        '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+          icon('file-text', 18) + 'Ordonnances récentes</h3>' +
+        '<a href="ordonnances.html" class="cs-btn cs-btn-sm cs-btn-ghost">Toutes ' + icon('chevron-right', 14) + '</a>' +
+      '</div>';
+
+      if (!data.ordonnancesRecentes.length) {
+        html += '<div class="text-center py-6 text-neutral-400 text-sm">Aucune ordonnance rédigée.</div>';
+      } else {
+        html += '<ul class="space-y-2">';
+        data.ordonnancesRecentes.forEach(function (o) {
+          var p = Storage.getPatientById(o.patientId);
+          var nbMed = Array.isArray(o.traitements) ? o.traitements.length : 0;
+          html +=
+            '<li class="flex items-center gap-3 p-3 rounded-cs-sm border border-neutral-200 hover:border-primary-300 hover:bg-primary-50 transition-colors">' +
+              '<div class="w-9 h-9 rounded-cs-sm bg-primary-100 text-primary-700 flex items-center justify-center flex-shrink-0">' +
+                icon('file-text', 16) + '</div>' +
+              '<div class="flex-1 min-w-0">' +
+                '<div class="text-sm font-medium text-neutral-800 truncate">' + echapperHTML(o.diagnostic || 'Ordonnance') + '</div>' +
+                '<div class="text-xs text-neutral-500">' +
+                  echapperHTML(p ? (p.prenom + ' ' + p.nom) : 'Patient') + ' &middot; ' + formatDate(o.date) +
+                  ' &middot; ' + nbMed + ' médicament(s)</div>' +
+              '</div>' +
+              '<span class="cs-badge ' + badgeForStatut(o.statut) + ' text-xs">' + echapperHTML(o.statut || '') + '</span>' +
+            '</li>';
+        });
+        html += '</ul>';
+      }
+      html += '</section>';
+      return html;
+    }
+
+    // ===== Patients récents =====
+    function renderPatientsRecents(data) {
+      var html = '<section class="cs-card p-5"><div class="flex items-center justify-between mb-4">' +
+        '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+          icon('users', 18) + 'Patients récents</h3>' +
+        '<a href="dossier-patient.html" class="cs-btn cs-btn-sm cs-btn-ghost">Tous ' + icon('chevron-right', 14) + '</a>' +
+      '</div>';
+
+      if (!data.derniersPatients.length) {
+        html += '<div class="text-center py-6 text-neutral-400 text-sm">Aucun patient suivi pour le moment.</div>';
+      } else {
+        html += '<ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">';
+        data.derniersPatients.forEach(function (p) {
+          var age = calculerAge(p.dateNaissance);
+          html +=
+            '<li class="flex items-center gap-3 p-2 rounded-cs-sm hover:bg-neutral-50">' +
+              '<div class="cs-avatar cs-avatar-sm ' + avatarColor(p.id) + '">' +
+                echapperHTML(initiales(p.prenom, p.nom)) + '</div>' +
+              '<div class="flex-1 min-w-0">' +
+                '<div class="text-sm font-medium text-neutral-800 truncate">' +
+                  echapperHTML(p.prenom + ' ' + p.nom) + '</div>' +
+                '<div class="text-xs text-neutral-500 font-mono">' + echapperHTML(p.id) + '</div>' +
+              '</div>' +
+              '<div class="text-xs text-neutral-500 text-right">' +
+                (age !== null ? age + ' ans' : '—') + '<br>' +
+                '<span class="text-[10px] uppercase">' + echapperHTML(p.sexe || '') + '</span>' +
+              '</div>' +
+            '</li>';
+        });
+        html += '</ul>';
+      }
+      html += '</section>';
+      return html;
+    }
+
+    // ===== Demandes de validation =====
+    function renderDemandesValidation(data) {
+      var html = '<section class="cs-card cs-card-accent-warning p-5 mb-6">' +
+        '<div class="flex items-center justify-between mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+            icon('shield-alert', 18) + 'Demandes de validation de confrères</h3>' +
+          '<span class="cs-badge cs-badge-warning">' + data.medecinsEnAttente.length + ' en attente</span>' +
+        '</div>' +
+        '<div class="overflow-x-auto"><table class="cs-table" role="table">' +
+          '<thead><tr>' +
+            '<th scope="col">Médecin</th>' +
+            '<th scope="col">Spécialité</th>' +
+            '<th scope="col">Établissement</th>' +
+            '<th scope="col">Date demande</th>' +
+            '<th scope="col"><span class="cs-sr-only">Actions</span></th>' +
+          '</tr></thead><tbody>';
+      data.medecinsEnAttente.forEach(function (m) {
+        var nom = (m.nom || '') + ' ' + (m.prenom || '');
+        html +=
+          '<tr>' +
+            '<td>' +
+              '<div class="flex items-center gap-2">' +
+                '<div class="cs-avatar cs-avatar-sm ' + avatarColor(m.id) + '">' +
+                  echapperHTML(initiales(m.prenom, m.nom)) + '</div>' +
+                '<div class="text-sm font-medium text-neutral-800">' + echapperHTML(nom) + '</div>' +
+              '</div>' +
+            '</td>' +
+            '<td class="text-sm">' + echapperHTML(m.specialite || '—') + '</td>' +
+            '<td class="text-sm">' + echapperHTML(m.etablissement || '—') + '</td>' +
+            '<td class="text-sm">' + formatDate(m.dateCreation) + '</td>' +
+            '<td class="text-right whitespace-nowrap">' +
+              '<button onclick="validerMedecin(\'' + m.id + '\')" class="cs-btn cs-btn-sm cs-btn-primary" aria-label="Valider ' + echapperHTML(nom) + '">' +
+                icon('check', 14) + ' Valider</button>' +
+              '<button onclick="ouvrirModaleRejet(\'' + m.id + '\', \'medecins\')" class="cs-btn cs-btn-sm cs-btn-danger ml-1" aria-label="Rejeter ' + echapperHTML(nom) + '">' +
+                icon('x', 14) + ' Rejeter</button>' +
+            '</td>' +
+          '</tr>';
+      });
+      html += '</tbody></table></div></section>';
+      return html;
+    }
+
+    function validerMedecin(medecinId) {
+      var result = Auth.validerCompte('medecins', medecinId, user.id);
+      if (result.success) {
+        showToast('Médecin validé', 'Le compte a été validé avec succès.', 'success');
+        initDashboard();
+      } else {
+        showToast('Erreur', result.error || 'Validation impossible', 'error');
+      }
+    }
+
+    function ouvrirModaleRejet(medecinId, entity) {
+      var med = Storage.getById(entity, medecinId);
+      if (!med) return;
+      var nomComplet = echapperHTML((med.nom || '') + ' ' + (med.prenom || ''));
+
+      var backdrop = document.createElement('div');
+      backdrop.className = 'cs-modal-backdrop';
+      backdrop.setAttribute('role', 'dialog');
+      backdrop.setAttribute('aria-modal', 'true');
+      backdrop.innerHTML =
+        '<div class="cs-modal">' +
+          '<div class="cs-modal-header">' +
+            '<h3 class="cs-modal-title">Rejeter la demande</h3>' +
+            '<button class="cs-btn cs-btn-icon cs-btn-ghost" onclick="this.closest(\'.cs-modal-backdrop\').remove()" aria-label="Fermer">' + icon('x', 18) + '</button>' +
+          '</div>' +
+          '<div class="cs-modal-body">' +
+            '<p class="text-sm text-neutral-600 mb-3">Vous êtes sur le point de rejeter la demande de : <strong>' + nomComplet + '</strong>.</p>' +
+            '<label class="block text-sm font-medium text-neutral-700 mb-1" for="cs-rejet-motif">Motif du rejet</label>' +
+            '<textarea id="cs-rejet-motif" rows="4" class="cs-input" placeholder="Motif obligatoire (ex. : agrément invalide, dossier incomplet...)" required></textarea>' +
+          '</div>' +
+          '<div class="cs-modal-footer">' +
+            '<button class="cs-btn cs-btn-secondary" onclick="this.closest(\'.cs-modal-backdrop\').remove()">Annuler</button>' +
+            '<button class="cs-btn cs-btn-danger" id="cs-rejet-confirm">Confirmer le rejet</button>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(backdrop);
+      document.getElementById('cs-rejet-confirm').addEventListener('click', function () {
+        var motif = (document.getElementById('cs-rejet-motif').value || '').trim();
+        if (motif.length < 5) {
+          showToast('Motif requis', 'Veuillez saisir un motif d\'au moins 5 caractères.', 'warning');
+          return;
+        }
+        var result = Auth.rejeterCompte(entity, medecinId, user.id, motif);
+        backdrop.remove();
+        if (result.success) {
+          showToast('Compte rejeté', 'La demande a été rejetée et le médecin notifié.', 'success');
+          initDashboard();
+        } else {
+          showToast('Erreur', result.error || 'Rejet impossible', 'error');
+        }
+      });
+    }
+
+    // ===== Codes ministère (médecin) =====
+    function renderCodesMinistere(data) {
+      var html = '<section class="cs-card p-5">' +
+        '<div class="flex items-center justify-between mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+            icon('key', 18) + 'Codes ministère</h3>' +
+          '<button onclick="genererCodeMed()" class="cs-btn cs-btn-sm cs-btn-primary">' +
+            icon('plus', 14) + ' Générer un code</button>' +
+        '</div>';
+
+      if (!data.codes.length) {
+        html += '<div class="text-center py-6 text-neutral-400 text-sm">' + icon('key', 32) +
+          '<p class="mt-2">Aucun code disponible. Générez un code pour un patient.</p></div>';
+      } else {
+        html += '<ul class="space-y-2">';
+        data.codes.forEach(function (c) {
+          var expire = new Date(c.dateExpiration) < new Date();
+          html +=
+            '<li class="flex items-center gap-3 p-3 rounded-cs-sm bg-neutral-50 border border-neutral-100">' +
+              '<div class="w-9 h-9 rounded-cs-sm bg-gold-100 text-gold-700 flex items-center justify-center flex-shrink-0">' +
+                icon('key', 16) + '</div>' +
+              '<div class="flex-1 min-w-0">' +
+                '<div class="text-sm font-mono font-semibold text-neutral-800">' + echapperHTML(c.code) + '</div>' +
+                '<div class="text-xs text-neutral-500">' +
+                  'Rôle : ' + echapperHTML(c.role) + ' &middot; Expire le ' + formatDate(c.dateExpiration, { avecHeure: true }) +
+                '</div>' +
+              '</div>' +
+              '<span class="cs-badge ' + (expire ? 'cs-badge-danger' : 'cs-badge-success') + ' text-xs">' +
+                (expire ? 'Expiré' : 'Actif') + '</span>' +
+            '</li>';
+        });
+        html += '</ul>';
+      }
+      html += '</section>';
+      return html;
+    }
+
+    function genererCodeMed() {
+      var role = window.prompt('Rôle destinataire du code (patient, medecin ou admin) :', 'patient');
+      if (!role) return;
+      role = role.trim().toLowerCase();
+      if (['patient', 'medecin', 'admin'].indexOf(role) === -1) {
+        showToast('Rôle invalide', 'Le rôle doit être patient, medecin ou admin.', 'error');
+        return;
+      }
+      var code = Auth.genererCodeMinistere(role, { generePar: user.id, source: 'dashboard-medecin' }, 72);
+      Storage.logAction('generation_code', user.id, 'medecin',
+        'Génération d\'un code ministère pour le rôle ' + role, { code: code.code });
+      showToast('Code généré', 'Code ' + code.code + ' valable 72h.', 'success');
+      initDashboard();
+    }
+
+    // ===== Notifications =====
+    function bindNotifications() {
+      var btn = document.getElementById('cs-notif-btn');
+      if (!btn) return;
+      btn.addEventListener('click', toggleNotifDropdown);
+    }
+
+    function toggleNotifDropdown(e) {
+      e.stopPropagation();
+      var existing = document.getElementById('cs-notif-dropdown');
+      if (existing) { existing.remove(); return; }
+
+      var notifs = Storage.getNotifications(user.id).slice(0, 6);
+      var dropdown = document.createElement('div');
+      dropdown.id = 'cs-notif-dropdown';
+      dropdown.setAttribute('role', 'menu');
+      dropdown.className = 'absolute right-0 mt-2 w-80 bg-white border border-neutral-200 rounded-cs-md shadow-cs-strong z-50 overflow-hidden';
+
+      var html = '<div class="flex items-center justify-between px-4 py-3 border-b border-neutral-100">' +
+        '<span class="font-semibold text-sm text-neutral-800">Notifications</span>' +
+        '<button onclick="markAllRead()" class="text-xs text-primary-700 hover:underline">Tout marquer lu</button>' +
+      '</div><div class="max-h-80 overflow-y-auto">';
+      if (!notifs.length) {
+        html += '<div class="p-6 text-center text-neutral-400 text-sm">Aucune notification.</div>';
+      } else {
+        notifs.forEach(function (n) {
+          html +=
+            '<div class="px-4 py-3 border-b border-neutral-50 hover:bg-neutral-50 cursor-pointer ' + (n.lue ? 'opacity-60' : '') + '" onclick="markNotifRead(\'' + n.id + '\')">' +
+              '<div class="flex items-start gap-2">' +
+                '<span class="cs-dot ' + (n.type === 'danger' ? 'cs-dot-danger' : (n.type === 'warning' ? 'cs-dot-warning' : (n.type === 'success' ? 'cs-dot-success' : 'cs-dot-info'))) + ' mt-1.5"></span>' +
+                '<div class="flex-1 min-w-0">' +
+                  '<div class="text-sm font-medium text-neutral-800">' + echapperHTML(n.titre) + '</div>' +
+                  '<div class="text-xs text-neutral-500 line-clamp-2">' + echapperHTML(n.message) + '</div>' +
+                  '<div class="text-[10px] text-neutral-400 mt-1">' + formatRelative(n.date) + '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
+        });
+      }
+      html += '</div>';
+      dropdown.innerHTML = html;
+      btn.parentNode.appendChild(dropdown);
+
+      setTimeout(function () {
+        document.addEventListener('click', function close(ev) {
+          if (!dropdown.contains(ev.target) && ev.target !== btn) {
+            dropdown.remove();
+            document.removeEventListener('click', close);
+          }
+        });
+      }, 0);
+    }
+
+    function markAllRead() {
+      Storage.markAllNotificationsRead(user.id);
+      var d = document.getElementById('cs-notif-dropdown');
+      if (d) d.remove();
+      document.getElementById('cs-topbar-wrapper').innerHTML =
+        renderTopbar('Tableau de bord', 'Bonjour, Dr ' + (user.nom || '') + ' ' + (user.prenom || ''));
+      bindNotifications();
+      showToast('Notifications', 'Toutes les notifications ont été marquées comme lues.', 'success');
+    }
+
+    function markNotifRead(id) {
+      Storage.markNotificationRead(id);
+      var d = document.getElementById('cs-notif-dropdown');
+      if (d) d.remove();
+      document.getElementById('cs-topbar-wrapper').innerHTML =
+        renderTopbar('Tableau de bord', 'Bonjour, Dr ' + (user.nom || '') + ' ' + (user.prenom || ''));
+      bindNotifications();
+    }
+  </script>
+</body>
+</html>
