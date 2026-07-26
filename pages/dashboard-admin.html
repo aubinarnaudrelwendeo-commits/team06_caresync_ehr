@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tableau de bord administrateur CareSync EHR — validations, journal d'audit, codes ministère et protocoles de sécurité.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tableau de bord administrateur — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body>
+  <a href="#cs-content" class="cs-sr-only">Aller au contenu</a>
+  <div id="cs-sim-elements"></div>
+  <div id="cs-sidebar-wrapper"></div>
+  <main class="cs-main-content">
+    <div id="cs-topbar-wrapper"></div>
+    <div class="cs-content-area" id="cs-content">
+      <div class="cs-card p-10 text-center">
+        <div class="inline-block cs-spinner cs-spinner-dark" style="width: 28px; height: 28px;"></div>
+        <p class="mt-3 text-sm text-neutral-500">Chargement...</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    var user = requireAuth('admin');
+    if (user) {
+      try { initDashboard(); } catch (err) {
+        document.getElementById('cs-content').innerHTML =
+          '<div class="cs-card p-8 text-center text-danger-700">Une erreur est survenue : ' + echapperHTML(err.message) + '</div>';
+      }
+    }
+
+    function initDashboard() {
+      document.getElementById('cs-sim-elements').innerHTML = renderSimElements();
+      document.getElementById('cs-sidebar-wrapper').innerHTML = renderSidebar('admin', 'dashboard-admin');
+      var nomComplet = (user.prenom || '') + ' ' + (user.nom || '');
+      document.getElementById('cs-topbar-wrapper').innerHTML =
+        renderTopbar('Tableau de bord', 'Administration — ' + nomComplet);
+      document.getElementById('cs-content').innerHTML = renderDashboard();
+      bindNotifications();
+    }
+
+    // ===== Données =====
+    function getDonneesAdmin() {
+      var patients = Storage.getAll('patients');
+      var medecins = Storage.getAll('medecins');
+      var structures = Storage.getAll('structures');
+      var consultations = Storage.getAll('consultations');
+      var codes = Storage.getCodesMinistere();
+
+      var medecinsEnAttente = medecins.filter(function (m) {
+        return m.statutValidation === 'en_attente';
+      });
+      var medecinsActifs = medecins.filter(function (m) { return m.statut === 'actif'; });
+
+      var journal = Storage.getJournal(10);
+
+      var alertesSecurite = journal.filter(function (j) {
+        return j.action === 'rejet_compte' ||
+               j.action === 'echec_connexion' ||
+               (j.details || '').toLowerCase().indexOf('sécurité') !== -1;
+      }).slice(0, 5);
+
+      // Inscriptions 6 derniers mois
+      var inscriptions = computeInscriptions6Mois(patients, medecins);
+
+      return {
+        patients: patients,
+        medecins: medecins,
+        structures: structures,
+        consultations: consultations,
+        codes: codes,
+        medecinsEnAttente: medecinsEnAttente,
+        medecinsActifs: medecinsActifs,
+        journal: journal,
+        alertesSecurite: alertesSecurite,
+        inscriptions: inscriptions
+      };
+    }
+
+    function computeInscriptions6Mois(patients, medecins) {
+      var maintenant = new Date();
+      var data = [];
+      for (var i = 5; i >= 0; i--) {
+        var d = new Date(maintenant.getFullYear(), maintenant.getMonth() - i, 1);
+        var mois = d.toISOString().slice(0, 7);
+        var label = d.toLocaleDateString('fr-FR', { month: 'short' });
+        var total = 0;
+        patients.forEach(function (p) {
+          if ((p.dateCreation || '').slice(0, 7) === mois) total++;
+        });
+        medecins.forEach(function (m) {
+          if ((m.dateCreation || '').slice(0, 7) === mois) total++;
+        });
+        data.push({ label: label, value: total });
+      }
+      return data;
+    }
+
+    // ===== Rendu principal =====
+    function renderDashboard() {
+      var data = getDonneesAdmin();
+      var html = '';
+      html += renderBandeauAlertes(data);
+
+      var dispo = data.medecinsActifs.length ?
+        Math.round((data.medecinsActifs.length / Math.max(data.medecins.length, 1)) * 100) : 0;
+      var alertesActives = data.medecinsEnAttente.length + data.alertesSecurite.length;
+
+      // Section KPI (non repliable - toujours visible)
+      html += '<div class="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">' +
+        kpiCard('users', data.patients.length, 'Patients totaux', 'Base nationale', 'bg-primary-100 text-primary-700') +
+        kpiCard('stethoscope', data.medecinsActifs.length, 'Médecins actifs', data.medecins.length + ' inscrits', 'bg-info-100 text-info-700') +
+        kpiCard('building-2', data.structures.length, 'Structures sanitaires', 'Réseau BF', 'bg-gold-100 text-gold-700') +
+        kpiCard('clipboard-list', data.consultations.length, 'Consultations totales', 'Historique complet', 'bg-admin-100 text-admin-700') +
+        kpiCard('activity', dispo + '%', 'Disponibilité système', 'Médecins actifs', 'bg-primary-100 text-primary-700') +
+        kpiCard(alertesActives > 0 ? 'alert-triangle' : 'shield-check',
+                alertesActives, 'Alertes actives',
+                data.medecinsEnAttente.length + ' validation(s) en attente',
+                alertesActives > 0 ? 'bg-danger-100 text-danger-700' : 'bg-primary-100 text-primary-700') +
+      '</div>';
+
+      // Sections repliables
+      html += '<div data-cs-collapsible="validations" data-cs-title="Validations et activité système" data-cs-icon="shield-alert">';
+      html += '<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">' +
+        renderValidationsAttente(data) +
+        renderActiviteSysteme(data) +
+      '</div>';
+      html += '</div>';
+
+      html += '<div data-cs-collapsible="stats" data-cs-title="Statistiques et journal d\'audit" data-cs-icon="bar-chart">';
+      html += '<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">' +
+        renderGraphique(data) +
+        renderJournalAudit(data) +
+      '</div>';
+      html += '</div>';
+
+      html += '<div data-cs-collapsible="codes" data-cs-title="Codes ministère et certifications" data-cs-icon="key">';
+      html += renderCodesMinistere(data);
+      html += '</div>';
+
+      // Section avis médecins (modération par le ministère)
+      html += '<div data-cs-collapsible="avis" data-cs-title="Avis patients sur les médecins (BETA) — Modération ministère" data-cs-icon="heart-pulse">';
+      html += renderAvisMedecins();
+      html += '</div>';
+
+      // Section détection de faux comptes
+      html += '<div data-cs-collapsible="fraude" data-cs-title="Détection de faux comptes et fraudes" data-cs-icon="shield-alert" data-cs-default="collapsed">';
+      html += renderDetectionFraude(data);
+      html += '</div>';
+
+      html += '<div data-cs-collapsible="securite" data-cs-title="Protocoles de sécurité" data-cs-icon="shield-check" data-cs-default="collapsed">';
+      html += renderProtocolesSecurite();
+      html += '</div>';
+
+      // Initialise les menus repliables
+      setTimeout(function () { CollapsibleMenus.autoInit(); }, 50);
+      return html;
+    }
+
+    // Liste des avis médecins pour modération ministère
+    function renderAvisMedecins() {
+      var avis = Storage.getAll('avisMedecins').slice().sort(function (a, b) {
+        return (b.date || '').localeCompare(a.date || '');
+      }).slice(0, 15);
+
+      var html = '<section class="cs-card p-5">' +
+        '<div class="flex items-center justify-between mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+            icon('heart-pulse', 18) + 'Avis patients récents (modération)</h3>' +
+          '<span class="cs-badge cs-badge-warning">BETA</span>' +
+        '</div>';
+
+      if (!avis.length) {
+        html += '<div class="text-center py-6 text-neutral-400">' + icon('heart-pulse', 32) +
+          '<p class="mt-2 text-sm">Aucun avis patient pour le moment.</p></div>';
+      } else {
+        html += '<div class="overflow-x-auto"><table class="cs-table">' +
+          '<thead><tr><th>Date</th><th>Médecin</th><th>Patient</th><th>Note</th><th>Commentaire</th><th>Statut</th><th>Action</th></tr></thead><tbody>';
+        avis.forEach(function (a) {
+          var med = Storage.getById('medecins', a.medecinId) || {};
+          var pat = Storage.getById('patients', a.patientId) || {};
+          var nomPat = a.anonyme ? '<em>Anonyme</em>' : echapperHTML(pat.prenom + ' ' + pat.nom);
+          html += '<tr>' +
+            '<td class="text-xs">' + formatDate(a.date) + '</td>' +
+            '<td class="text-sm">' + echapperHTML((med.prenom || '') + ' ' + (med.nom || '')) + '</td>' +
+            '<td class="text-sm">' + nomPat + '</td>' +
+            '<td>' + HeartsRating.renderCoeurs(HeartsRating.noteToCoeurs(a.note), false) + '</td>' +
+            '<td class="text-xs text-neutral-600 max-w-xs truncate" title="' + echapperHTML(a.commentaire || '') + '">' +
+              echapperHTML(truncate(a.commentaire, 50)) + '</td>' +
+            '<td><span class="cs-badge ' + (a.visible ? 'cs-badge-success' : 'cs-badge-danger') + '">' +
+              (a.visible ? 'Visible' : 'Masqué') + '</span></td>' +
+            '<td><button onclick="HeartsRating.toggleVisibilite(\'' + a.id + '\'); initDashboard();" class="cs-btn cs-btn-sm cs-btn-ghost">' +
+              (a.visible ? icon('eye-off', 14) + ' Masquer' : icon('eye', 14) + ' Afficher') + '</button></td>' +
+          '</tr>';
+        });
+        html += '</tbody></table></div>';
+      }
+      html += '</section>';
+      return html;
+    }
+
+    // Détection de faux comptes et fraudes potentielles
+    function renderDetectionFraude(data) {
+      // Identifie les médecins avec numéros d'agrément en double
+      var agrementMap = {};
+      data.medecins.forEach(function (m) {
+        if (m.numeroAgrement) {
+          if (!agrementMap[m.numeroAgrement]) agrementMap[m.numeroAgrement] = [];
+          agrementMap[m.numeroAgrement].push(m);
+        }
+      });
+      var doublonsAgrement = Object.keys(agrementMap).filter(function (k) {
+        return agrementMap[k].length > 1;
+      }).map(function (k) { return { agrement: k, medecins: agrementMap[k] }; });
+
+      // Comptes rejetés
+      var comptesRejetes = data.medecins.filter(function (m) {
+        return m.statutValidation === 'rejeté';
+      });
+
+      // Patients sans CIN (suspect pour un adulte)
+      var patSansCIN = data.patients.filter(function (p) {
+        return !p.numeroCIN && p.dateNaissance && 2026 - parseInt(p.dateNaissance.slice(0, 4)) >= 18;
+      });
+
+      // Connexions suspectes (IP inhabituelle, multiple échecs)
+      var journal = Storage.getJournal();
+      var connexionsSuspectes = journal.filter(function (j) {
+        return j.action === 'echec_connexion' || (j.details || '').toLowerCase().indexOf('refusé') !== -1;
+      }).slice(0, 5);
+
+      var html = '<section class="cs-card p-5">' +
+        '<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">' +
+          fraudeCard('Doublons agrément', doublonsAgrement.length, 'shield-alert', doublonsAgrement.length > 0 ? 'danger' : 'success') +
+          fraudeCard('Comptes rejetés', comptesRejetes.length, 'x-circle', comptesRejetes.length > 0 ? 'warning' : 'success') +
+          fraudeCard('Adultes sans CIN', patSansCIN.length, 'alert-triangle', patSansCIN.length > 5 ? 'warning' : 'success') +
+        '</div>';
+
+      if (doublonsAgrement.length > 0) {
+        html += '<div class="p-3 bg-danger-50 rounded-cs-sm border border-danger-200 mb-3">' +
+          '<h4 class="text-sm font-semibold text-danger-700 mb-2">' + icon('alert-triangle', 16) + ' Doublons d\'agrément détectés</h4>';
+        doublonsAgrement.forEach(function (d) {
+          html += '<div class="text-xs text-neutral-700 mb-1">Agrément <code>' + echapperHTML(d.agrement) + '</code> utilisé par :</div>';
+          d.medecins.forEach(function (m) {
+            html += '<div class="text-xs ml-4 mb-1 flex items-center gap-2">' +
+              icon('user', 12) + echapperHTML((m.nom || '') + ' ' + (m.prenom || '') + ' (' + m.id + ')') +
+              '<button onclick="supprimerFauxMedecin(\'' + m.id + '\')" class="cs-btn cs-btn-xs cs-btn-danger">' + icon('trash', 10) + ' Supprimer</button>' +
+            '</div>';
+          });
+        });
+        html += '</div>';
+      }
+
+      if (comptesRejetes.length > 0) {
+        html += '<div class="p-3 bg-warning-50 rounded-cs-sm border border-warning-200 mb-3">' +
+          '<h4 class="text-sm font-semibold text-gold-700 mb-2">' + icon('x-circle', 16) + ' Comptes médecin rejetés</h4>';
+        comptesRejetes.forEach(function (m) {
+          html += '<div class="text-xs text-neutral-700 mb-1">' +
+            echapperHTML((m.nom || '') + ' ' + (m.prenom || '') + ' (' + m.id + ')') +
+            (m.motifRejet ? ' - <em>' + echapperHTML(m.motifRejet) + '</em>' : '') +
+          '</div>';
+        });
+        html += '</div>';
+      }
+
+      if (connexionsSuspectes.length > 0) {
+        html += '<div class="p-3 bg-info-50 rounded-cs-sm border border-info-200">' +
+          '<h4 class="text-sm font-semibold text-info-700 mb-2">' + icon('shield-alert', 16) + ' Événements suspects récents</h4>';
+        connexionsSuspectes.forEach(function (j) {
+          html += '<div class="text-xs text-neutral-700 mb-1">' +
+            formatDate(j.date, { avecHeure: true }) + ' - ' + echapperHTML(truncate(j.details, 80)) +
+          '</div>';
+        });
+        html += '</div>';
+      }
+
+      if (doublonsAgrement.length === 0 && comptesRejetes.length === 0 && connexionsSuspectes.length === 0) {
+        html += '<div class="text-center py-6 text-success-700">' + icon('shield-check', 32) +
+          '<p class="mt-2 text-sm">Aucune fraude détectée. Le système est propre.</p></div>';
+      }
+
+      html += '</section>';
+      return html;
+    }
+
+    function fraudeCard(label, value, iconName, level) {
+      var color = level === 'danger' ? 'bg-danger-100 text-danger-700' :
+                  level === 'warning' ? 'bg-gold-100 text-gold-700' :
+                  'bg-primary-100 text-primary-700';
+      return '<div class="p-4 rounded-cs-sm border border-neutral-200">' +
+        '<div class="flex items-center gap-2 mb-2">' +
+          '<div class="w-8 h-8 rounded-cs-sm ' + color + ' flex items-center justify-center">' + icon(iconName, 16) + '</div>' +
+          '<span class="text-sm font-medium text-neutral-700">' + echapperHTML(label) + '</span>' +
+        '</div>' +
+        '<div class="text-2xl font-bold ' + (level === 'danger' ? 'text-danger-700' : level === 'warning' ? 'text-gold-700' : 'text-primary-700') + '">' + value + '</div>' +
+      '</div>';
+    }
+
+    function supprimerFauxMedecin(medecinId) {
+      if (!confirm('Voulez-vous vraiment supprimer ce faux médecin ? Cette action est tracée.')) return;
+      var med = Storage.getById('medecins', medecinId);
+      Storage.removeById('medecins', medecinId);
+      Storage.logAction('suppression_faux_medecin', user.id, 'admin',
+        'Suppression du médecin ' + medecinId + ' (agrément en doublon)', { medecinId: medecinId });
+      showToast('Faux médecin supprimé', med ? (med.prenom + ' ' + med.nom) : medecinId + ' a été retiré.', 'success');
+      initDashboard();
+    }
+
+    // ===== Bandeau alertes =====
+    function renderBandeauAlertes(data) {
+      var niveau = data.medecinsEnAttente.length > 2 ? 'critique' : (data.medecinsEnAttente.length > 0 ? 'warning' : 'ok');
+      var bg = niveau === 'critique' ? 'from-danger-700 to-danger-900'
+              : (niveau === 'warning' ? 'from-gold-600 to-gold-800' : 'from-primary-700 to-primary-900');
+      var ic = niveau === 'ok' ? 'shield-check' : 'alert-triangle';
+      var titre = niveau === 'ok' ? 'Système nominal' : (niveau === 'critique' ? 'Alertes critiques détectées' : 'Points d\'attention');
+
+      return '<section class="cs-card p-6 mb-6 bg-gradient-to-br ' + bg + ' text-white border-0">' +
+        '<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">' +
+          '<div class="flex items-center gap-4">' +
+            '<div class="w-12 h-12 rounded-cs-sm bg-white/15 flex items-center justify-center flex-shrink-0">' +
+              icon(ic, 24) + '</div>' +
+            '<div>' +
+              '<h2 class="text-xl font-bold text-white mb-1">' + titre + '</h2>' +
+              '<p class="text-sm text-white/85">' + formatDate(new Date().toISOString(), { long: true, avecHeure: true }) + '</p>' +
+            '</div>' +
+          '</div>' +
+          '<div class="flex flex-wrap gap-3 w-full lg:w-auto">' +
+            '<div class="flex items-center gap-3 bg-white/10 px-4 py-2 rounded-cs-sm">' +
+              icon('shield-alert', 18) +
+              '<div><div class="text-xs text-white/80">Validations en attente</div>' +
+              '<div class="text-sm font-semibold text-white">' + data.medecinsEnAttente.length + ' médecin(s)</div></div>' +
+            '</div>' +
+            '<div class="flex items-center gap-3 bg-white/10 px-4 py-2 rounded-cs-sm">' +
+              icon('siren', 18) +
+              '<div><div class="text-xs text-white/80">Alertes sécurité</div>' +
+              '<div class="text-sm font-semibold text-white">' + data.alertesSecurite.length + ' évènement(s)</div></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</section>';
+    }
+
+    // ===== KPI card =====
+    function kpiCard(iconName, value, label, trend, color) {
+      return '<div class="cs-kpi-card">' +
+        '<div class="flex items-center justify-between mb-3">' +
+          '<div class="cs-kpi-icon ' + color + '">' +
+            icon(iconName, 20) + '</div>' +
+          (trend ? '<span class="text-xs text-neutral-500 text-right max-w-[55%]">' + echapperHTML(trend) + '</span>' : '') +
+        '</div>' +
+        '<div class="text-3xl font-bold text-neutral-800">' + echapperHTML(value) + '</div>' +
+        '<div class="text-sm text-neutral-500 mt-1">' + echapperHTML(label) + '</div>' +
+      '</div>';
+    }
+
+    // ===== Validations en attente =====
+    function renderValidationsAttente(data) {
+      var html = '<section class="cs-card p-5"><div class="flex items-center justify-between mb-4">' +
+        '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+          icon('shield-alert', 18) + 'Validations en attente</h3>' +
+        '<span class="cs-badge cs-badge-warning">' + data.medecinsEnAttente.length + ' en attente</span>' +
+      '</div>';
+
+      if (!data.medecinsEnAttente.length) {
+        html += '<div class="text-center py-8 text-neutral-400">' + icon('check-circle', 32) +
+          '<p class="mt-2 text-sm">Aucune validation en attente. Tout est à jour.</p></div>';
+      } else {
+        html += '<div class="overflow-x-auto"><table class="cs-table" role="table">' +
+          '<thead><tr>' +
+            '<th scope="col">Médecin</th>' +
+            '<th scope="col">Spécialité</th>' +
+            '<th scope="col">Établissement</th>' +
+            '<th scope="col">Demande</th>' +
+            '<th scope="col"><span class="cs-sr-only">Actions</span></th>' +
+          '</tr></thead><tbody>';
+        data.medecinsEnAttente.forEach(function (m) {
+          var nom = (m.nom || '') + ' ' + (m.prenom || '');
+          html +=
+            '<tr>' +
+              '<td>' +
+                '<div class="flex items-center gap-2">' +
+                  '<div class="cs-avatar cs-avatar-sm ' + avatarColor(m.id) + '">' +
+                    echapperHTML(initiales(m.prenom, m.nom)) + '</div>' +
+                  '<div class="text-sm font-medium text-neutral-800">' + echapperHTML(nom) + '</div>' +
+                '</div>' +
+              '</td>' +
+              '<td class="text-sm">' + echapperHTML(m.specialite || '—') + '</td>' +
+              '<td class="text-sm">' + echapperHTML(m.etablissement || '—') + '</td>' +
+              '<td class="text-sm">' + formatDate(m.dateCreation) + '</td>' +
+              '<td class="text-right whitespace-nowrap">' +
+                '<button onclick="validerMedecin(\'' + m.id + '\')" class="cs-btn cs-btn-sm cs-btn-primary" aria-label="Valider ' + echapperHTML(nom) + '">' +
+                  icon('check', 14) + ' Valider</button>' +
+                '<button onclick="ouvrirModaleRejet(\'' + m.id + '\', \'medecins\')" class="cs-btn cs-btn-sm cs-btn-danger ml-1" aria-label="Rejeter ' + echapperHTML(nom) + '">' +
+                  icon('x', 14) + ' Rejeter</button>' +
+              '</td>' +
+            '</tr>';
+        });
+        html += '</tbody></table></div>';
+      }
+      html += '</section>';
+      return html;
+    }
+
+    function validerMedecin(medecinId) {
+      var result = Auth.validerCompte('medecins', medecinId, user.id);
+      if (result.success) {
+        showToast('Médecin validé', 'Le compte a été validé avec succès.', 'success');
+        initDashboard();
+      } else {
+        showToast('Erreur', result.error || 'Validation impossible', 'error');
+      }
+    }
+
+    function ouvrirModaleRejet(medecinId, entity) {
+      var med = Storage.getById(entity, medecinId);
+      if (!med) return;
+      var nomComplet = echapperHTML((med.nom || '') + ' ' + (med.prenom || ''));
+
+      var backdrop = document.createElement('div');
+      backdrop.className = 'cs-modal-backdrop';
+      backdrop.setAttribute('role', 'dialog');
+      backdrop.setAttribute('aria-modal', 'true');
+      backdrop.innerHTML =
+        '<div class="cs-modal">' +
+          '<div class="cs-modal-header">' +
+            '<h3 class="cs-modal-title">Rejeter la demande</h3>' +
+            '<button class="cs-btn cs-btn-icon cs-btn-ghost" onclick="this.closest(\'.cs-modal-backdrop\').remove()" aria-label="Fermer">' + icon('x', 18) + '</button>' +
+          '</div>' +
+          '<div class="cs-modal-body">' +
+            '<p class="text-sm text-neutral-600 mb-3">Vous êtes sur le point de rejeter la demande de : <strong>' + nomComplet + '</strong>.</p>' +
+            '<label class="block text-sm font-medium text-neutral-700 mb-1" for="cs-rejet-motif">Motif du rejet</label>' +
+            '<textarea id="cs-rejet-motif" rows="4" class="cs-input" placeholder="Motif obligatoire (ex. : agrément invalide, dossier incomplet...)" required></textarea>' +
+          '</div>' +
+          '<div class="cs-modal-footer">' +
+            '<button class="cs-btn cs-btn-secondary" onclick="this.closest(\'.cs-modal-backdrop\').remove()">Annuler</button>' +
+            '<button class="cs-btn cs-btn-danger" id="cs-rejet-confirm">Confirmer le rejet</button>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(backdrop);
+      document.getElementById('cs-rejet-confirm').addEventListener('click', function () {
+        var motif = (document.getElementById('cs-rejet-motif').value || '').trim();
+        if (motif.length < 5) {
+          showToast('Motif requis', 'Veuillez saisir un motif d\'au moins 5 caractères.', 'warning');
+          return;
+        }
+        var result = Auth.rejeterCompte(entity, medecinId, user.id, motif);
+        backdrop.remove();
+        if (result.success) {
+          showToast('Compte rejeté', 'La demande a été rejetée et le médecin notifié.', 'success');
+          initDashboard();
+        } else {
+          showToast('Erreur', result.error || 'Rejet impossible', 'error');
+        }
+      });
+    }
+
+    // ===== Activité système (timeline 10 entrées) =====
+    function renderActiviteSysteme(data) {
+      var html = '<section class="cs-card p-5"><div class="flex items-center justify-between mb-4">' +
+        '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+          icon('activity', 18) + 'Activité système</h3>' +
+        '<span class="cs-badge cs-badge-info">' + data.journal.length + ' dernières</span>' +
+      '</div>';
+
+      if (!data.journal.length) {
+        html += '<div class="text-center py-6 text-neutral-400 text-sm">Aucune activité enregistrée.</div>';
+      } else {
+        html += '<div class="cs-timeline">';
+        data.journal.forEach(function (j) {
+          var dotClass = 'cs-dot-info';
+          if (j.action === 'validation_compte') dotClass = 'cs-dot-success';
+          else if (j.action === 'rejet_compte') dotClass = 'cs-dot-danger';
+          else if (j.action === 'connexion' || j.action === 'deconnexion') dotClass = 'cs-dot-info';
+          else if (j.action === 'generation_code') dotClass = 'cs-dot-warning';
+          html +=
+            '<div class="cs-timeline-item">' +
+              '<div class="cs-timeline-dot ' + dotClass + '"></div>' +
+              '<div class="text-sm text-neutral-800">' + echapperHTML(j.details || j.action) + '</div>' +
+              '<div class="text-xs text-neutral-500 mt-0.5">' + echapperHTML(j.role || '') +
+                ' &middot; ' + echapperHTML(j.userId || '—') +
+                ' &middot; ' + formatRelative(j.date) + '</div>' +
+            '</div>';
+        });
+        html += '</div>';
+      }
+      html += '</section>';
+      return html;
+    }
+
+    // ===== Graphique inscriptions 6 mois =====
+    function renderGraphique(data) {
+      var max = 1;
+      data.inscriptions.forEach(function (d) { if (d.value > max) max = d.value; });
+
+      var html = '<section class="cs-card p-5"><div class="flex items-center justify-between mb-4">' +
+        '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+          icon('bar-chart', 18) + 'Inscriptions — 6 derniers mois</h3>' +
+        '</div>';
+
+      html += '<div class="cs-chart-bars" role="img" aria-label="Inscriptions des 6 derniers mois">';
+      data.inscriptions.forEach(function (d) {
+        var height = max > 0 ? Math.max((d.value / max) * 100, 4) : 4;
+        html +=
+          '<div class="cs-chart-bar-item">' +
+            '<div class="cs-chart-bar-value">' + echapperHTML(String(d.value)) + '</div>' +
+            '<div class="cs-chart-bar" style="height: ' + height + '%;" title="' + d.value + ' inscriptions"></div>' +
+            '<span class="cs-chart-bar-label">' + echapperHTML(d.label) + '</span>' +
+          '</div>';
+      });
+      html += '</div>';
+      html += '<p class="text-xs text-neutral-500 mt-3">Total cumulé : ' +
+        data.inscriptions.reduce(function (a, b) { return a + b.value; }, 0) + ' nouvelles inscriptions sur 6 mois.</p>';
+      html += '</section>';
+      return html;
+    }
+
+    // ===== Journal d'audit =====
+    function renderJournalAudit(data) {
+      var html = '<section class="cs-card p-5"><div class="flex items-center justify-between mb-4">' +
+        '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+          icon('clipboard-list', 18) + 'Journal d\'audit</h3>' +
+        '<span class="cs-badge cs-badge-neutral">10 dernières</span>' +
+      '</div>';
+
+      if (!data.journal.length) {
+        html += '<div class="text-center py-6 text-neutral-400 text-sm">Journal vide.</div>';
+      } else {
+        html += '<div class="overflow-x-auto"><table class="cs-table" role="table">' +
+          '<thead><tr>' +
+            '<th scope="col">Horodatage</th>' +
+            '<th scope="col">Utilisateur</th>' +
+            '<th scope="col">Action</th>' +
+            '<th scope="col">Détail</th>' +
+            '<th scope="col">IP</th>' +
+          '</tr></thead><tbody>';
+        data.journal.forEach(function (j) {
+          html +=
+            '<tr>' +
+              '<td class="text-xs font-mono whitespace-nowrap">' + formatDate(j.date, { avecHeure: true }) + '</td>' +
+              '<td class="text-xs"><div class="font-medium text-neutral-700">' + echapperHTML(j.userId || '—') + '</div>' +
+                '<div class="text-neutral-400">' + echapperHTML(j.role || '') + '</div></td>' +
+              '<td><span class="cs-badge cs-badge-neutral text-xs">' + echapperHTML(j.action) + '</span></td>' +
+              '<td class="text-xs text-neutral-600 max-w-xs truncate" title="' + echapperHTML(j.details || '') + '">' +
+                echapperHTML(truncate(j.details, 80)) + '</td>' +
+              '<td class="text-xs font-mono text-neutral-500">' + echapperHTML(j.ip || '—') + '</td>' +
+            '</tr>';
+        });
+        html += '</tbody></table></div>';
+      }
+      html += '</section>';
+      return html;
+    }
+
+    // ===== Codes ministère =====
+    function renderCodesMinistere(data) {
+      var html = '<section class="cs-card p-5">' +
+        '<div class="flex items-center justify-between mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+            icon('key', 18) + 'Codes ministère</h3>' +
+          '<button onclick="ouvrirModaleGenerationCode()" class="cs-btn cs-btn-sm cs-btn-primary">' +
+            icon('plus', 14) + ' Générer un code</button>' +
+        '</div>';
+
+      if (!data.codes.length) {
+        html += '<div class="text-center py-6 text-neutral-400 text-sm">' + icon('key', 32) +
+          '<p class="mt-2">Aucun code généré pour le moment.</p></div>';
+      } else {
+        html += '<div class="overflow-x-auto"><table class="cs-table" role="table">' +
+          '<thead><tr>' +
+            '<th scope="col">Code</th>' +
+            '<th scope="col">Rôle</th>' +
+            '<th scope="col">Créé le</th>' +
+            '<th scope="col">Expire le</th>' +
+            '<th scope="col">Statut</th>' +
+            '<th scope="col">Utilisé par</th>' +
+          '</tr></thead><tbody>';
+        data.codes.slice(0, 12).forEach(function (c) {
+          var expire = new Date(c.dateExpiration) < new Date();
+          var statut = c.utilise ? 'Utilisé' : (expire ? 'Expiré' : 'Actif');
+          var badge = c.utilise ? 'cs-badge-info' : (expire ? 'cs-badge-danger' : 'cs-badge-success');
+          html +=
+            '<tr>' +
+              '<td class="font-mono text-sm font-semibold text-neutral-800">' + echapperHTML(c.code) + '</td>' +
+              '<td><span class="cs-badge cs-badge-neutral text-xs">' + echapperHTML(c.role) + '</span></td>' +
+              '<td class="text-sm">' + formatDate(c.dateCreation) + '</td>' +
+              '<td class="text-sm">' + formatDate(c.dateExpiration, { avecHeure: true }) + '</td>' +
+              '<td><span class="cs-badge ' + badge + ' text-xs">' + statut + '</span></td>' +
+              '<td class="text-xs font-mono text-neutral-500">' + echapperHTML(c.utilisePar || '—') + '</td>' +
+            '</tr>';
+        });
+        html += '</tbody></table></div>';
+        if (data.codes.length > 12) {
+          html += '<p class="text-xs text-neutral-500 mt-3 text-center">' +
+            (data.codes.length - 12) + ' codes supplémentaires non affichés.</p>';
+        }
+      }
+      html += '</section>';
+      return html;
+    }
+
+    function ouvrirModaleGenerationCode() {
+      var backdrop = document.createElement('div');
+      backdrop.className = 'cs-modal-backdrop';
+      backdrop.setAttribute('role', 'dialog');
+      backdrop.setAttribute('aria-modal', 'true');
+      backdrop.innerHTML =
+        '<div class="cs-modal">' +
+          '<div class="cs-modal-header">' +
+            '<h3 class="cs-modal-title">Générer un code ministère</h3>' +
+            '<button class="cs-btn cs-btn-icon cs-btn-ghost" onclick="this.closest(\'.cs-modal-backdrop\').remove()" aria-label="Fermer">' + icon('x', 18) + '</button>' +
+          '</div>' +
+          '<div class="cs-modal-body">' +
+            '<p class="text-sm text-neutral-600 mb-4">Sélectionnez le rôle destinataire du code. Le code sera valable 72 heures.</p>' +
+            '<div class="space-y-2" role="radiogroup" aria-label="Rôle destinataire">' +
+              '<label class="flex items-center gap-3 p-3 border border-neutral-200 rounded-cs-sm cursor-pointer hover:border-primary-400 hover:bg-primary-50">' +
+                '<input type="radio" name="cs-code-role" value="patient" checked class="text-primary-700">' +
+                '<div class="w-9 h-9 rounded-cs-sm bg-primary-100 text-primary-700 flex items-center justify-center">' + icon('user', 16) + '</div>' +
+                '<div><div class="text-sm font-medium text-neutral-800">Patient</div>' +
+                '<div class="text-xs text-neutral-500">Inscription d\'un nouveau patient</div></div>' +
+              '</label>' +
+              '<label class="flex items-center gap-3 p-3 border border-neutral-200 rounded-cs-sm cursor-pointer hover:border-info-400 hover:bg-info-50">' +
+                '<input type="radio" name="cs-code-role" value="medecin" class="text-info-700">' +
+                '<div class="w-9 h-9 rounded-cs-sm bg-info-100 text-info-700 flex items-center justify-center">' + icon('stethoscope', 16) + '</div>' +
+                '<div><div class="text-sm font-medium text-neutral-800">Médecin</div>' +
+                '<div class="text-xs text-neutral-500">Inscription d\'un nouveau médecin</div></div>' +
+              '</label>' +
+              '<label class="flex items-center gap-3 p-3 border border-neutral-200 rounded-cs-sm cursor-pointer hover:border-admin-400 hover:bg-admin-50">' +
+                '<input type="radio" name="cs-code-role" value="admin" class="text-admin-700">' +
+                '<div class="w-9 h-9 rounded-cs-sm bg-admin-100 text-admin-700 flex items-center justify-center">' + icon('shield', 16) + '</div>' +
+                '<div><div class="text-sm font-medium text-neutral-800">Administrateur</div>' +
+                '<div class="text-xs text-neutral-500">Création d\'un compte administrateur</div></div>' +
+              '</label>' +
+            '</div>' +
+          '</div>' +
+          '<div class="cs-modal-footer">' +
+            '<button class="cs-btn cs-btn-secondary" onclick="this.closest(\'.cs-modal-backdrop\').remove()">Annuler</button>' +
+            '<button class="cs-btn cs-btn-primary" id="cs-code-confirm">Générer le code</button>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(backdrop);
+      document.getElementById('cs-code-confirm').addEventListener('click', function () {
+        var selected = document.querySelector('input[name="cs-code-role"]:checked');
+        var role = selected ? selected.value : 'patient';
+        var code = Auth.genererCodeMinistere(role, { generePar: user.id, source: 'dashboard-admin' }, 72);
+        Storage.logAction('generation_code', user.id, 'admin',
+          'Génération d\'un code ministère (' + role + ')', { code: code.code });
+        backdrop.remove();
+        showToast('Code généré', 'Le code ' + code.code + ' est valable 72h.', 'success');
+        initDashboard();
+      });
+    }
+
+    // ===== Protocoles de sécurité =====
+    function renderProtocolesSecurite() {
+      var protocoles = [
+        { nom: 'Authentification multi-rôles', desc: 'Vérification identifiant / mot de passe avec hashage localStorage.', actif: true, icon: 'lock-keyhole' },
+        { nom: 'Journalisation des actions', desc: 'Toutes les actions sensibles sont tracées (200 dernières entrées).', actif: true, icon: 'clipboard-list' },
+        { nom: 'Validation ministère', desc: 'Comptes médecins validés par un administrateur avant activation.', actif: true, icon: 'shield-check' },
+        { nom: 'Certification des comptes', desc: 'Niveaux OR / ARGENT / BRONZE attribués selon la profondeur de validation.', actif: true, icon: 'badge-check' },
+        { nom: 'Double authentification (2FA simulé)', desc: 'Simulation pédagogique du 2FA par code temporaire.', actif: true, icon: 'smartphone' },
+        { nom: 'Échappement XSS systématique', desc: 'Toutes les données dynamiques sont échappées via echapperHTML().', actif: true, icon: 'shield' },
+        { nom: 'Codes ministère à expiration', desc: 'Codes d\'inscription valables 72h, non réutilisables.', actif: true, icon: 'key' },
+        { nom: 'Chiffrement TLS simulé', desc: 'En production : HTTPS + chiffrement côté serveur (bcrypt).', actif: false, icon: 'lock' }
+      ];
+
+      var html = '<section class="cs-card p-5">' +
+        '<div class="flex items-center justify-between mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+            icon('shield-check', 18) + 'Protocoles de sécurité</h3>' +
+          '<a href="securite.html" class="cs-btn cs-btn-sm cs-btn-ghost">Détails ' + icon('chevron-right', 14) + '</a>' +
+        '</div>' +
+        '<ul class="grid grid-cols-1 md:grid-cols-2 gap-3">';
+      protocoles.forEach(function (p) {
+        var badge = p.actif ? 'cs-badge-success' : 'cs-badge-neutral';
+        var label = p.actif ? 'Actif' : 'Inactif (prod)';
+        var bg = p.actif ? 'bg-primary-100 text-primary-700' : 'bg-neutral-100 text-neutral-500';
+        html +=
+          '<li class="flex items-start gap-3 p-3 rounded-cs-sm border border-neutral-200">' +
+            '<div class="w-9 h-9 rounded-cs-sm ' + bg + ' flex items-center justify-center flex-shrink-0">' + icon(p.icon, 16) + '</div>' +
+            '<div class="flex-1 min-w-0">' +
+              '<div class="flex items-center justify-between gap-2">' +
+                '<div class="text-sm font-medium text-neutral-800">' + echapperHTML(p.nom) + '</div>' +
+                '<span class="cs-badge ' + badge + ' text-xs whitespace-nowrap">' + label + '</span>' +
+              '</div>' +
+              '<div class="text-xs text-neutral-500 mt-1">' + echapperHTML(p.desc) + '</div>' +
+            '</div>' +
+          '</li>';
+      });
+      html += '</ul></section>';
+      return html;
+    }
+
+    // ===== Notifications =====
+    function bindNotifications() {
+      var btn = document.getElementById('cs-notif-btn');
+      if (!btn) return;
+      btn.addEventListener('click', toggleNotifDropdown);
+    }
+
+    function toggleNotifDropdown(e) {
+      e.stopPropagation();
+      var existing = document.getElementById('cs-notif-dropdown');
+      if (existing) { existing.remove(); return; }
+
+      var notifs = Storage.getNotifications(user.id).slice(0, 6);
+      var dropdown = document.createElement('div');
+      dropdown.id = 'cs-notif-dropdown';
+      dropdown.setAttribute('role', 'menu');
+      dropdown.className = 'absolute right-0 mt-2 w-80 bg-white border border-neutral-200 rounded-cs-md shadow-cs-strong z-50 overflow-hidden';
+
+      var html = '<div class="flex items-center justify-between px-4 py-3 border-b border-neutral-100">' +
+        '<span class="font-semibold text-sm text-neutral-800">Notifications</span>' +
+        '<button onclick="markAllRead()" class="text-xs text-primary-700 hover:underline">Tout marquer lu</button>' +
+      '</div><div class="max-h-80 overflow-y-auto">';
+      if (!notifs.length) {
+        html += '<div class="p-6 text-center text-neutral-400 text-sm">Aucune notification.</div>';
+      } else {
+        notifs.forEach(function (n) {
+          html +=
+            '<div class="px-4 py-3 border-b border-neutral-50 hover:bg-neutral-50 cursor-pointer ' + (n.lue ? 'opacity-60' : '') + '" onclick="markNotifRead(\'' + n.id + '\')">' +
+              '<div class="flex items-start gap-2">' +
+                '<span class="cs-dot ' + (n.type === 'danger' ? 'cs-dot-danger' : (n.type === 'warning' ? 'cs-dot-warning' : (n.type === 'success' ? 'cs-dot-success' : 'cs-dot-info'))) + ' mt-1.5"></span>' +
+                '<div class="flex-1 min-w-0">' +
+                  '<div class="text-sm font-medium text-neutral-800">' + echapperHTML(n.titre) + '</div>' +
+                  '<div class="text-xs text-neutral-500 line-clamp-2">' + echapperHTML(n.message) + '</div>' +
+                  '<div class="text-[10px] text-neutral-400 mt-1">' + formatRelative(n.date) + '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
+        });
+      }
+      html += '</div>';
+      dropdown.innerHTML = html;
+      btn.parentNode.appendChild(dropdown);
+
+      setTimeout(function () {
+        document.addEventListener('click', function close(ev) {
+          if (!dropdown.contains(ev.target) && ev.target !== btn) {
+            dropdown.remove();
+            document.removeEventListener('click', close);
+          }
+        });
+      }, 0);
+    }
+
+    function markAllRead() {
+      Storage.markAllNotificationsRead(user.id);
+      var d = document.getElementById('cs-notif-dropdown');
+      if (d) d.remove();
+      document.getElementById('cs-topbar-wrapper').innerHTML =
+        renderTopbar('Tableau de bord', 'Administration — ' + (user.prenom || '') + ' ' + (user.nom || ''));
+      bindNotifications();
+      showToast('Notifications', 'Toutes les notifications ont été marquées comme lues.', 'success');
+    }
+
+    function markNotifRead(id) {
+      Storage.markNotificationRead(id);
+      var d = document.getElementById('cs-notif-dropdown');
+      if (d) d.remove();
+      document.getElementById('cs-topbar-wrapper').innerHTML =
+        renderTopbar('Tableau de bord', 'Administration — ' + (user.prenom || '') + ' ' + (user.nom || ''));
+      bindNotifications();
+    }
+  </script>
+</body>
+</html>
