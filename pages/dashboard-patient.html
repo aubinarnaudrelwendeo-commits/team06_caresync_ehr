@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tableau de bord patient CareSync EHR — consultations, ordonnances, rendez-vous et rappels vaccinaux.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tableau de bord patient — CareSync EHR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/simulation.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/intelligent-search.js"></script>
+  <script src="../assets/js/medicament-search.js"></script>
+  <script src="../assets/js/family-health.js"></script>
+  <script src="../assets/js/hearts-rating.js"></script>
+  <script src="../assets/js/collapsible-menus.js"></script>
+</head>
+<body>
+  <a href="#cs-content" class="cs-sr-only">Aller au contenu</a>
+  <div id="cs-sim-elements"></div>
+  <div id="cs-sidebar-wrapper"></div>
+  <main class="cs-main-content">
+    <div id="cs-topbar-wrapper"></div>
+    <div class="cs-content-area" id="cs-content">
+      <div class="cs-card p-10 text-center">
+        <div class="inline-block cs-spinner cs-spinner-dark" style="width: 28px; height: 28px;"></div>
+        <p class="mt-3 text-sm text-neutral-500">Chargement...</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    var user = requireAuth('patient');
+    if (user) {
+      try { initDashboard(); } catch (err) {
+        document.getElementById('cs-content').innerHTML =
+          '<div class="cs-card p-8 text-center text-danger-700">Une erreur est survenue : ' + echapperHTML(err.message) + '</div>';
+      }
+    }
+
+    function initDashboard() {
+      document.getElementById('cs-sim-elements').innerHTML = renderSimElements();
+      document.getElementById('cs-sidebar-wrapper').innerHTML = renderSidebar('patient', 'dashboard-patient');
+      var prenom = (user.prenom || '').split(' ')[0] || 'cher patient';
+      document.getElementById('cs-topbar-wrapper').innerHTML =
+        renderTopbar('Tableau de bord', 'Bienvenue, ' + prenom);
+      document.getElementById('cs-content').innerHTML = renderDashboard();
+      bindNotifications();
+    }
+
+    // ===== Données =====
+    function getDonneesPatient() {
+      var consultations = Storage.getConsultationsByPatient(user.id);
+      var ordonnances = Storage.getOrdonnancesByPatient(user.id);
+      var documents = Storage.getAll('documents').filter(function (d) {
+        return d.patientId === user.id;
+      }).slice(0, 3);
+      var journal = Storage.getJournal(50).filter(function (j) {
+        return j.userId === user.id ||
+               (j.details || '').indexOf(user.id) !== -1 ||
+               (j.meta && j.meta.patientId === user.id);
+      }).slice(0, 5);
+
+      var maintenant = new Date().toISOString().slice(0, 10);
+      var rdvFuturs = consultations.filter(function (c) {
+        return (c.date || '') >= maintenant && c.statut !== 'terminée' && c.statut !== 'annulée';
+      }).slice(0, 3);
+      var prochainRdv = rdvFuturs.length ? rdvFuturs[0] : null;
+
+      var ordonnancesActives = ordonnances.filter(function (o) {
+        return o.statut === 'certifiée' || o.statut === 'active';
+      }).length;
+
+      var vaccinsRetard = calculerVaccinsRetard();
+
+      return {
+        consultations: consultations,
+        ordonnances: ordonnances,
+        ordonnancesActives: ordonnancesActives,
+        documents: documents,
+        journal: journal,
+        rdvFuturs: rdvFuturs,
+        prochainRdv: prochainRdv,
+        vaccinsRetard: vaccinsRetard
+      };
+    }
+
+    // Calcul simplifié : membres de la famille < 5 ans sans "à jour" dans les antécédents
+    function calculerVaccinsRetard() {
+      var famille = Storage.getFamilleByPatient(user.id);
+      if (!famille || !Array.isArray(famille.membres)) return 0;
+      var retard = 0;
+      famille.membres.forEach(function (pid) {
+        var p = Storage.getPatientById(pid);
+        if (!p || !p.dateNaissance) return;
+        var age = calculerAge(p.dateNaissance);
+        if (age !== null && age < 5) {
+          var ante = (p.antecedents || []).join(' ').toLowerCase();
+          if (ante.indexOf('à jour') === -1 && ante.indexOf('a jour') === -1) retard++;
+        }
+      });
+      return retard;
+    }
+
+    // ===== Rendu principal =====
+    function renderDashboard() {
+      var data = getDonneesPatient();
+      var html = '';
+      html += renderBandeauBienvenue(data);
+      html += '<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">' +
+        kpiCard('stethoscope', data.consultations.length, 'Consultations totales', 'Historique complet', 'bg-primary-100 text-primary-700') +
+        kpiCard('file-text', data.ordonnancesActives, 'Ordonnances actives', 'Certifiées par le ministère', 'bg-info-100 text-info-700') +
+        kpiCard(data.prochainRdv ? 'calendar-check' : 'calendar',
+                data.prochainRdv ? formatRelative(data.prochainRdv.date) : 'Aucun',
+                'Prochain RDV',
+                data.prochainRdv ? (data.prochainRdv.motif || 'Consultation') : 'Planifier un rendez-vous',
+                'bg-gold-100 text-gold-700') +
+        kpiCard('syringe', data.vaccinsRetard, 'Vaccins en retard',
+                data.vaccinsRetard > 0 ? 'Action requise' : 'À jour',
+                data.vaccinsRetard > 0 ? 'bg-danger-100 text-danger-700' : 'bg-primary-100 text-primary-700') +
+      '</div>';
+
+      // Sections repliables
+      html += '<div data-cs-collapsible="rdv" data-cs-title="Rendez-vous et rappels vaccinaux" data-cs-icon="calendar-days">';
+      html += '<div class="grid grid-cols-1 lg:grid-cols-5 gap-4">' +
+        renderRDVFuturs(data) +
+        renderRappelsVaccinaux(data) +
+      '</div>';
+      html += '</div>';
+
+      html += '<div data-cs-collapsible="docs" data-cs-title="Documents et activité récente" data-cs-icon="folder-open" data-cs-default="collapsed">';
+      html += '<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">' +
+        renderDocumentsRecents(data) +
+        renderTimelineActivite(data) +
+      '</div>';
+      html += '</div>';
+
+      html += '<div data-cs-collapsible="certif" data-cs-title="Certification du compte" data-cs-icon="badge-check" data-cs-default="collapsed">';
+      html += renderSectionCertification();
+      html += '</div>';
+
+      setTimeout(function () { CollapsibleMenus.autoInit(); }, 50);
+      return html;
+    }
+
+    // ===== Bandeau bienvenue =====
+    function renderBandeauBienvenue(data) {
+      var prenom = echapperHTML((user.prenom || '').split(' ')[0] || 'cher patient');
+      var rdvHtml = '';
+      if (data.prochainRdv) {
+        var med = Storage.getMedecinById(data.prochainRdv.medecinId);
+        var medNom = med ? echapperHTML((med.nom || '') + ' ' + (med.prenom || '')) : 'Médecin non assigné';
+        rdvHtml =
+          '<div class="flex items-center gap-3 bg-white/10 px-4 py-2 rounded-cs-sm">' +
+            icon('calendar-check', 18) +
+            '<div>' +
+              '<div class="text-xs text-primary-100">Prochain rendez-vous</div>' +
+              '<div class="text-sm font-semibold text-white">' + formatDate(data.prochainRdv.date, { long: true }) +
+                (data.prochainRdv.heure ? ' &middot; ' + echapperHTML(data.prochainRdv.heure) : '') + '</div>' +
+              '<div class="text-xs text-primary-100 mt-0.5">' + medNom + '</div>' +
+            '</div>' +
+          '</div>';
+      } else {
+        rdvHtml =
+          '<div class="flex items-center gap-3 bg-white/10 px-4 py-2 rounded-cs-sm">' +
+            icon('calendar-x', 18) +
+            '<div>' +
+              '<div class="text-xs text-primary-100">Aucun rendez-vous planifié</div>' +
+              '<div class="text-sm font-semibold text-white">Prenez un rendez-vous dès maintenant</div>' +
+            '</div>' +
+          '</div>';
+      }
+
+      return '<section class="cs-card cs-card-accent p-6 mb-6 bg-gradient-to-br from-primary-700 to-primary-900 text-white border-0">' +
+        '<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">' +
+          '<div>' +
+            '<h2 class="text-2xl font-bold text-white mb-1">Bonjour, ' + prenom + '</h2>' +
+            '<p class="text-sm text-primary-100">Voici un résumé de votre parcours de soins aujourd\'hui ' +
+              formatDate(new Date().toISOString(), { long: true }) + '.</p>' +
+          '</div>' +
+          '<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">' +
+            rdvHtml +
+            '<a href="calendar.html" class="cs-btn bg-gold-500 hover:bg-gold-600 text-white whitespace-nowrap">' +
+              icon('calendar-days', 18) + '<span>Prendre RDV</span></a>' +
+          '</div>' +
+        '</div>' +
+      '</section>';
+    }
+
+    // ===== KPI card =====
+    function kpiCard(iconName, value, label, trend, color) {
+      return '<div class="cs-card p-5">' +
+        '<div class="flex items-center justify-between mb-3">' +
+          '<div class="w-10 h-10 rounded-cs-sm ' + color + ' flex items-center justify-center">' +
+            icon(iconName, 20) + '</div>' +
+          (trend ? '<span class="text-xs text-neutral-500 text-right max-w-[50%]">' + echapperHTML(trend) + '</span>' : '') +
+        '</div>' +
+        '<div class="text-3xl font-bold text-neutral-800">' + echapperHTML(value) + '</div>' +
+        '<div class="text-sm text-neutral-500 mt-1">' + echapperHTML(label) + '</div>' +
+      '</div>';
+    }
+
+    // ===== RDV à venir (3 cols) =====
+    function renderRDVFuturs(data) {
+      var html = '<section class="cs-card p-5 lg:col-span-3"><div class="flex items-center justify-between mb-4">' +
+        '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+          icon('calendar-days', 18) + 'Rendez-vous à venir</h3>' +
+        '<a href="calendar.html" class="cs-btn cs-btn-sm cs-btn-ghost">Voir l\'agenda ' + icon('chevron-right', 14) + '</a>' +
+      '</div>';
+
+      if (!data.rdvFuturs.length) {
+        html += '<div class="text-center py-8 text-neutral-400">' + icon('calendar-x', 32) +
+          '<p class="mt-2 text-sm">Aucun rendez-vous à venir.</p>' +
+          '<a href="calendar.html" class="cs-btn cs-btn-primary cs-btn-sm mt-3">Planifier</a></div>';
+      } else {
+        html += '<div class="space-y-3">';
+        data.rdvFuturs.forEach(function (c) {
+          var med = Storage.getMedecinById(c.medecinId);
+          var struct = Storage.getStructureById(c.etablissement);
+          html +=
+            '<div class="flex items-center gap-4 p-3 rounded-cs-sm border border-neutral-200 hover:border-primary-300 hover:bg-primary-50 transition-colors">' +
+              '<div class="flex flex-col items-center justify-center w-14 h-14 rounded-cs-sm bg-primary-100 text-primary-700 flex-shrink-0">' +
+                '<span class="text-[10px] uppercase font-semibold">' + echapperHTML(formatDate(c.date).split('/')[1]) + '</span>' +
+                '<span class="text-lg font-bold leading-none">' + echapperHTML(formatDate(c.date).split('/')[0]) + '</span>' +
+              '</div>' +
+              '<div class="flex-1 min-w-0">' +
+                '<div class="font-semibold text-neutral-800 truncate">' + echapperHTML(c.motif || 'Consultation') + '</div>' +
+                '<div class="text-xs text-neutral-500 mt-0.5 flex items-center gap-2 flex-wrap">' +
+                  '<span class="flex items-center gap-1">' + icon('stethoscope', 12) + echapperHTML(med ? (med.nom + ' ' + med.prenom) : 'Médecin') + '</span>' +
+                  (struct ? '<span class="flex items-center gap-1">' + icon('building', 12) + echapperHTML(struct.nom || '') + '</span>' : '') +
+                  (c.heure ? '<span class="flex items-center gap-1">' + icon('clock', 12) + echapperHTML(c.heure) + '</span>' : '') +
+                '</div>' +
+              '</div>' +
+              '<span class="cs-badge ' + badgeForStatut(c.statut) + ' text-xs">' + echapperHTML(c.statut || '') + '</span>' +
+            '</div>';
+        });
+        html += '</div>';
+      }
+      html += '</section>';
+      return html;
+    }
+
+    // ===== Rappels vaccinaux (2 cols) =====
+    function renderRappelsVaccinaux(data) {
+      var famille = Storage.getFamilleByPatient(user.id);
+      var membres = famille ? Storage.getMembresFamille(famille.id) : [];
+      var enfants = membres.filter(function (m) {
+        var age = calculerAge(m.dateNaissance);
+        return age !== null && age < 18;
+      });
+
+      var html = '<section class="cs-card p-5 lg:col-span-2">' +
+        '<div class="flex items-center justify-between mb-4">' +
+          '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+            icon('syringe', 18) + 'Rappels vaccinaux</h3>' +
+          '<span class="cs-badge ' + (data.vaccinsRetard > 0 ? 'cs-badge-danger' : 'cs-badge-success') + '">' +
+            (data.vaccinsRetard > 0 ? data.vaccinsRetard + ' en retard' : 'À jour') + '</span>' +
+        '</div>';
+
+      if (!enfants.length) {
+        html += '<div class="text-center py-6 text-neutral-400 text-sm">Aucun rappel vaccinal actif.</div>';
+      } else {
+        html += '<div class="space-y-2">';
+        enfants.slice(0, 4).forEach(function (m) {
+          var age = calculerAge(m.dateNaissance);
+          var ante = (m.antecedents || []).join(' ').toLowerCase();
+          var aJour = ante.indexOf('à jour') !== -1 || ante.indexOf('a jour') !== -1;
+          html +=
+            '<div class="flex items-center gap-3 p-2 rounded-cs-sm hover:bg-neutral-50">' +
+              '<div class="cs-avatar cs-avatar-sm ' + avatarColor(m.id) + '">' + echapperHTML(initiales(m.prenom, m.nom)) + '</div>' +
+              '<div class="flex-1 min-w-0">' +
+                '<div class="text-sm font-medium text-neutral-800 truncate">' + echapperHTML(m.prenom + ' ' + m.nom) + '</div>' +
+                '<div class="text-xs text-neutral-500">' + (age !== null ? age + ' ans' : '—') + '</div>' +
+              '</div>' +
+              '<span class="cs-dot ' + (aJour ? 'cs-dot-success' : 'cs-dot-warning') + '" title="' + (aJour ? 'À jour' : 'En retard') + '"></span>' +
+            '</div>';
+        });
+        html += '</div>';
+      }
+      html += '</section>';
+      return html;
+    }
+
+    // ===== Documents récents =====
+    function renderDocumentsRecents(data) {
+      var html = '<section class="cs-card p-5"><div class="flex items-center justify-between mb-4">' +
+        '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+          icon('folder-open', 18) + 'Documents récents</h3>' +
+        '<a href="documents.html" class="cs-btn cs-btn-sm cs-btn-ghost">Tous ' + icon('chevron-right', 14) + '</a>' +
+      '</div>';
+
+      if (!data.documents.length) {
+        html += '<div class="text-center py-6 text-neutral-400 text-sm">' + icon('folder', 32) +
+          '<p class="mt-2">Aucun document disponible.</p></div>';
+      } else {
+        html += '<ul class="space-y-2">';
+        data.documents.forEach(function (d) {
+          var ic = d.type === 'ordonnance' ? 'file-text' : (d.type === 'analyse' ? 'test-tube' : 'file');
+          html +=
+            '<li class="flex items-center gap-3 p-2 rounded-cs-sm hover:bg-neutral-50 cursor-pointer">' +
+              '<div class="w-9 h-9 rounded-cs-sm bg-info-100 text-info-700 flex items-center justify-center flex-shrink-0">' + icon(ic, 16) + '</div>' +
+              '<div class="flex-1 min-w-0">' +
+                '<div class="text-sm font-medium text-neutral-800 truncate">' + echapperHTML(d.titre || d.nom || 'Document') + '</div>' +
+                '<div class="text-xs text-neutral-500">' + formatDate(d.date || d.createdAt, { avecHeure: false }) +
+                  (d.taille ? ' &middot; ' + echapperHTML(d.taille) : '') + '</div>' +
+              '</div>' +
+              '<button class="cs-btn cs-btn-icon cs-btn-ghost" aria-label="Télécharger">' + icon('download', 16) + '</button>' +
+            '</li>';
+        });
+        html += '</ul>';
+      }
+      html += '</section>';
+      return html;
+    }
+
+    // ===== Timeline activité =====
+    function renderTimelineActivite(data) {
+      var html = '<section class="cs-card p-5"><div class="flex items-center justify-between mb-4">' +
+        '<h3 class="font-semibold text-neutral-800 flex items-center gap-2">' +
+          icon('activity', 18) + 'Activité récente</h3>' +
+      '</div>';
+
+      if (!data.journal.length) {
+        html += '<div class="text-center py-6 text-neutral-400 text-sm">Aucune activité enregistrée.</div>';
+      } else {
+        html += '<div class="cs-timeline">';
+        data.journal.forEach(function (j) {
+          var dotClass = 'cs-dot-info';
+          if (j.action === 'validation_compte') dotClass = 'cs-dot-success';
+          else if (j.action === 'rejet_compte') dotClass = 'cs-dot-danger';
+          else if (j.action === 'consultation') dotClass = 'cs-dot-success';
+          else if (j.action === 'ordonnance') dotClass = 'cs-dot-info';
+          html +=
+            '<div class="cs-timeline-item">' +
+              '<div class="cs-timeline-dot ' + dotClass + '"></div>' +
+              '<div class="text-sm text-neutral-800">' + echapperHTML(j.details || j.action) + '</div>' +
+              '<div class="text-xs text-neutral-500 mt-0.5">' + formatRelative(j.date) + '</div>' +
+            '</div>';
+        });
+        html += '</div>';
+      }
+      html += '</section>';
+      return html;
+    }
+
+    // ===== Section certification =====
+    function renderSectionCertification() {
+      var niveau = (user.niveauCertification || 'BRONZE').toUpperCase();
+      var niveauColor = 'cs-badge-warning';
+      var niveauBg = 'bg-gold-100 text-gold-700';
+      var niveauDesc = 'Niveau de base. Authentification standard et accès limité.';
+      if (niveau === 'OR') {
+        niveauColor = 'cs-badge-warning';
+        niveauBg = 'bg-gold-100 text-gold-700';
+        niveauDesc = 'Niveau supérieur. Validation renforcée et accès étendus.';
+      } else if (niveau === 'ARGENT') {
+        niveauColor = 'cs-badge-info';
+        niveauBg = 'bg-info-100 text-info-700';
+        niveauDesc = 'Niveau intermédiaire. Données certifiées et journalisation avancée.';
+      }
+
+      return '<section class="cs-card cs-card-accent p-6">' +
+        '<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">' +
+          '<div class="flex items-start gap-4">' +
+            '<div class="w-12 h-12 rounded-cs-sm ' + niveauBg + ' flex items-center justify-center flex-shrink-0">' +
+              icon('shield-check', 24) + '</div>' +
+            '<div>' +
+              '<h3 class="font-semibold text-neutral-800 mb-1">Sécurité &amp; Certification</h3>' +
+              '<p class="text-sm text-neutral-600 mb-2">Votre niveau de certification actuel :</p>' +
+              '<div class="flex items-center gap-2">' +
+                '<span class="cs-badge ' + niveauColor + ' text-sm">' + echapperHTML(niveau) + '</span>' +
+                '<span class="text-xs text-neutral-500">' + echapperHTML(niveauDesc) + '</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<a href="securite.html" class="cs-btn cs-btn-secondary whitespace-nowrap">' +
+            icon('shield', 18) + '<span>Gérer la sécurité</span></a>' +
+        '</div>' +
+      '</section>';
+    }
+
+    // ===== Notifications (cloche) =====
+    function bindNotifications() {
+      var btn = document.getElementById('cs-notif-btn');
+      if (!btn) return;
+      btn.addEventListener('click', toggleNotifDropdown);
+    }
+
+    function toggleNotifDropdown(e) {
+      e.stopPropagation();
+      var existing = document.getElementById('cs-notif-dropdown');
+      if (existing) { existing.remove(); return; }
+
+      var notifs = Storage.getNotifications(user.id).slice(0, 6);
+      var dropdown = document.createElement('div');
+      dropdown.id = 'cs-notif-dropdown';
+      dropdown.setAttribute('role', 'menu');
+      dropdown.className = 'absolute right-0 mt-2 w-80 bg-white border border-neutral-200 rounded-cs-md shadow-cs-strong z-50 overflow-hidden';
+
+      var html = '<div class="flex items-center justify-between px-4 py-3 border-b border-neutral-100">' +
+        '<span class="font-semibold text-sm text-neutral-800">Notifications</span>' +
+        '<button onclick="markAllRead()" class="text-xs text-primary-700 hover:underline">Tout marquer lu</button>' +
+      '</div><div class="max-h-80 overflow-y-auto">';
+      if (!notifs.length) {
+        html += '<div class="p-6 text-center text-neutral-400 text-sm">Aucune notification.</div>';
+      } else {
+        notifs.forEach(function (n) {
+          html +=
+            '<div class="px-4 py-3 border-b border-neutral-50 hover:bg-neutral-50 cursor-pointer ' + (n.lue ? 'opacity-60' : '') + '" onclick="markNotifRead(\'' + n.id + '\')">' +
+              '<div class="flex items-start gap-2">' +
+                '<span class="cs-dot ' + (n.type === 'danger' ? 'cs-dot-danger' : (n.type === 'warning' ? 'cs-dot-warning' : (n.type === 'success' ? 'cs-dot-success' : 'cs-dot-info'))) + ' mt-1.5"></span>' +
+                '<div class="flex-1 min-w-0">' +
+                  '<div class="text-sm font-medium text-neutral-800">' + echapperHTML(n.titre) + '</div>' +
+                  '<div class="text-xs text-neutral-500 line-clamp-2">' + echapperHTML(n.message) + '</div>' +
+                  '<div class="text-[10px] text-neutral-400 mt-1">' + formatRelative(n.date) + '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
+        });
+      }
+      html += '</div>';
+      dropdown.innerHTML = html;
+      btn.parentNode.appendChild(dropdown);
+
+      setTimeout(function () {
+        document.addEventListener('click', function close(ev) {
+          if (!dropdown.contains(ev.target) && ev.target !== btn) {
+            dropdown.remove();
+            document.removeEventListener('click', close);
+          }
+        });
+      }, 0);
+    }
+
+    function markAllRead() {
+      Storage.markAllNotificationsRead(user.id);
+      var d = document.getElementById('cs-notif-dropdown');
+      if (d) d.remove();
+      document.getElementById('cs-topbar-wrapper').innerHTML =
+        renderTopbar('Tableau de bord', 'Bienvenue, ' + ((user.prenom || '').split(' ')[0] || 'cher patient'));
+      bindNotifications();
+      showToast('Notifications', 'Toutes les notifications ont été marquées comme lues.', 'success');
+    }
+
+    function markNotifRead(id) {
+      Storage.markNotificationRead(id);
+      var d = document.getElementById('cs-notif-dropdown');
+      if (d) d.remove();
+      document.getElementById('cs-topbar-wrapper').innerHTML =
+        renderTopbar('Tableau de bord', 'Bienvenue, ' + ((user.prenom || '').split(' ')[0] || 'cher patient'));
+      bindNotifications();
+    }
+  </script>
+</body>
+</html>
